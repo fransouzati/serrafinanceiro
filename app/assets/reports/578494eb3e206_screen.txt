@@ -1,0 +1,1 @@
+a:1:{i:0;a:5:{s:4:"name";s:9:"Cliente 1";s:4:"cnpj";s:11:"03842023065";s:8:"finances";s:0:"";s:10:"pendencies";a:2:{i:0;a:4:{s:4:"type";s:18:"Parcela de projeto";s:5:"value";s:7:"R$50,00";s:6:"expiry";s:10:"11/07/2016";s:2:"id";s:2:"24";}i:1;a:4:{s:4:"type";s:18:"Parcela de projeto";s:5:"value";s:7:"R$75,00";s:6:"expiry";s:10:"21/07/2016";s:2:"id";s:1:"5";}}s:5:"total";d:125;}}
