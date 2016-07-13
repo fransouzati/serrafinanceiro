@@ -4,7 +4,7 @@
 	 * Database connection config
 	 *
 	**/
-	if($_SERVER['HTTP_HOST'] == 'localhost:8092'){
+	if(_LOCAL){
 		define('_HOST', 'localhost');
 		define('_DATABASE', 'financeiro');
 		define('_DATABASE_USER', 'root');

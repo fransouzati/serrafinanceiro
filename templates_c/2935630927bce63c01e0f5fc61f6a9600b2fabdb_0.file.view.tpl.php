@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-24 15:11:20
+/* Smarty version 3.1.28, created on 2016-07-13 10:54:02
   from "C:\wamp\www\financeiro3\app\viewer\Client\view.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_576d77c88c3076_53127983',
+  'unifunc' => 'content_578647fa078194_08406995',
   'file_dependency' => 
   array (
     '2935630927bce63c01e0f5fc61f6a9600b2fabdb' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Client\\view.tpl',
-      1 => 1466791869,
+      1 => 1468310114,
       2 => 'file',
     ),
   ),
@@ -19,11 +19,11 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_576d77c88c3076_53127983 ($_smarty_tpl) {
+function content_578647fa078194_08406995 ($_smarty_tpl) {
 ?>
 <div class="row">
     <div class="col-md-12" style="margin-bottom: 20px;">
-        <a href="/client/add">
+        <a href="client/add">
             <button class="btn btn-primary pull-right">
                 Cadastrar
             </button>
@@ -41,7 +41,7 @@ function content_576d77c88c3076_53127983 ($_smarty_tpl) {
     </div>
 </div>
 <div class="row">
-    <form action="client/view" method="post">
+    <form action="client/view" method="post" class="ignore-wait">
         <input class="filter-input" filter-type="status" type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['_filter_status']->value;?>
 " name="_filter_status">
         <input class="filter-input" filter-type="finances" type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['_filter_finances']->value;?>
@@ -91,6 +91,8 @@ function content_576d77c88c3076_53127983 ($_smarty_tpl) {
         <hr>
     </div>
 </div>
+<?php $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, (dirname($_smarty_tpl->source->filepath)).("/viewPendencies.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, true);
+?>
 
 <div class="row">
     <div class="col-sm-12 table-responsive">
@@ -127,7 +129,7 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "finance", 0);?>
                     <td><?php echo $_smarty_tpl->tpl_vars['client']->value->get('id');?>
 </td>
                     <td>
-                        <a href="/client/view/<?php echo $_smarty_tpl->tpl_vars['client']->value->get('id');?>
+                        <a href="client/view/<?php echo $_smarty_tpl->tpl_vars['client']->value->get('id');?>
 ">
                             <?php echo $_smarty_tpl->tpl_vars['client']->value->get('name');?>
 
@@ -146,12 +148,13 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "finance", 0);?>
                     <td><?php echo $_smarty_tpl->tpl_vars['client']->value->get('since',true);?>
 </td>
                     <td align="center">
-                        <?php if ($_smarty_tpl->tpl_vars['client']->value->get('status')) {?>
+                        <?php if ($_smarty_tpl->tpl_vars['finance']->value->get('status')) {?>
                             <i class="fa fa-circle" style="color: #7AFF88"></i>
                         <?php } else { ?>
-                            <a href="/client/pending/<?php echo $_smarty_tpl->tpl_vars['client']->value->get('id');?>
-">
-                                <i class="fa fa-circle" style="color: #FF6671!important"></i>
+                            <a style="cursor: pointer">
+                                <i client="<?php echo $_smarty_tpl->tpl_vars['client']->value->get('id');?>
+" class="pendencies-modal fa fa-circle"
+                                   style="color: #FF6671!important"></i>
                             </a>
                         <?php }?>
                     </td>

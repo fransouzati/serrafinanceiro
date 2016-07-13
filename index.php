@@ -4,7 +4,9 @@
 
     setlocale(LC_MONETARY,"pt_BR");
     date_default_timezone_set('Brazil/East');
-
+    
+    define('_LOCAL', $_SERVER['HTTP_HOST'] == 'localhost:8091' || $_SERVER['HTTP_HOST'] == 'localhost:8092');
+    
     // Dir config
     include_once('config/dirList.php');
 

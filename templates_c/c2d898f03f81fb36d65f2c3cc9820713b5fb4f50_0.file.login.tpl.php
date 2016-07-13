@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-10 15:45:48
+/* Smarty version 3.1.28, created on 2016-07-13 10:48:29
   from "C:\wamp\www\financeiro3\app\viewer\User\login.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_575ac48cf35815_05820774',
+  'unifunc' => 'content_578646ad7cd617_08146426',
   'file_dependency' => 
   array (
     'c2d898f03f81fb36d65f2c3cc9820713b5fb4f50' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\User\\login.tpl',
-      1 => 1465566347,
+      1 => 1468310114,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_575ac48cf35815_05820774 ($_smarty_tpl) {
+function content_578646ad7cd617_08146426 ($_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -60,7 +60,7 @@ assets/css/style-responsive.css" rel="stylesheet">
     <div class="container">
         <?php echo $_smarty_tpl->tpl_vars['_flash']->value;?>
 
-        <form class="form-login" action="/user/login" method="post">
+        <form class="form-login" action="user/login" method="post">
             <div class="login-wrap">
                 <input type="email" class="form-control" name="email" placeholder="Email" autofocus>
                 <br>

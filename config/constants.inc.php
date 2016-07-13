@@ -7,7 +7,11 @@
     define('_LOCALE', 'ptbr');
 
     // Defines the URL base of the website
-    define('_BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].'/financeiro/');
+    if(!_LOCAL)
+        $ext = '/financeiro/';
+    else
+        $ext = '';
+    define('_BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].$ext);
 
     // Defines the directory separator
     define('_DS', DIRECTORY_SEPARATOR);

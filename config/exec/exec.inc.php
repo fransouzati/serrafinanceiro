@@ -3,6 +3,17 @@
     if (!isset($_SESSION['phpError']))
         $_SESSION['phpError'] = '';
     $friendlyUrl = isset($_GET['ctrl']) && isset($_GET['act']) ? false : true;
+    
+    if(_LOCAL){
+        $first = 0;
+        $sec = 1;
+        $third = 2;
+    }else{
+        $first = 1;
+        $sec = 2;
+        $third = 3;
+    }
+    
     if ($friendlyUrl) {
 
         $comp = strrchr($_SERVER['REQUEST_URI'], '?');
@@ -10,22 +21,22 @@
         $url = explode('/', $end);
         array_shift($url);
 
-        if (isset($url[1])) {
-            if (isset($url[2])) {
-                if(trim($url[2]) != '')
-                    $action = $url[2];
+        if (isset($url[$first])) {
+            if (isset($url[$sec])) {
+                if(trim($url[$sec]) != '')
+                    $action = $url[$sec];
                 else
                     $action = 'view';
             } else {
                 $action = 'view';
             }
-            $controller = ucfirst($url[1]) . 'Controller';
+            $controller = ucfirst($url[$first]) . 'Controller';
         } else {
             $controller = _MAIN_CLASS;
         }
 
         $params = '';
-        if (isset($url[3])) {
+        if (isset($url[$third])) {
             for ($i = 3; $i < count($url); $i++) {
                 if(trim($url[$i]) != '')
                     $params .= '"' . $url[$i] . '",';

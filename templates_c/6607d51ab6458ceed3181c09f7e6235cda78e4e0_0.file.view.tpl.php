@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-14 14:48:39
+/* Smarty version 3.1.28, created on 2016-07-13 10:54:19
   from "C:\wamp\www\financeiro3\app\viewer\Investor\view.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_575ffd27b19c71_76761645',
+  'unifunc' => 'content_5786480beff467_08484269',
   'file_dependency' => 
   array (
     '6607d51ab6458ceed3181c09f7e6235cda78e4e0' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Investor\\view.tpl',
-      1 => 1465907139,
+      1 => 1468310113,
       2 => 'file',
     ),
   ),
@@ -19,12 +19,12 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_575ffd27b19c71_76761645 ($_smarty_tpl) {
+function content_5786480beff467_08484269 ($_smarty_tpl) {
 ?>
 		<div class="row">
 	        <div class="col-sm-12">
 				<div class="col-md-12" style="margin-bottom: 20px;">
-					<a href="/investor/add">
+					<a href="investor/add">
 						<button class="btn btn-primary pull-right">
 							Cadastrar
 						</button>
@@ -62,13 +62,13 @@ $__foreach_investor_0_saved_local_item = $_smarty_tpl->tpl_vars['investor'];
                                     <td><?php echo $_smarty_tpl->tpl_vars['investor']->value->get('is_partner',true);?>
 </td>
 									<td>
-										<a href="/investor/view/<?php echo $_smarty_tpl->tpl_vars['investor']->value->get('id');?>
+										<a href="investor/view/<?php echo $_smarty_tpl->tpl_vars['investor']->value->get('id');?>
 ">
 											<button class="btn btn-primary">
 												Visualizar
 											</button>
 										</a>
-                                        <a href="/investor/edit/<?php echo $_smarty_tpl->tpl_vars['investor']->value->get('id');?>
+                                        <a href="investor/edit/<?php echo $_smarty_tpl->tpl_vars['investor']->value->get('id');?>
 ">
                                             <button class="btn btn-primary">
                                                 Editar

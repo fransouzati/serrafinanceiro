@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-30 09:42:50
+/* Smarty version 3.1.28, created on 2016-07-13 10:53:56
   from "C:\wamp\www\financeiro3\app\viewer\default\footer.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_577513ca486b64_21691734',
+  'unifunc' => 'content_578647f47bec93_56546201',
   'file_dependency' => 
   array (
     '0138df88c2023ce100398dcfcf9a64e4757bad60' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\default\\footer.tpl',
-      1 => 1467289229,
+      1 => 1468310751,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_577513ca486b64_21691734 ($_smarty_tpl) {
+function content_578647f47bec93_56546201 ($_smarty_tpl) {
 ?>
 
 
@@ -57,7 +57,7 @@ assets/js/browserDetection.js"><?php echo '</script'; ?>
  src="plugins/input-mask/jquery.inputmask.js"><?php echo '</script'; ?>
 >
     <?php echo '<script'; ?>
- src="plugins/input-mask/jquery.maskMoney.js"><?php echo '</script'; ?>
+ src="plugins/input-mask/jquery.maskmoney.js"><?php echo '</script'; ?>
 >
     <?php echo '<script'; ?>
  src="plugins/input-mask/jquery.mask.init.js"><?php echo '</script'; ?>
@@ -121,7 +121,7 @@ assets/js/filter.js"><?php echo '</script'; ?>
  src="plugins/datatables/datatables.min.js"><?php echo '</script'; ?>
 >
     <?php echo '<script'; ?>
- src="plugins/datatables/dataTables.init.js"><?php echo '</script'; ?>
+ src="plugins/datatables/datatables.init.js"><?php echo '</script'; ?>
 >
 
     <?php echo '<script'; ?>

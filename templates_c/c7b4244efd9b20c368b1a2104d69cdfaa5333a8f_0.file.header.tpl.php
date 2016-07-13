@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-30 09:42:50
+/* Smarty version 3.1.28, created on 2016-07-13 10:53:56
   from "C:\wamp\www\financeiro3\app\viewer\default\header.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_577513ca26f379_30565628',
+  'unifunc' => 'content_578647f4462463_88159921',
   'file_dependency' => 
   array (
     'c7b4244efd9b20c368b1a2104d69cdfaa5333a8f' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\default\\header.tpl',
-      1 => 1467289174,
+      1 => 1468310896,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_577513ca26f379_30565628 ($_smarty_tpl) {
+function content_578647f4462463_88159921 ($_smarty_tpl) {
 ?>
 <html>
     <head>
@@ -84,7 +84,11 @@ plugins/select2/dist/css/select2.min.css">
             </div>
             <div class="top-menu">
                 <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="/user/logout">Logout</a></li>
+                    <li><a class="logout" href="user/viewBalance">Saldo em caixa: R$<?php echo $_smarty_tpl->tpl_vars['_balance']->value;?>
+</a></li>
+                </ul>
+                <ul class="nav pull-right top-menu">
+                    <li><a class="logout" href="user/logout">Logout</a></li>
                 </ul>
             </div>
         </header>
@@ -99,19 +103,17 @@ plugins/select2/dist/css/select2.min.css">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
 
-                    <p class="centered"><img src="<?php echo _APP_ROOT_DIR;?>
-assets/img/logo-serra.png" class="img-" width="200"></a></p>
                     <?php $_smarty_tpl->tpl_vars["userSess"] = new Smarty_Variable(unserialize($_SESSION['user']), null);
 $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "userSess", 0);?>
                     <h5 class="centered">
-                        <a href="/user/view/<?php echo $_smarty_tpl->tpl_vars['userSess']->value->get('id');?>
+                        <a href="user/view/<?php echo $_smarty_tpl->tpl_vars['userSess']->value->get('id');?>
  ">
                             <?php echo $_smarty_tpl->tpl_vars['userSess']->value->get('name');?>
 </h5>
                         </a>
 
                     <li class="mt">
-                        <a class="" href="/user/home/">
+                        <a class="" href="user/home/">
                             <i class="fa fa-home"></i>
                             <span>Início</span>
                         </a>
@@ -125,8 +127,9 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "userSess", 0);?>
                         <ul class="sub">
                             <li><a  href="user/">Administradores</a></li>
                             <li><a  href="investor/">Investidores</a></li>
-                            <li><a  href="exitType/">Tipos de saída</a></li>
+                            <li><a  href="withdrawType/">Tipos de saída</a></li>
                             <li><a  href="entryType/">Tipos de entrada</a></li>
+                            <li><a  href="bill/">Contas a pagar</a></li>
                         </ul>
                     </li>
 
@@ -138,7 +141,7 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "userSess", 0);?>
                     </li>
 
                     <li class="">
-                        <a class="" href="exit/">
+                        <a class="" href="withdraw/">
                             <i class="fa fa-sign-out"></i>
                             <span>Saídas</span>
                         </a>
@@ -155,6 +158,13 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "userSess", 0);?>
                         <a class="" href="project/">
                             <i class="fa fa-folder"></i>
                             <span>Projetos</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a class="" href="bill/payments">
+                            <i class="fa fa-folder-o"></i>
+                            <span>Contas pagas</span>
                         </a>
                     </li>
 

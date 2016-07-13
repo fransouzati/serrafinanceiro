@@ -1,5 +1,9 @@
 <?php
-    define('HOME', getenv('DOCUMENT_ROOT').'/financeiro/');
+    if(!_LOCAL)
+        $ext = '/financeiro/';
+    else
+        $ext = '';
+    define('HOME', getenv('DOCUMENT_ROOT').$ext);
     define('HOST', $_SERVER['HTTP_HOST']);
     define('FRAMEWORK', HOME.'/base/');
     
