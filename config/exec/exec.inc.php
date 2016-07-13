@@ -37,7 +37,7 @@
 
         $params = '';
         if (isset($url[$third])) {
-            for ($i = 3; $i < count($url); $i++) {
+            for ($i = $third; $i < count($url); $i++) {
                 if(trim($url[$i]) != '')
                     $params .= '"' . $url[$i] . '",';
             }
