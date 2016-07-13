@@ -1,1 +1,8 @@
 unnamed.patch
+.idea/workspace.xml
+app/model/pdf/
+app/plugins/lineicons/.DS_Store
+app/plugins/lineicons/fonts/.DS_Store
+plugins/datatables-plugins/sorting/.DS_Store
+plugins/datatables-responsive/examples/.DS_Store
+plugins/datatables-responsive/examples/initialisation/.DS_Store
