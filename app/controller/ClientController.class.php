@@ -6,9 +6,6 @@
         public function view($id = null) {
             if (!is_null($id)) {
                 
-                
-                echo 'o';
-                
                 if (!$this->model->exists('client', 'id', $id)) {
                     Viewer::flash(_EXISTS_ERROR, 'e');
 
