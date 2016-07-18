@@ -379,7 +379,11 @@
 
             $div .= '<div class="col-sm-4 form-group">';
             $div .= '<label id="lblExpiry' . $qtt . '" for="expiry' . $qtt . '" class="control-label">Vencimento</label>';
-            $div .= '<input type="date" id="lblExpiry' . $qtt . '" name="expiry' . $qtt . '" class="form-control mask-date expiry">';
+            if($qtt == 1)
+                $class = 'firstInstallment';
+            else
+                $class = '';
+            $div .= '<input type="date" id="lblExpiry' . $qtt . '" name="expiry' . $qtt . '" class="form-control mask-date expiry '.$class.'">';
             $div .= '</div>';
 
             $div .= '<div class="col-sm-2 form-group">';

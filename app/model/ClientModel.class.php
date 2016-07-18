@@ -174,7 +174,11 @@
                     return false;
                 }
 
-                $finances->set('status', 1);
+                if($finances->decimalMask($finances->get('monthly_value')) > 0)
+                    $finances->set('status', 0);
+                else
+                    $finances->set('status', 0);
+    
                 $finances->set('observation', $_POST['observation_finances']);
                 if (!$this->insert('finances', $finances)) {
                     // If not inserted, cancel the transaction (including the client) and returns the error message
@@ -357,11 +361,24 @@
             $total = 0;
 
             if($finances->get('monthly_value') > 0) {
-                $sql = 'SELECT * FROM entry 
-                        WHERE id_type = ' . _SUPPORT_ENTRY_TYPE_ID . ' AND 
-                              date >= "' . $periodInit . '" AND 
-                              date <= "' . $periodFinal . '" AND
-                              id_client = ' . $id_client;
+                $initMonth = explode('-', $periodInit)[1];
+                $finalMonth = explode('-', $periodFinal)[1];
+                
+                for($i = $initMonth; $i <= $finalMonth; $i++){
+                    $sql = 'SELECT * FROM entry
+                            WHERE date 
+                    ';
+                }
+                
+                if($initMonth == $finalMonth) {
+                    $sql = 'SELECT * FROM entry 
+                            WHERE id_type = ' . _SUPPORT_ENTRY_TYPE_ID . ' AND 
+                                  date >= "' . $periodInit . '" AND 
+                                  date <= "' . $periodFinal . '" AND
+                                  id_client = ' . $id_client;
+                }else{
+                    
+                }
 
                 $entries = $this->query($sql);
                 if (count($entries) < 1) {

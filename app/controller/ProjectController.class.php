@@ -86,6 +86,10 @@
             $clients = $this->model->search('client', '*', false, 'name');
             $clients = $this->model->query2dto($clients, 'client');
             $this->viewer->set('clients', $clients);
+    
+            $entryTypes = $this->model->search('entry_type');
+            $entryTypes = $this->model->query2dto($entryTypes, 'entry_type');
+            $this->viewer->set('entryTypes', $entryTypes);
 
             $project = $this->model->getProject($id);
             $this->viewer->set('project', $project);
@@ -187,11 +191,15 @@
                     return $this->add();
                 }
             }
-
+            
             $clients = $this->model->search('client', '*', false, 'name');
             $clients = $this->model->query2dto($clients, 'client');
             $this->viewer->set('clients', $clients);
-
+    
+            $entryTypes = $this->model->search('entry_type');
+            $entryTypes = $this->model->query2dto($entryTypes, 'entry_type');
+            $this->viewer->set('entryTypes', $entryTypes);
+            
             $this->viewer->addJs(_APP_ROOT_DIR . 'assets/js/addInstallment.js');
 
             return $this->viewer->show('add', 'Cadastrar projeto');

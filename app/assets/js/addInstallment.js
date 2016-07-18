@@ -67,27 +67,24 @@ $(function () {
     });
 
     $('#calculateDates').on('click', function () {
-        if(typeof $('#initial_date') != undefined)
-            initialDate = $('#initial_date').val();
+        if(typeof $('.firstInstallment') != undefined)
+            initialDate = $('.firstInstallment').val();
         else
             return;
+
+        isFirst = true;
+
+        if(initialDate == '')
+            return;
+
         
         if (initialDate != '' && $('.expiry').length > 0) {
-            isFirst = true;
 
-
-
-            firstDate = nextMonth(initialDate, true);
-
-            prev = null;
             $('.expiry').each(function () {
-                if (isFirst) {
-                    $(this).val(firstDate);
-                    isFirst = false;
-                } else {
+                if(!isFirst)
                     $(this).val(nextMonth(prev.val(), false));
-                }
                 prev = $(this);
+                isFirst = false;
             })
         }
     });
@@ -99,9 +96,11 @@ function nextMonth(date, br){
     if(br) {
         month = parseInt(date.split('/')[1]);
         year = parseInt(date.split('/')[2]);
+        day = parseInt(date.split('/')[0]);
     }else{
         month = parseInt(date.split('-')[1]);
         year = parseInt(date.split('-')[0]);
+        day = parseInt(date.split('-')[2]);
     }
 
     if (month == 12) {
@@ -112,7 +111,10 @@ function nextMonth(date, br){
     }
     if(month < 10)
         month = '0'+month;
-    return year + '-' + month + '-10';
+
+    if(day < 10)
+        day = '0' + day;
+    return year + '-' + month + '-' + day;
 }
 
 function maskAgain() {

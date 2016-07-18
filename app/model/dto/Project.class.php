@@ -7,9 +7,11 @@
             'value' => 'notEmpty,validMoney',
             'initial_date' => 'validDate',
             'end_date' => 'validDate',
+            'id_entry_type' => array('existsForeign', 'entry_type'),
         );
         private $FieldsMasks = array(
             'id_client' => array('getDto', ['client', 'id']),
+            'id_entry_type' => array('getDto', ['entry_type', 'id']),
             'value' => 'moneyMask',
             'initial_date' => 'dateMask',
             'end_date' => 'dateMask',
@@ -32,6 +34,7 @@
         use DTO;
         private $id;
         private $id_client = null;
+        private $id_entry_type = null;
         private $name;
         private $value;
         private $initial_date;

@@ -79,9 +79,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12 form-group">
+        <div class="col-sm-6 form-group">
             <label class="control-label" for="monthly_value">Suporte mensal</label>
             <input type="text" class="form-control mask-money" name="monthly_value">
+        </div>
+        <div class="col-sm-6 form-group">
+            <label class="control-label" for="payment_day">Dia de pagamento</label>
+            <input type="number" min="1" max="31" class="form-control" name="payment_day">
         </div>
     </div>
     <div class="row">

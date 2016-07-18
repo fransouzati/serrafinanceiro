@@ -43,11 +43,13 @@
         <div class="row">
             <div class="col-sm-6 form-group">
                 <label class="control-label" for="phone1">Telefone 1</label>
-                <input disabled type="text" class="form-control mask-phone" name="phone1" value="{$client->get('phone1')}">
+                <input disabled type="text" class="form-control mask-phone" name="phone1"
+                       value="{$client->get('phone1')}">
             </div>
             <div class="col-sm-6 form-group">
                 <label class="control-label" for="phone2">Telefone 2</label>
-                <input disabled type="text" class="form-control mask-phone" name="phone2" value="{$client->get('phone2')}">
+                <input disabled type="text" class="form-control mask-phone" name="phone2"
+                       value="{$client->get('phone2')}">
             </div>
         </div>
         <div class="row">
@@ -57,13 +59,15 @@
             </div>
             <div class="col-sm-6 form-group">
                 <label class="control-label" for="since">Cliente desde</label>
-                <input disabled type="text" class="form-control mask-date" name="since" value="{$client->get('since', true)}">
+                <input disabled type="text" class="form-control mask-date" name="since"
+                       value="{$client->get('since', true)}">
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6 form-group">
                 <label class="control-label" for="responsible">Responsável</label>
-                <input disabled type="text" class="form-control" name="responsible" value="{$client->get('responsible')}">
+                <input disabled type="text" class="form-control" name="responsible"
+                       value="{$client->get('responsible')}">
             </div>
             <div class="col-sm-6 form-group">
                 <label class="control-label" for="responsible_cpf">CPF Responsável</label>
@@ -110,33 +114,37 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 form-group">
+            <div class="col-sm-6 form-group">
                 <label class="control-label" for="monthly_value">Suporte mensal</label>
                 <input disabled type="text" class="form-control mask-money" name="monthly_value"
                        value="R${$finances->get('monthly_value', true)}">
+            </div>
+            <div class="col-sm-6 form-group">
+                <label class="control-label" for="payment_day">Dia de pagamento</label>
+                <input disabled type="number" class="form-control" name="payment_day"
+                       value="{$finances->get('payment_day')}">
             </div>
         </div>
         <div class="row mt">
             <div class="col-sm-12 form-group checkbox-inline">
                 <label for="status" class="control-label">Situação: </label>
                 <br>
-                <a href="finances/check/{$client->get('id')}">
-                    <div class="switch switch-square"
-                         data-on-label="<i class=' fa fa-check'></i>"
-                         data-off-label="<i class='fa fa-times'></i>">
-                        {if $finances->get('status')}
-                            <input disabled type="checkbox" checked/>
-                        {else}
-                            <input disabled type="checkbox"/>
-                        {/if}
-                    </div>
-                </a>
+                <div class="switch switch-square"
+                     data-on-label="<i class=' fa fa-check'></i>"
+                     data-off-label="<i class='fa fa-times'></i>">
+                    {if $finances->get('status')}
+                        <input disabled type="checkbox" checked/>
+                    {else}
+                        <input disabled type="checkbox"/>
+                    {/if}
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12 text-center">
                 <label class="control-label" for="observation_finances">Observações financeiras</label>
-                <textarea disabled name="observation_finances" class="form-control">{$finances->get('observation')}</textarea>
+                <textarea disabled name="observation_finances"
+                          class="form-control">{$finances->get('observation')}</textarea>
             </div>
         </div>
         {if !empty($histories)}
