@@ -168,7 +168,7 @@
 
             $withdraw = new Withdraw();
             $withdraw->set('date', date('Y-m-d'));
-            $withdraw->set('Description', 'Decréscimo de caixa');
+            $withdraw->set('description', 'Decréscimo de caixa');
             $withdraw->set('value', $difference);
             $withdraw->set('id_type', _ADJUST_EXIT_TYPE_ID);
             $withdraw->set('id_investor', $investor->get('id'));
