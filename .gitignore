@@ -1,5 +1,5 @@
 unnamed.patch
-.idea/workspace.xml
+.idea/
 app/model/pdf/
 app/plugins/lineicons/.DS_Store
 app/plugins/lineicons/fonts/.DS_Store
