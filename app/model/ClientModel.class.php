@@ -468,7 +468,7 @@
                 );
                 $total += $installment->get('value');
             }
-            die;
+            
             return array('pendencies' => $pendencies, 'total' => $total);
 
         }
@@ -604,8 +604,7 @@
             }else{
                 $pendencies['project'] = '-';
             }
-            var_dump($pendencies);
-            die;
+            
             return array('pendencies' => $pendencies, 'total' => $total);
         }
 
