@@ -131,7 +131,7 @@
             $email->Port = 587;
 
             $email->From = 'sistemafinanceiro@serraempresas.com.br';
-            $email->FromName = 'Sistema Financeiro';
+            $email->FromName = 'Sistema financeiro';
             $email->addBCC('');
             $email->isHTML(true);
 
