@@ -361,37 +361,62 @@
             $total = 0;
 
             if($finances->get('monthly_value') > 0) {
-                $initMonth = explode('-', $periodInit)[1];
-                $finalMonth = explode('-', $periodFinal)[1];
+                $diff = abs(strtotime($periodFinal) - strtotime($periodInit));
+                $years = floor($diff / (365*60*60*24));
+                $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
                 
-                for($i = $initMonth; $i <= $finalMonth; $i++){
-                    $sql = 'SELECT * FROM entry
-                            WHERE date 
-                    ';
-                }
-                
-                if($initMonth == $finalMonth) {
-                    $sql = 'SELECT * FROM entry 
-                            WHERE id_type = ' . _SUPPORT_ENTRY_TYPE_ID . ' AND 
-                                  date >= "' . $periodInit . '" AND 
-                                  date <= "' . $periodFinal . '" AND
-                                  id_client = ' . $id_client;
-                }else{
+                for($i = 0; $i < $months; $i++){
+                    $month = explode('-', $periodInit)[1] + $i;
+                    $year = explode('-', $periodInit)[0];
+                    if($month > 12){
+                        $month = 1;
+                        $year = $year + 1;
+                    }
+                    if($month < 10)
+                        $month = '0'.$month;
                     
-                }
-
-                $entries = $this->query($sql);
-                if (count($entries) < 1) {
-                    $pendencies[] = array(
-                        'type'   => 'Suporte web',
-                        'value'  => $finances->get('monthly_value', true),
-                        'expiry' => date('t/m/Y'),
-                        'id' => $id_client,
-                    );
-                    $total += $finances->get('monthly_value');
+                    $monthInit = $year.'-'.$month.'-01';
+                    $monthFinal = date("Y-m-t", strtotime($monthInit));
+    
+                    $monthInitTs = strtotime($monthInit);
+                    $monthFinalTs = strtotime($monthFinal);
+                    $todayTs = strtotime(date('Y-m-d'));
+    
+                    $thisMonth = (($todayTs >= $monthInitTs) && ($todayTs <= $monthFinalTs));
+                    
+                    if($thisMonth){
+                        if(date('d') > $finances->get('payment_day')){
+                            $finalDate = date('Y-m-d');
+                        }else{
+                            continue;
+                        }
+                    }else{
+                        // Prev month
+                        if($todayTs > $monthFinalTs){
+                            $finalDate = $monthFinal;
+                        }else{
+                            continue;
+                        }
+                    }
+                    
+                    $sql = 'SELECT * FROM entry 
+                                    WHERE id_type = ' . _SUPPORT_ENTRY_TYPE_ID . ' AND 
+                                    date >= "' . $monthInit . '" AND 
+                                    date <= "' . $finalDate . '" AND
+                                    id_client = ' . $id_client;
+                    
+                    $entries = $this->query($sql);
+                    if (count($entries) < 1) {
+                        $pendencies[] = array(
+                            'type'   => 'Suporte web',
+                            'value'  => $finances->get('monthly_value', true),
+                            'expiry' => $finances->get('payment_day').'/'.$month.'/'.$year,
+                            'id' => $id_client,
+                        );
+                        $total += $finances->get('monthly_value');
+                    }
                 }
             }
-
 
             $sql = 'SELECT * FROM extra_charge
                     WHERE status = 0 AND 
@@ -443,7 +468,7 @@
                 );
                 $total += $installment->get('value');
             }
-
+            die;
             return array('pendencies' => $pendencies, 'total' => $total);
 
         }
@@ -468,21 +493,63 @@
             );
             $total = 0;
 
+            $pendencies['support'] = '-';
             if($finances->get('monthly_value') > 0) {
-                $sql = 'SELECT * FROM entry 
-                        WHERE id_type = ' . _SUPPORT_ENTRY_TYPE_ID . ' AND 
-                              date >= "' . $periodInit . '" AND 
-                              date <= "' . $periodFinal . '" AND
-                              id_client = ' . $id_client;
-
-                $entries = $this->query($sql);
-                if (count($entries) < 1) {
-                    $pendencies['support'] = 'R$'.$finances->get('monthly_value', true);
-                    $total += $finances->get('monthly_value');
-                }else{
-                    $pendencies['support'] =  '-';
+                $diff = abs(strtotime($periodFinal) - strtotime($periodInit));
+                $years = floor($diff / (365*60*60*24));
+                $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+    
+                for($i = 0; $i < $months; $i++) {
+                    $month = explode('-', $periodInit)[1] + $i;
+                    $year = explode('-', $periodInit)[0];
+                    if ($month > 12) {
+                        $month = 1;
+                        $year = $year + 1;
+                    }
+                    if ($month < 10)
+                        $month = '0' . $month;
+    
+                    $monthInit = $year . '-' . $month . '-01';
+                    $monthFinal = date("Y-m-t", strtotime($monthInit));
+    
+                    $monthInitTs = strtotime($monthInit);
+                    $monthFinalTs = strtotime($monthFinal);
+                    $todayTs = strtotime(date('Y-m-d'));
+    
+                    $thisMonth = (($todayTs >= $monthInitTs) && ($todayTs <= $monthFinalTs));
+    
+                    if ($thisMonth) {
+                        if (date('d') > $finances->get('payment_day')) {
+                            $finalDate = date('Y-m-d');
+                        } else {
+                            continue;
+                        }
+                    } else {
+                        // Prev month
+                        if ($todayTs > $monthFinalTs) {
+                            $finalDate = $monthFinal;
+                        } else {
+                            continue;
+                        }
+                    }
+    
+                    $sql = 'SELECT * FROM entry 
+                                    WHERE id_type = ' . _SUPPORT_ENTRY_TYPE_ID . ' AND 
+                                    date >= "' . $monthInit . '" AND 
+                                    date <= "' . $finalDate . '" AND
+                                    id_client = ' . $id_client;
+                    
+                    $entries = $this->query($sql);
+                    if (count($entries) < 1) {
+                        if($pendencies['support'] == '-')
+                            $pendencies['support'] = '';
+                        $expiry = $finances->get('payment_day').'/'.$month.'/'.$year;
+                        $pendencies['support'] .= 'R$' . $finances->get('monthly_value', true).' ('.$expiry.') + ';
+                        $total += $finances->get('monthly_value');
+                    }
                 }
             }
+            $pendencies['support'] = trim($pendencies['support'], ' + ');
 
 
             $sql = 'SELECT * FROM extra_charge
@@ -537,7 +604,8 @@
             }else{
                 $pendencies['project'] = '-';
             }
-
+            var_dump($pendencies);
+            die;
             return array('pendencies' => $pendencies, 'total' => $total);
         }
 
