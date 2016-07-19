@@ -116,7 +116,7 @@
 
             $pop = new POP3();
             $pop->Authorise('mail.serraempresas.com.br', 587, 30, 'sistemafinanceiro@serraempresas.com.br',
-                'ut$AL937', 1);
+                'ut$AL937', 0);
 
             $email = new PHPMailer;
 
@@ -131,11 +131,11 @@
             $email->Port = 587;
 
             $email->From = 'sistemafinanceiro@serraempresas.com.br';
-            $email->FromName = 'Sistema financeiro';
+            $email->FromName = 'Sistema Financeiro';
             $email->addBCC('');
             $email->isHTML(true);
 
-            $email->Subject = 'Alteração de caixa no sistema financeiro';
+            $email->Subject = 'Alteração de caixa no Sistema Financeiro';
 
             $oldValue = $investor->get('initial_capital', true);
             $newValue = $_POST['initial_capital'];
