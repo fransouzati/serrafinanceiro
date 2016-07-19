@@ -1,5 +1,5 @@
 unnamed.patch
-.idea/
-app/model/pdf/
-app/assets/reports/
-templates_c/
+.idea/*
+app/model/pdf/*
+app/assets/reports/*
+templates_c/*
