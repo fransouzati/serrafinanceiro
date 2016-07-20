@@ -141,9 +141,9 @@
             $newValue = $_POST['initial_capital'];
             $user = unserialize($_SESSION['user'])->get('name');
 
-            $email->Body = 'Valor de saldo em conta alterado: de R$' . $oldValue . ' para R$' . $newValue . ', por '.$user.'.';
+            $email->Body = 'Valor de saldo em conta do caixa '.$investor->get('name').' alterado: de R$' . $oldValue . ' para ' . $newValue . ', por '.$user.'.';
             $email->CharSet = 'UTF-8';
-
+            
             $email->AddAddress('eduardo@serraempresas.com.br', "Eduardo");
             $email->AddAddress('emanuel@serraempresas.com.br', "Emanuel");
             $email->AddAddress('mauricio@serraempresas.com.br', "Mauricio");
