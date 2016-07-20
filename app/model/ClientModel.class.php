@@ -357,6 +357,8 @@
 
 
             $finances = $this->getFinances($id_client);
+            $client = $this->getClient($id_client);
+            
             $pendencies = array();
             $total = 0;
 
@@ -364,6 +366,7 @@
                 $diff = abs(strtotime($periodFinal) - strtotime($periodInit));
                 $years = floor($diff / (365*60*60*24));
                 $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+                $months = ($years * 12) + $months;
                 
                 for($i = 0; $i < $months; $i++){
                     $month = explode('-', $periodInit)[1] + $i;
@@ -381,6 +384,8 @@
                     $monthInitTs = strtotime($monthInit);
                     $monthFinalTs = strtotime($monthFinal);
                     $todayTs = strtotime(date('Y-m-d'));
+                    
+                    
     
                     $thisMonth = (($todayTs >= $monthInitTs) && ($todayTs <= $monthFinalTs));
                     
@@ -391,12 +396,10 @@
                             continue;
                         }
                     }else{
-                        // Prev month
-                        if($todayTs > $monthFinalTs){
-                            $finalDate = $monthFinal;
-                        }else{
+                        if(strtotime($client->get('since')) > $monthInitTs)
                             continue;
-                        }
+                        // Prev & next month
+                        $finalDate = $monthFinal;
                     }
                     
                     $sql = 'SELECT * FROM entry 
@@ -409,7 +412,7 @@
                     if (count($entries) < 1) {
                         $pendencies[] = array(
                             'type'   => 'Suporte web',
-                            'value'  => $finances->get('monthly_value', true),
+                            'value'  => 'R$'.$finances->get('monthly_value', true),
                             'expiry' => $finances->get('payment_day').'/'.$month.'/'.$year,
                             'id' => $id_client,
                         );
@@ -417,7 +420,7 @@
                     }
                 }
             }
-
+            
             $sql = 'SELECT * FROM extra_charge
                     WHERE status = 0 AND 
                           expiry >= "' . $periodInit . '" AND
@@ -525,12 +528,8 @@
                             continue;
                         }
                     } else {
-                        // Prev month
-                        if ($todayTs > $monthFinalTs) {
-                            $finalDate = $monthFinal;
-                        } else {
-                            continue;
-                        }
+                        // Prev or next month
+                        $finalDate = $monthFinal;
                     }
     
                     $sql = 'SELECT * FROM entry 
@@ -538,7 +537,6 @@
                                     date >= "' . $monthInit . '" AND 
                                     date <= "' . $finalDate . '" AND
                                     id_client = ' . $id_client;
-                    
                     $entries = $this->query($sql);
                     if (count($entries) < 1) {
                         if($pendencies['support'] == '-')
@@ -550,8 +548,7 @@
                 }
             }
             $pendencies['support'] = trim($pendencies['support'], ' + ');
-
-
+    
             $sql = 'SELECT * FROM extra_charge
                     WHERE status = 0 AND 
                           expiry >= "' . $periodInit . '" AND

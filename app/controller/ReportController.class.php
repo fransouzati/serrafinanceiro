@@ -13,6 +13,9 @@
 
                 $report = $this->model->getReport($id);
                 $period = $report->get('period', true);
+                
+                if(explode(' - ', $period)[0] == '01/01/1970')
+                    $period = 'todos em aberto até '.explode(' - ', $period)[1];
                 $this->viewer->set('period', $period);
 
                 $txt = $this->model->txt2array($report)[0];
@@ -55,7 +58,7 @@
             $clients = $this->model->search('client', '*', false, 'name');
             $clients = $this->model->query2dto($clients, 'client');
             $this->viewer->set('clients', $clients);
-
+            $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/addReport.js');
             return $this->viewer->show('add', 'Realizar relatório de títulos');
 
 
@@ -79,8 +82,10 @@
             }
 
             $report = $this->model->getReport($id);
-
-            $pdfType = 'Período: '.$report->get('period', true).' | Criação: '.$report->get('created', true);
+            $period = $report->get('period', true);
+            if(explode(' - ', $period)[0] == '01/01/1970')
+                $period = 'todos em aberto até '.explode(' - ', $period)[1];
+            $pdfType = 'Período: '.$period  .' | Criação: '.$report->get('created', true);
 
             // Declares the variables before initializing the pdf
             $this->export->pdf->set('pdfName', 'Relatório de títulos');
@@ -113,8 +118,10 @@
             }
 
             $report = $this->model->getReport($id);
-
-            $excelType = 'Período: '.$report->get('period', true).' | Criação: '.$report->get('created', true);
+            $period = $report->get('period', true);
+            if(explode(' - ', $period)[0] == '01/01/1970')
+                $period = 'todos em aberto até '.explode(' - ', $period)[1];
+            $excelType = 'Período: '.$period.' | Criação: '.$report->get('created', true);
 
             $this->export->excel->set('title', 'Relatório de Títulos');
             $this->export->excel->PutRow(array('Relatório de títulos - '.$excelType));

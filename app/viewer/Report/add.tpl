@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-sm-4 form-group">
             <label class="control-label">Período do relatório</label>
-            <input value="{$period}" type="text" class="form-control mask-dateinterval" name="period" required>
+            <input value="{$period}" type="text" class="form-control mask-dateinterval" name="period" required id="period">
+            <input type="checkbox" name="all" id="all">Pegar todos em aberto até hoje
         </div>
 
         <div class="col-sm-4 form-group">

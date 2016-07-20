@@ -13,6 +13,10 @@
             $error = $report[1];
             $report = $report[0];
             $report->set('created', date('Y-m-d'));
+            
+            if(isset($_POST['all'])){
+                $report->set('period', '1970-01-01 / '.date('Y-m-d'));
+            }
 
             if ($error != '') {
                 Viewer::flash($error, 'e');

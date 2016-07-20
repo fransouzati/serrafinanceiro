@@ -4,7 +4,7 @@
     class Report {
         private $FieldsValidation = array(
             'name' => 'notEmpty',
-            'period' => 'notEmpty',
+            'period' => '',
             'file' => 'notEmpty',
             'created' => 'validDate',
         );

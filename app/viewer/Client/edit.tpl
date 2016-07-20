@@ -46,7 +46,7 @@
         </div>
         <div class="col-sm-6 form-group">
             <label class="control-label" for="since">Cliente desde</label>
-            <input type="text" class="form-control mask-date" name="since" value="{$client->get('since', true)}">
+            <input required type="text" class="form-control mask-date" name="since" value="{$client->get('since', true)}">
         </div>
     </div>
     <div class="row">
