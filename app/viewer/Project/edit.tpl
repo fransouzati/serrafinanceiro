@@ -60,7 +60,7 @@
     <div class="row">
         <div class="col-sm-12 form-group">
             <label class="control-label" for="id_entry_type">Tipo de entrada para relatório de título</label>
-            <select name="id_entry_type" class="form-control select2">
+            <select required name="id_entry_type" class="form-control select2">
                 {foreach $entryTypes as $entryType}
                     {if $entryType->get('id') == $project->get('id_entry_type')}
                         {assign var="selected" value="selected"}

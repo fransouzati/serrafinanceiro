@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-30 10:51:21
+/* Smarty version 3.1.28, created on 2016-07-20 11:15:13
   from "C:\wamp\www\financeiro3\app\viewer\Entry\view.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_577523d9b1d112_46268430',
+  'unifunc' => 'content_578f87712c4c16_70256059',
   'file_dependency' => 
   array (
     '1ffe26ded15f9c47d6bd140bd933e85e9d66b3cd' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Entry\\view.tpl',
-      1 => 1467291657,
+      1 => 1468310113,
       2 => 'file',
     ),
   ),
@@ -19,12 +19,12 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_577523d9b1d112_46268430 ($_smarty_tpl) {
+function content_578f87712c4c16_70256059 ($_smarty_tpl) {
 ?>
 <div class="row">
     <div class="col-sm-12">
         <div class="col-md-12" style="margin-bottom: 20px;">
-            <a href="/entry/add">
+            <a href="entry/add">
                 <button class="btn btn-primary pull-right">
                     Cadastrar
                 </button>
@@ -198,18 +198,27 @@ if ($__foreach_entry_2_total) {
 foreach ($_from as $_smarty_tpl->tpl_vars['entry']->value) {
 $__foreach_entry_2_saved_local_item = $_smarty_tpl->tpl_vars['entry'];
 ?>
-                    <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('id');?>
+                    <tr>
+                        <?php if ($_smarty_tpl->tpl_vars['entry']->value->get('id_client') == NULL) {?>
+                            <?php $_smarty_tpl->tpl_vars["client"] = new Smarty_Variable("-", null);
+$_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
+                        <?php } else { ?>
+                            <?php $_smarty_tpl->tpl_vars["client"] = new Smarty_Variable($_smarty_tpl->tpl_vars['entry']->value->get('id_client',true)->get('name'), null);
+$_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
+                        <?php }?>
+                        <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('id');?>
 </td>
-                    <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('date',true);?>
+                        <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('date',true);?>
 </td>
-                    <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('id_type',true)->get('name');?>
+                        <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('id_type',true)->get('name');?>
 </td>
-                    <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('id_client',true)->get('name');?>
+                        <td><?php echo $_smarty_tpl->tpl_vars['client']->value;?>
 </td>
-                    <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('description');?>
+                        <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('description');?>
 </td>
-                    <td><?php echo $_smarty_tpl->tpl_vars['entry']->value->get('value',true);?>
+                        <td>R$<?php echo $_smarty_tpl->tpl_vars['entry']->value->get('value',true);?>
 </td>
+                    </tr>
                 <?php
 $_smarty_tpl->tpl_vars['entry'] = $__foreach_entry_2_saved_local_item;
 }

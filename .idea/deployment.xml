@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData">
+  <component name="PublishConfigData" serverName="Financeiro">
     <serverData>
+      <paths name="Alameda Casa Rosa">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="Financeiro">
         <serverdata>
           <mappings>
             <mapping deploy="public_html/financeiro/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="O Fornao">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/public_html/pizzaofornao.com.br/pedidos" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

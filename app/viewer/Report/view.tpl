@@ -21,7 +21,12 @@
 							{foreach $reports as $report}
 								<tr>
 									<td>{$report->get('name')}</td>
-                                    <td>{$report->get('period', true)}</td>
+                                    {assign var='period' value=' - '|explode:$report->get('period', true)}
+                                    {if $period[0] == '01/01/1970'}
+                                        <td>Todos em aberto até {$period[1]}</td>
+                                    {else}
+                                        <td>{$report->get('period', true)}</td>
+                                    {/if}
 									<td>
                                         <a href="report/view/{$report->get('id')}">
                                             <button class="btn btn-primary">

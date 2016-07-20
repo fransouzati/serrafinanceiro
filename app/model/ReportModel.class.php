@@ -86,7 +86,7 @@
             $toTxt = array();
             $toTxtExport = array();
             if (in_array('all', $_POST['clients'])) {
-                $clients = $this->query2dto($this->search('client'), 'client');
+                $clients = $this->query2dto($this->search('client', '*', false, 'name'), 'client');
 
                 foreach ($clients as $client) {
                     $this->checkPendenciesScreen($clientModel, $client->get('id'), $period, $toTxt);
@@ -231,8 +231,8 @@
                     }
                     $id_client = $extra->get('id_client');
                 }else{
-                    $id_type = _DEVELOPMENT_ENTRY_TYPE_ID;
                     $installment = $projectModel->getInstallment($id);
+                    $id_type = $installment->get('id_project', true)->get('id_entry_type');
                     $installment->set('status', 1);
                     if(!$projectModel->update('project_installment', $installment, array('id' => $id))){
                         $this->cancelTransaction();

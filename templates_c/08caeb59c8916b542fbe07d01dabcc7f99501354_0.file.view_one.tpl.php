@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-30 14:37:13
+/* Smarty version 3.1.28, created on 2016-07-20 11:14:53
   from "C:\wamp\www\financeiro3\app\viewer\Project\view_one.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_577558c93f8586_70676271',
+  'unifunc' => 'content_578f875d8a6763_72607248',
   'file_dependency' => 
   array (
     '08caeb59c8916b542fbe07d01dabcc7f99501354' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Project\\view_one.tpl',
-      1 => 1467290715,
+      1 => 1469023039,
       2 => 'file',
     ),
   ),
@@ -19,8 +19,21 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_577558c93f8586_70676271 ($_smarty_tpl) {
-?>
+function content_578f875d8a6763_72607248 ($_smarty_tpl) {
+if ($_smarty_tpl->tpl_vars['project']->value->get('done')) {?>
+    <?php $_smarty_tpl->tpl_vars["disabled_end"] = new Smarty_Variable("disabled", null);
+$_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "disabled_end", 0);?>
+    <div class="row">
+        <div class="col-sm-12 text-center alert alert-info">
+            Projeto finalizado em <?php echo $_smarty_tpl->tpl_vars['project']->value->get('done_date',true);?>
+!
+        </div>
+    </div>
+<?php } else { ?>
+    <?php $_smarty_tpl->tpl_vars["disabled_end"] = new Smarty_Variable('', null);
+$_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "disabled_end", 0);
+}?>
+
 <div class="row">
     <div class="col-sm-6 form-group">
         <label class="control-label" for="name">Nome</label>
@@ -57,12 +70,13 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
     <div class="col-sm-6 form-group">
         <label class="control-label" for="initial_date">Data início</label>
         <input disabled type="text" class="form-control mask-date" name="initial_date"
-               value="<?php echo $_smarty_tpl->tpl_vars['project']->value->get('initial_date');?>
+               value="<?php echo $_smarty_tpl->tpl_vars['project']->value->get('initial_date',true);?>
 ">
     </div>
     <div class="col-sm-6 form-group">
         <label class="control-label" for="end_date">Data fim</label>
-        <input disabled type="text" class="form-control mask-date" name="end_date" value="<?php echo $_smarty_tpl->tpl_vars['project']->value->get('end_date');?>
+        <input disabled type="text" class="form-control mask-date" name="end_date"
+               value="<?php echo $_smarty_tpl->tpl_vars['project']->value->get('end_date',true);?>
 ">
     </div>
 </div>
@@ -73,7 +87,14 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
 </textarea>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-sm-12 form-group">
+        <label class="control-label" for="id_entry_type">Tipo de entrada para relatório de título</label>
+        <input disabled type="text" name="id_entry_type" class="form-control"
+               value="<?php echo $_smarty_tpl->tpl_vars['project']->value->get('id_entry_type',true)->get('name');?>
+">
+    </div>
+</div>
 
 <!-- Parcelas !-->
 <div class="row">
@@ -84,7 +105,7 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addInstallmentModal">
             Adicionar parcela
         </button>
-        <?php $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, (dirname($_smarty_tpl->source->filepath)).("\addInstallment.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, true);
+        <?php $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, (dirname($_smarty_tpl->source->filepath)).("/addInstallment.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, true);
 ?>
 
         <hr>
@@ -121,7 +142,7 @@ $__foreach_installment_0_saved_local_item = $_smarty_tpl->tpl_vars['installment'
 </td>
                         <td>R$<?php echo $_smarty_tpl->tpl_vars['installment']->value->get('value',true);?>
 </td>
-                        <td><?php echo $_smarty_tpl->tpl_vars['installment']->value->get('expiry',true);?>
+                        <td class="expiry-table"><?php echo $_smarty_tpl->tpl_vars['installment']->value->get('expiry',true);?>
 </td>
                         <td align="center">
                             <?php if ($_smarty_tpl->tpl_vars['installment']->value->get('status')) {?>
@@ -131,17 +152,24 @@ $__foreach_installment_0_saved_local_item = $_smarty_tpl->tpl_vars['installment'
                             <?php }?>
                         </td>
                         <td align="center">
-                            <a href="/project/deleteInstallment/<?php echo $_smarty_tpl->tpl_vars['installment']->value->get('id');?>
+                            <a href="project/deleteInstallment/<?php echo $_smarty_tpl->tpl_vars['installment']->value->get('id');?>
 " class="confirm-link">
-                                <button title="Deletar" class="btn btn-default btn-danger">
+                                <button title="Deletar" class="btn btn-danger">
                                     <i class="fa fa-remove"></i>
                                 </button>
                             </a>
 
-                            <a href="/project/editInstallment/<?php echo $_smarty_tpl->tpl_vars['installment']->value->get('id');?>
+                            <a href="project/editInstallment/<?php echo $_smarty_tpl->tpl_vars['installment']->value->get('id');?>
 ">
-                                <button title="Editar" class="btn btn-default btn-primary">
+                                <button title="Editar" class="btn btn-primary">
                                     <i class="fa fa-edit"></i>
+                                </button>
+                            </a>
+
+                            <a href="project/payInstallment/<?php echo $_smarty_tpl->tpl_vars['installment']->value->get('id');?>
+" class="confirm-link">
+                                <button title="Pagar" class="btn btn-success">
+                                    <i class="fa fa-dollar"></i>
                                 </button>
                             </a>
                         </td>
@@ -161,13 +189,23 @@ $_smarty_tpl->tpl_vars['installment'] = $__foreach_installment_0_saved_item;
 <?php }?>
 
 <div class="row">
-    <div class="col-sm-offset-4 col-sm-4">
-        <a href="/project/edit/<?php echo $_smarty_tpl->tpl_vars['project']->value->get('id');?>
+    <div class="col-sm-offset-2 col-sm-4">
+        <a href="project/edit/<?php echo $_smarty_tpl->tpl_vars['project']->value->get('id');?>
 ">
             <button class="btn btn-success btn-lg btn-block">
                 Editar
             </button>
         </a>
+    </div>
+    <div class="col-sm-4">
+        <button <?php echo $_smarty_tpl->tpl_vars['disabled_end']->value;?>
+ type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
+                                data-target="#endModal">
+            Finalizar projeto
+        </button>
+        <?php $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, (dirname($_smarty_tpl->source->filepath)).("/endProject.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, true);
+?>
+
     </div>
 </div>
 <?php }

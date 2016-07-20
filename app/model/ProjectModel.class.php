@@ -67,14 +67,17 @@
         public function edit($id) {
             $project = $this->getProject($id);
             $status = $project->get('status');
+            $done = $project->get('done');
+            $doneDate = $project->get('done_date');
             $project = $this->makeDto($project, $id);
             $error = $project[1];
             $project = $project[0];
-
             $project->set('status', $status);
             if ($project->get('id_client') == '')
                 $project->set('id_client', null);
-
+            $project->set('done', $done);
+            $project->set('done_date', $doneDate);
+            
             if ($error != '') {
                 Viewer::flash($error, 'e');
 

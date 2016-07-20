@@ -53,7 +53,13 @@
         <textarea disabled name="observation" class="form-control">{$project->get('observation')}</textarea>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-sm-12 form-group">
+        <label class="control-label" for="id_entry_type">Tipo de entrada para relatório de título</label>
+        <input disabled type="text" name="id_entry_type" class="form-control"
+               value="{$project->get('id_entry_type', true)->get('name')}">
+    </div>
+</div>
 
 <!-- Parcelas !-->
 <div class="row">

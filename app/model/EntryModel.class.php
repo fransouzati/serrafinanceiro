@@ -138,7 +138,8 @@
             $entry->set('date', date('Y-m-d'));
             $entry->set('description', 'Pagamento de parcela de projeto - ' . $installment->get('id_project') . '.');
             $entry->set('value', $installment->get('value'));
-            $entry->set('id_type', _DEVELOPMENT_ENTRY_TYPE_ID);
+            $idType = $installment->get('id_project', true)->get('id_entry_type');
+            $entry->set('id_type', $idType);
             if(!$this->insert('entry', $entry))
                 return false;
             if(!$this->cashDestination($entry))

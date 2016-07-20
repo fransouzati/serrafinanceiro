@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-07-06 17:09:03
+/* Smarty version 3.1.28, created on 2016-07-20 10:24:55
   from "C:\wamp\www\financeiro3\app\viewer\Project\view.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_577d655ff3e7a0_54677594',
+  'unifunc' => 'content_578f7ba78fc184_81379781',
   'file_dependency' => 
   array (
     'fb3675c3232922c5d9740f135ee3e648d6f02ed8' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Project\\view.tpl',
-      1 => 1467835741,
+      1 => 1468310113,
       2 => 'file',
     ),
   ),
@@ -19,11 +19,11 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_577d655ff3e7a0_54677594 ($_smarty_tpl) {
+function content_578f7ba78fc184_81379781 ($_smarty_tpl) {
 ?>
 <div class="row">
     <div class="col-md-12" style="margin-bottom: 20px;">
-        <a href="/project/add">
+        <a href="project/add">
             <button class="btn btn-primary pull-right">
                 Cadastrar
             </button>
@@ -50,6 +50,10 @@ function content_577d655ff3e7a0_54677594 ($_smarty_tpl) {
         <input class="filter-input" filter-type="status" type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['_filter_status']->value;?>
 "
                name="_filter_status">
+
+        <input class="filter-input" filter-type="end" type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['_filter_end']->value;?>
+"
+               name="_filter_end">
 
         <div class="col-sm-3">
             <label for="_filter_name" class="control-label">Nome</label>
@@ -121,6 +125,14 @@ $_smarty_tpl->tpl_vars['client'] = $__foreach_client_0_saved_item;
             </h4>
         </div>
         <div class="col-sm-12">
+            <h4>
+                <span class="label label-primary filter" filter-type="end" value="all">Todos</span>
+                <span class="label label-default filter" filter-type="end" value="finished">Projetos terminados</span>
+                <span class="label label-default filter" filter-type="end" value="ongoing">Projetos em andamento</span>
+                <span class="label label-default filter" filter-type="end" value="late">Projetos atrasados</span>
+            </h4>
+        </div>
+        <div class="col-sm-12">
             <button type="submit" class="btn btn-default" name="submit" value="filter">
                 Aplicar filtro
             </button>
@@ -187,11 +199,18 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
                     <?php $_smarty_tpl->tpl_vars["client"] = new Smarty_Variable($_smarty_tpl->tpl_vars['project']->value->get('id_client',true)->get('name'), null);
 $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
                 <?php }?>
+                <?php if ($_smarty_tpl->tpl_vars['project']->value->strtotime2($_smarty_tpl->tpl_vars['project']->value->get('end_date')) < $_smarty_tpl->tpl_vars['project']->value->strtotime2($_smarty_tpl->tpl_vars['project']->value->today(false)) && !$_smarty_tpl->tpl_vars['project']->value->get('done')) {?>
+                    <?php $_smarty_tpl->tpl_vars["style"] = new Smarty_Variable("style='color: red'", null);
+$_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "style", 0);?>
+                <?php } else { ?>
+                    <?php $_smarty_tpl->tpl_vars["style"] = new Smarty_Variable('', null);
+$_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "style", 0);?>
+                <?php }?>
                 <tr>
                     <td><?php echo $_smarty_tpl->tpl_vars['project']->value->get('id');?>
 </td>
                     <td>
-                        <a href="/project/view/<?php echo $_smarty_tpl->tpl_vars['project']->value->get('id');?>
+                        <a href="project/view/<?php echo $_smarty_tpl->tpl_vars['project']->value->get('id');?>
 ">
                             <?php echo $_smarty_tpl->tpl_vars['project']->value->get('name');?>
 
@@ -203,7 +222,8 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
 </td>
                     <td><?php echo $_smarty_tpl->tpl_vars['project']->value->get('initial_date',true);?>
 </td>
-                    <td><?php echo $_smarty_tpl->tpl_vars['project']->value->get('end_date',true);?>
+                    <td <?php echo $_smarty_tpl->tpl_vars['style']->value;?>
+><?php echo $_smarty_tpl->tpl_vars['project']->value->get('end_date',true);?>
 </td>
                     <td><?php echo $_smarty_tpl->tpl_vars['project']->value->get('executor');?>
 </td>
@@ -213,8 +233,7 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
                         <?php } else { ?>
                             <a style="cursor: pointer">
                                 <i project="<?php echo $_smarty_tpl->tpl_vars['project']->value->get('id');?>
-" data-toggle="modal"
-                                   data-target="#viewInstallmentModal" class="fa fa-circle"
+" class="installments-modal fa fa-circle"
                                    style="color: #FF6671!important"></i>
                             </a>
                         <?php }?>

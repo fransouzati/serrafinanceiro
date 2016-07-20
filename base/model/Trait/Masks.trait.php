@@ -124,7 +124,6 @@
                 $table = $table[0];
             }
             $model = new Model();
-
             return $model->getDto($table, $primary, $id);
         }
 
