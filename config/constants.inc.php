@@ -17,7 +17,9 @@
     define('_DS', DIRECTORY_SEPARATOR);
 
     define('_BANK_INVESTOR_NAME', 'Caixa');
+    define('_BANK_INVESTOR_ID', 4);
     define('_INTERNAL_INVESTOR_NAME', 'Caixa interno');
+    define('_INTERNAL_INVESTOR_ID', 5);
 
     define('_SUPPORT_ENTRY_TYPE_ID', 1);
     define('_DEVELOPMENT_ENTRY_TYPE_ID', 2);

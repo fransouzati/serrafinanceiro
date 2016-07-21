@@ -19,13 +19,8 @@
                 $this->viewer->set('period', $period);
 
                 $txt = $this->model->txt2array($report)[0];
+                $txt = $this->model->blockPayed($txt);
                 $this->viewer->set('txt', $txt);
-
-                if($this->model->exists('report_payment', 'id_report', $id)){
-                    $this->viewer->set('reportStatus', true);
-                }else{
-                    $this->viewer->Set('reportStatus', false);
-                }
 
                 $this->viewer->set('report', $report);
                 $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/reportFilter.js');

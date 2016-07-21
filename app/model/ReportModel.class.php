@@ -290,5 +290,41 @@
             $payment->set('id_client', $id_client);
             return $this->insert('report_payment', $payment);
         }
+        
+        public function blockPayed($report){
+            $finalReport = array();
+            foreach($report as $client){
+                foreach($client['pendencies'] as $num=>$pendency){
+                    switch($pendency['type']){
+                        case 'Suporte web':
+                            $type = 'support';
+                            break;
+                        case 'Cobrança extra':
+                            $type = 'extra';
+                            break;
+                        case 'Parcela de projeto':
+                            $type = 'installment';
+                            break;
+                    }
+                    $cond = array(
+                        'type' => $type,
+                        'conscond1' => 'AND',
+                        'id_client' => $client['id'],
+                        'conscond2' => 'AND',
+                        'id_title' => $pendency['id'],
+                    );
+                    $paids = $this->search('report_payment', '*', $cond);
+                    if(count($paids) > 0){
+                        $pendency['block'] = 1;
+                    }else{
+                        $pendency['block'] = 0;
+                    }
+                    $client['pendencies'][$num] = $pendency;
+                }
+                $finalReport[] = $client;
+            }
+            return $finalReport;
+        }
+        
 
     }

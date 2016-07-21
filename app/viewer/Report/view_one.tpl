@@ -79,8 +79,8 @@
                                     <td>{$pendency['value']}</td>
                                     <td>{$pendency['expiry']}</td>
                                     <td>
-                                        {if $reportStatus}
-                                            <b>Relatório já finalizado</b>
+                                        {if $pendency['block']}
+                                            Título pago
                                         {else}
                                             <label class="checkbox-inline">
                                                 <input type="checkbox" name="pay[]" value="{$titleValue}">
@@ -98,11 +98,11 @@
             </div>
         </div>
     {/foreach}
-    {if !empty($txt) && !$reportStatus}
+    {if !empty($txt)}
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">
-                    Finalizar relatório de títulos
+                    Pagar títulos marcados
                 </button>
             </div>
         </div>

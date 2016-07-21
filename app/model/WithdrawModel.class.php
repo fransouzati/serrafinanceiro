@@ -49,32 +49,6 @@
 
         }
 
-        public function edit($id) {
-            $withdrawType = $this->getWithdrawType($id);
-            $error = '';
-
-            if (!$withdrawType->set('name', $_POST['name']))
-                $error .= $withdrawType->FieldsErrors['name'] . '<br>';
-            $withdrawType->set('need_partner', isset($_POST['need_partner']));
-
-            if ($error != '') {
-                Viewer::flash($error, 'e');
-
-                return false;
-            } else {
-                if ($this->update('withdraw_type', $withdrawType, array('id' => $id))) {
-                    Viewer::flash(_INSERT_SUCCESS, 's');
-
-                    return true;
-                } else {
-                    Viewer::flash(_INSERT_ERROR, 'e');
-
-                    return false;
-                }
-            }
-
-        }
-
         public function add() {
             $withdraw = new Withdraw();
 
@@ -112,12 +86,25 @@
                     return false;
                 }
 
-
-                if (!$this->cashDestination($withdraw)) {
-                    Viewer::flash(_INSERT_ERROR, 'e');
-                    $this->cancelTransaction();
-
-                    return false;
+                $destination = true;
+                switch ($withdraw->get('id_investor')){
+                    case _BANK_INVESTOR_ID:
+                        $_POST['destination'] = 'bank';
+                        break;
+                    case _INTERNAL_INVESTOR_ID:
+                        $_POST['destination'] = 'internal';
+                        break;
+                    default:
+                        $destination = false;
+                        break;
+                }
+                if($destination) {
+                    if (!$this->cashDestination($withdraw)) {
+                        Viewer::flash(_INSERT_ERROR, 'e');
+                        $this->cancelTransaction();
+        
+                        return false;
+                    }
                 }
 
                 $withdrawTypeModel = new WithdrawTypeModel();

@@ -90,7 +90,7 @@
             return true;
         }
 
-        public function delete($extraCharge){
+        public function delete($extraCharge, $condition = false){
             if($extraCharge->get('status')){
                 $withdrawModel = new WithdrawModel();
                 if(!$withdrawModel->addByExtraCharge($extraCharge)){

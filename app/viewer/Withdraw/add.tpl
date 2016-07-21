@@ -53,22 +53,6 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-12">
-            <hr>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12 form-group">
-            <label for="destionation" class="control-label">Esta saída será retirada do caixa</label>
-            <select required class="form-control" name="destination">
-                <option value="bank">Do banco</option>
-                <option value="internal">Interno</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="col-sm-offset-4 col-sm-4">
             <button class="btn btn-lg btn-success btn-block">
                 Cadastrar
