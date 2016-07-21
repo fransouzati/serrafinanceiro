@@ -85,11 +85,16 @@
             $clientModel = new ClientModel();
             $toTxt = array();
             $toTxtExport = array();
+            $totals = array(
+                'support' => 0,
+                'installment' => 0,
+                'extra' => 0,
+            );
             if (in_array('all', $_POST['clients'])) {
                 $clients = $this->query2dto($this->search('client', '*', false, 'name'), 'client');
 
                 foreach ($clients as $client) {
-                    $this->checkPendenciesScreen($clientModel, $client->get('id'), $period, $toTxt);
+                    $this->checkPendenciesScreen($clientModel, $client->get('id'), $period, $toTxt, $totals);
                     $this->checkPendenciesExport($clientModel, $client->get('id'), $period, $toTxtExport);
                 }
                 
@@ -97,7 +102,6 @@
                 if(count($aloneInstallments)){
 
                     $screenInstallments = array();
-                    $exportInstallments = '';
                     $finalTotal = 0;
 
                     foreach($aloneInstallments as $installment){
@@ -108,11 +112,22 @@
                             'id' => $installment->get('id'),
                         );
 
-                        $exportInstallments .= 'R$'.$installment->get('value', true).' parcela '.$installment->get('number').
-                                               ' '.$installment->get('id_project', true)->get('name').' + ';
-
-
-                        $finalTotal += $installment->get('value');
+                        $exportInstallments = 'R$'.$installment->get('value', true).' parcela '.$installment->get('number').
+                                               ' '.$installment->get('id_project', true)->get('name');
+    
+    
+                        $toTxtExport[] = array(
+                            '-',
+                            'SEM CLIENTE',
+                            '-',
+                            'Vencimento: '.$installment->get('expiry', true),
+                            '-',
+                            $exportInstallments,
+                            '-',
+                            $installment->get('value'),
+                        );
+                        
+                        $totals['installment'] += $installment->get('value');
                     }
                     $exportInstallments = trim($exportInstallments, ' + ');
 
@@ -124,25 +139,26 @@
                         'total' => $finalTotal,
                     );
 
-                    $toTxtExport[] = array(
-                        '-',
-                        'SEM CLIENTE',
-                        '-',
-                        '-',
-                        '-',
-                        $exportInstallments,
-                        '-',
-                        $finalTotal,
-                    );
                 }
 
             } else {
                 foreach($_POST['clients'] as $id_client){
-                    $this->checkPendenciesScreen($clientModel, $id_client, $period, $toTxt);
-                    $this->checkPendenciesExport($clientModel, $id_client, $period, $toTxtExport);
+                    $this->checkPendenciesScreen($clientModel, $id_client, $period, $toTxt, $totals);
+                    $this->checkPendenciesExport($clientModel, $id_client, $period, $toTxtExport, $totals);
                 }
             }
 
+            $client = new Client();
+            $sumTotal = $totals['support'] + $totals['installment'] + $totals['extra'];
+            $toTxtExport[] = array(
+                '', '', '',
+                'SOMA TOTAL',
+                'R$'.$client->moneyMask($totals['support']),
+                'R$'.$client->moneyMask($totals['installment']),
+                'R$'.$client->moneyMask($totals['extra']),
+                $sumTotal,
+            );
+            
             $toTxt = serialize($toTxt);
             $toTxtExport = serialize($toTxtExport);
             $file = uniqid();
@@ -153,7 +169,7 @@
 
         }
 
-        public function checkPendenciesScreen(ClientModel $model, $id_client, $period, &$toTxt){
+        public function checkPendenciesScreen(ClientModel $model, $id_client, $period, &$toTxt, &$totals){
             $pendencies = $model->getPendencies($id_client, $period);
             if($pendencies['total'] != 0){
                 $client = $model->getClient($id_client);
@@ -166,6 +182,9 @@
                     'pendencies' => $pendencies['pendencies'],
                     'total' => $pendencies['total'],
                 );
+                $totals['support'] += $pendencies['supportTotal'];
+                $totals['extra'] += $pendencies['extraTotal'];
+                $totals['installment'] += $pendencies['installmentTotal'];
             }
         }
 

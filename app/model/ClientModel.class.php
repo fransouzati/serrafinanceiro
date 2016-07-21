@@ -439,7 +439,7 @@
                     'id'     => $extraCharge->get('id'),
                 );
                 $total += $extraCharge->get('value');
-                $extraCharge += $extraCharge->get('value');
+                $extraTotal += $extraCharge->get('value');
             }
             
             $sql = 'SELECT p.done, 
@@ -554,7 +554,7 @@
                         $expiry = $finances->get('payment_day') . '/' . $month . '/' . $year;
                         $pendencies['support'] .= 'R$' . $finances->get('monthly_value', true) . ' (' . $expiry . ') + ';
                         $total += $finances->get('monthly_value');
-                        $supportTotal = $finances->get('monthly_value');
+                        $supportTotal += $finances->get('monthly_value');
                     }
                 }
             }
@@ -615,7 +615,9 @@
                 $pendencies['project'] = '-';
             }
             
-            return array('pendencies' => $pendencies, 'total' => $total);
+            return array('pendencies' => $pendencies, 'total' => $total,
+                         'supportTotal' => $supportTotal, 'extraTotal' => $extraTotal,
+                         'installmentTotal' => $installmentTotal);
         }
         
         public function getAloneInstallments($period = null) {
