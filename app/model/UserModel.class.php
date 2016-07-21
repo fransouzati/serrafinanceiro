@@ -99,6 +99,10 @@
             $investor = $investorModel->getInvestor($id);
             $this->initTransaction();
             if ($investorModel->editBalance($investor)) {
+                if(!$this->balanceHistory($investor)){
+                    $this->cancelTransaction();
+                    return false;
+                }
                 if(!$this->emailBalance($investor)){
                     $this->cancelTransaction();
                     return false;
@@ -109,6 +113,20 @@
                 $this->cancelTransaction();
                 return false;
             }
+        }
+        
+        public function balanceHistory($investor){
+            $oldValue = $investor->get('initial_capital');
+            $newValue = $investor->decimalMask($_POST['initial_capital']);
+            $user = unserialize($_SESSION['user'])->get('id');
+            
+            $history = new Balance_history();
+            $history->set('id_user', $user);
+            $history->set('value_before', $oldValue);
+            $history->set('value_after', $newValue);
+            $history->set('date', date('Y-m-d H:i:s'));
+            
+            return $this->insert('balance_history', $history);
         }
 
         public function emailBalance($investor) {

@@ -110,6 +110,10 @@
             $sql = 'SELECT * FROM investor WHERE name = "'._BANK_INVESTOR_NAME.'" OR name = "'._INTERNAL_INVESTOR_NAME.'"';
             $investors = $this->model->query($sql);
             $investors = $this->model->query2dto($investors, 'investor');
+            
+            $history = $this->model->query2dto($this->model->search('balance_history'), 'balance_history');
+            $this->viewer->set('histories', $history);
+            
             $this->viewer->set('investors', $investors);
             $this->viewer->show('viewBalance', 'Saldo em caixa');
             return;
