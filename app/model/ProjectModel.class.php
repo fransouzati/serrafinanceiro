@@ -171,7 +171,8 @@
                 // If the installment is already payed, adds to the entry table
                 if ($installment->get('status')) {
                     $entryModel = isset($entryModel) ? $entryModel : new EntryModel();
-                    if (!$entryModel->addByInstallment($installment)) {
+                    $_POST['destination'] = $_POST['destination'.$installment->get('number')];
+                    if (!$entryModel->addByInstallment($installment, $project->get('id_entry_type'), $project->get('id_client'))) {
                         Viewer::flash(_INSERT_ERROR, 'e');
                         $this->cancelTransaction();
 
@@ -375,12 +376,12 @@
             $div .= '<b style="font-size: 18px!important" id="lblQtt' . $qtt . '">' . $qtt . '.</b>';
             $div .= '</div>';
 
-            $div .= '<div class="col-sm-4 form-group">';
+            $div .= '<div class="col-sm-3 form-group">';
             $div .= '<label id="lblValue' . $qtt . '" for="value' . $qtt . '" class="control-label">Valor</label>';
             $div .= '<input type="text" id="lblValue' . $qtt . '" name="value' . $qtt . '" class="form-control mask-money">';
             $div .= '</div>';
 
-            $div .= '<div class="col-sm-4 form-group">';
+            $div .= '<div class="col-sm-3 form-group">';
             $div .= '<label id="lblExpiry' . $qtt . '" for="expiry' . $qtt . '" class="control-label">Vencimento</label>';
             if($qtt == 1)
                 $class = 'firstInstallment';
@@ -393,6 +394,14 @@
             $div .= '<label id="lblStatus' . $qtt . '" for="status' . $qtt . '" class="control-label">Situação</label> <br>';
             $div .= '<input type="radio" id="iptStatusnok' . $qtt . '" name="status' . $qtt . '" value="0" checked> Pendente <br>';
             $div .= '<input type="radio" id="iptStatusok' . $qtt . '" name="status' . $qtt . '" value="1"> Pago ';
+            $div .= '</div>';
+            
+            $div .= '<div class="col-sm-2 form-group">';
+            $div .= '<label id="lblDestination'.$qtt.'" for="destination'.$qtt.'" class="control-label">Caixa</label>';
+            $div .= '<select id="iptDestination'.$qtt.'" name="destination'.$qtt.'" class="form-control">';
+            $div .= '<option value="bank">Banco</option>';
+            $div .= '<option value="internal">Interno</option>';
+            $div .= '</select>';
             $div .= '</div>';
 
             $div .= '<div class="col-xs-1 col-md-1 form-group"><br>';

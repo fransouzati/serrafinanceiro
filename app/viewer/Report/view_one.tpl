@@ -88,6 +88,13 @@
                                             </label>
                                             <br>
                                             <input type="text" class="mask-money form-control" name="{$titleValue}" value="{$pendency['value']}">
+                                            <br>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="{$titleValue}_destination" checked value="bank"> Caixa do banco
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="{$titleValue}_destination" value="internal"> Caixa interno
+                                            </label>
                                         {/if}
                                     </td>
                                 </tr>

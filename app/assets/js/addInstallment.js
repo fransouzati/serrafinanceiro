@@ -53,6 +53,12 @@ $(function () {
                 $('#iptStatusnok' + i).attr('name', 'status' + (parseInt(i) - 1));
                 $('#iptStatusnok' + i).attr('id', 'iptStatusnok' + (parseInt(i) - 1));
 
+                $('#lblDestination' + i).attr('for', 'destination' + (parseInt(i) - 1));
+                $('#lblDestination' + i).attr('id', 'lblDestination' + (parseInt(i) - 1));
+                $('#iptDestination' + i).attr('name', 'destination' + (parseInt(i) - 1));
+                $('#iptDestination' + i).attr('id', 'iptDestination' + (parseInt(i) - 1));
+                $('#iptDestination' + i).addClass('destination');
+
                 $('#' + i).attr('id', (parseInt(i) - 1));
                 $('#lblQtt' + i).attr('id', 'lblQtt' + (parseInt(i) - 1));
 

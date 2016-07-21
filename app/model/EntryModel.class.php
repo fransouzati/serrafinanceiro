@@ -133,25 +133,27 @@
             }
         }
 
-        public function addByInstallment($installment) {
+        public function addByInstallment($installment, $idType = false, $idClient = null) {
             $entry = new Entry();
             $entry->set('date', date('Y-m-d'));
             $entry->set('description', 'Pagamento de parcela de projeto - ' . $installment->get('id_project') . '.');
             $entry->set('value', $installment->get('value'));
-            $idType = $installment->get('id_project', true)->get('id_entry_type');
+            if(!$idType)
+                $idType = $installment->get('id_project', true)->get('id_entry_type');
             $entry->set('id_type', $idType);
+            $entry->set('id_client', $idClient);
             if(!$this->insert('entry', $entry))
                 return false;
             if(!$this->cashDestination($entry))
                 return false;
-            if(!$this->saveHistory($entry)){
-                return false;
+            
+            if($this->exists('client', 'id', $entry->get('id_client'))) {
+                if (!$this->saveHistory($entry))
+                    return false;
+                $clientModel = new ClientModel();
+                $clientModel->inspectionValidate($entry->get('id_client'));
             }
-
-
-            $clientModel = new ClientModel();
-            $clientModel->inspectionValidate($entry->get('id_client'));
-
+    
             return true;
         }
 
@@ -286,6 +288,8 @@
         }
 
         public function saveHistory($entry){
+            if(!$this->exists('client', 'id', $entry->get('id_client')))
+                return true;
             $history = new Finances_history();
             $history->set('id_finances', $entry->get('id_client'));
             $history->set('date', $entry->get('date'));

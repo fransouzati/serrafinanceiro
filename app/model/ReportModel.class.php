@@ -266,7 +266,7 @@
                     $description = 'Pagamento de título - Parcela '.$installment->get('number').
                                    ' de projeto '.$project->get('name');
                 }
-
+                $_POST['destination'] = $_POST[$title.'_destination'];
                 if(!$entryModel->addByReport($id_type, $_POST[$title], $id_client, $description)){
                     $this->cancelTransaction();
                     return false;
