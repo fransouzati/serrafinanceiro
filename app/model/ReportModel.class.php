@@ -242,6 +242,7 @@
                 if($type == 'support'){
                     $id_type = _SUPPORT_ENTRY_TYPE_ID;
                     $id_client = $id;
+                    $description = 'Pagamento de título - Suporte mensal';
                 }elseif($type == 'extra'){
                     $id_type = _EXTRA_ENTRY_TYPE_ID;
                     $extra = $extraChargeModel->getExtraCharge($id);
@@ -251,18 +252,22 @@
                         return false;
                     }
                     $id_client = $extra->get('id_client');
+                    $description = 'Pagamento de título - Cobrança extra';
                 }else{
                     $installment = $projectModel->getInstallment($id);
-                    $id_type = $installment->get('id_project', true)->get('id_entry_type');
+                    $project = $installment->get('id_project', true);
+                    $id_type = $project->get('id_entry_type');
                     $installment->set('status', 1);
                     if(!$projectModel->update('project_installment', $installment, array('id' => $id))){
                         $this->cancelTransaction();
                         return false;
                     }
                     $id_client = $installment->get('id_project', true)->get('id_client');
+                    $description = 'Pagamento de título - Parcela '.$installment->get('number').
+                                   ' de projeto '.$project->get('name');
                 }
 
-                if(!$entryModel->addByReport($id_type, $_POST[$title], $id_client)){
+                if(!$entryModel->addByReport($id_type, $_POST[$title], $id_client, $description)){
                     $this->cancelTransaction();
                     return false;
                 }

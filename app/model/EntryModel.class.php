@@ -193,13 +193,13 @@
             return true;
         }
 
-        public function addByReport($id_type, $value, $id_client = null){
+        public function addByReport($id_type, $value, $id_client = null, $description = 'Pagamento de título'){
             $entry = new Entry();
             $entry->set('date', date('Y-m-d'));
             $entry->set('value', $value);
             $entry->set('id_type', $id_type);
             $entry->set('id_client', $id_client);
-            $entry->set('description', 'Pagamento de título');
+            $entry->set('description', $description);
             if(!$this->insert('entry', $entry))
                 return false;
             if(!$this->cashDestination($entry))
