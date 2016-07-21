@@ -19,7 +19,7 @@
                 $this->viewer->set('period', $period);
 
                 $txt = $this->model->txt2array($report)[0];
-                $txt = $this->model->blockPayed($txt);
+                $txt = $this->model->blockPayed($txt, $id);
                 $this->viewer->set('txt', $txt);
 
                 $this->viewer->set('report', $report);
