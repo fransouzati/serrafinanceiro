@@ -26,7 +26,7 @@
 
         public function add() {
             $error = '';
-            $withdrawType = new Withdraw_Type();
+            $withdrawType = new Withdraw_type();
 
             if (!$withdrawType->set('name', $_POST['name']))
                 $error .= $withdrawType->FieldsErrors['name'] . '<br>';

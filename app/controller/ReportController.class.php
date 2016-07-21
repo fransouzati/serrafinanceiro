@@ -28,6 +28,7 @@
                 }
 
                 $this->viewer->set('report', $report);
+                $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/reportFilter.js');
                 return $this->viewer->show('view_one', $report->get('name'));
             }
 

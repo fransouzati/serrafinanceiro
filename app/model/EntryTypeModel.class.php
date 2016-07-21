@@ -26,7 +26,7 @@
 
         public function add() {
             $error = '';
-            $entryType = new Entry_Type();
+            $entryType = new Entry_type();
 
             if (!$entryType->set('name', $_POST['name']))
                 $error .= $entryType->FieldsErrors['name'] . '<br>';

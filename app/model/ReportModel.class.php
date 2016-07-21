@@ -132,6 +132,7 @@
                     $exportInstallments = trim($exportInstallments, ' + ');
 
                     $toTxt[] = array(
+                        'id' => 0,
                         'name' => 'SEM CLIENTE',
                         'cnpj' => '',
                         'finances' => '',
@@ -176,6 +177,7 @@
                 $finances = $model->getFinances($id_client);
 
                 $toTxt[] = array(
+                    'id' => $client->get('id'),
                     'name' => $client->get('name'),
                     'cnpj' => $client->get('cpf_cnpj'),
                     'finances' => $finances->get('observation'),

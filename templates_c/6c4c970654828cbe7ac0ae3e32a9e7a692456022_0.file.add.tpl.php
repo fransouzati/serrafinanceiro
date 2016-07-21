@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-07-20 10:24:56
+/* Smarty version 3.1.28, created on 2016-07-21 14:38:27
   from "C:\wamp\www\financeiro3\app\viewer\Project\add.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_578f7ba8a95770_57755005',
+  'unifunc' => 'content_5791089308a8e9_77358739',
   'file_dependency' => 
   array (
     '6c4c970654828cbe7ac0ae3e32a9e7a692456022' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Project\\add.tpl',
-      1 => 1468866805,
+      1 => 1469022991,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_578f7ba8a95770_57755005 ($_smarty_tpl) {
+function content_5791089308a8e9_77358739 ($_smarty_tpl) {
 ?>
 <form action="project/add" method="post">
     <div class="row">
@@ -86,7 +86,7 @@ $_smarty_tpl->tpl_vars['client'] = $__foreach_client_0_saved_item;
     <div class="row">
         <div class="col-sm-12 form-group">
             <label class="control-label" for="id_entry_type">Tipo de entrada para relatório de título</label>
-            <select name="id_entry_type" class="form-control select2">
+            <select required name="id_entry_type" class="form-control select2">
                 <?php
 $_from = $_smarty_tpl->tpl_vars['entryTypes']->value;
 if (!is_array($_from) && !is_object($_from)) {

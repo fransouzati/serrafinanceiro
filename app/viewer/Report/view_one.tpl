@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <h5>Período: {$period}</h5>
     </div>
-    <div class="col-sm-12">
+</div>
+<div class="row">
+    <div class="col-sm-2 col-lg-1">
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true"
@@ -23,10 +25,24 @@
             </ul>
         </div>
     </div>
+    <div class="col-sm-10 col-lg-11">
+        <div class="form-group">
+            <select class="form-control" id="filter">
+                <option value="no">Sem filtro</option>
+                <option value="0">Sem cliente
+                </option>
+                {foreach $txt as $client}
+                    {if $client['name'] != 'SEM CLIENTE'}
+                        <option value="{$client['id']}">{$client['name']}</option>
+                    {/if}
+                {/foreach}
+            </select>
+        </div>
+    </div>
 </div>
 <form action="report/pay/{$report->get('id')}" method="post">
     {foreach $txt as $client}
-        <div class="showback">
+        <div class="showback client" id="{$client['id']}">
             <div class="row">
                 <div class="col-sm-12">
                     <h3>{$client['name']}</h3>
