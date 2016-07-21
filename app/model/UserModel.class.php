@@ -130,6 +130,8 @@
         }
 
         public function emailBalance($investor) {
+            if(_LOCAL)
+                return true;
             require HOME.'/plugins/phpmailer/PHPMailerAutoload.php';
 
             $pop = new POP3();
