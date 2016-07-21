@@ -67,7 +67,7 @@ $(function(){
     })
 
     $('.mask-money').each(function(){
-        $(this).maskMoney({thousands:'.', decimal:',', allowZero:true, prefix: 'R$'});
+        $(this).maskMoney({thousands:'.', decimal:',', allowZero:true, prefix: 'R$', allowNegative:true});
     })
 
     $('.mask-time').each(function(){
