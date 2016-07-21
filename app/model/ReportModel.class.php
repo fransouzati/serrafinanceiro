@@ -296,7 +296,7 @@
             return $this->insert('report_payment', $payment);
         }
         
-        public function blockPayed($report){
+        public function blockPayed($report, $id_report){
             $finalReport = array();
             foreach($report as $client){
                 foreach($client['pendencies'] as $num=>$pendency){
@@ -316,8 +316,12 @@
                         'conscond1' => 'AND',
                         'id_client' => $client['id'],
                         'conscond2' => 'AND',
-                        'id_title' => $pendency['id'],
+                        'id_title' => $pendency['id']
                     );
+                    if($type == 'support'){
+                        $cond['conscond3'] = 'AND';
+                        $cond['id_report'] = $id_report;
+                    }
                     $paids = $this->search('report_payment', '*', $cond);
                     if(count($paids) > 0){
                         $pendency['block'] = 1;
