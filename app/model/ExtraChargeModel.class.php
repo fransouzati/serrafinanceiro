@@ -89,7 +89,12 @@
             $clientModel->inspectionValidate($extraCharge->get('id_client'));
             return true;
         }
-
+    
+        /**
+         * @param String $extraCharge
+         * @param bool $condition - needed to be equal to the parent one
+         * @return bool
+         */
         public function delete($extraCharge, $condition = false){
             if($extraCharge->get('status')){
                 $withdrawModel = new WithdrawModel();

@@ -289,13 +289,6 @@
                                     {/if}
                                 </td>
                                 <td>
-                                    {if !$extra->get('status')}
-                                        <a href="extraCharge/pay/{$extra->get('id')}" class="confirm-link">
-                                            <button type="button" class="btn btn-success" title="Pagar">
-                                                <i class="fa fa-dollar"></i>
-                                            </button>
-                                        </a>
-                                    {/if}
                                     <a href="extraCharge/delete/{$extra->get('id')}" class="confirm-link">
                                         <button type="button" class="btn btn-danger" title="Remover">
                                             <i class="fa fa-remove"></i>

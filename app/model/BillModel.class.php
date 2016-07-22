@@ -51,6 +51,7 @@
             $sql2 = '
                 SELECT * FROM bill b
                 WHERE b.id NOT IN ('.$sql1.')
+                ORDER BY b.day
             ';
             $toPay = $this->query2dto($this->query($sql2), 'bill');
             return $toPay;

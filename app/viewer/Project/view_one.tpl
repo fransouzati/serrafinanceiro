@@ -113,11 +113,6 @@
                                 </button>
                             </a>
 
-                            <a href="project/payInstallment/{$installment->get('id')}" class="confirm-link">
-                                <button title="Pagar" class="btn btn-success">
-                                    <i class="fa fa-dollar"></i>
-                                </button>
-                            </a>
                         </td>
                     </tr>
                 {/foreach}

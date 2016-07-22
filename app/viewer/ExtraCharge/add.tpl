@@ -29,6 +29,16 @@
 
     <div class="row">
         <div class="col-sm-12 form-group">
+            <label for="destination" class="control-label">Esta cobrança extra será direcionada para o caixa</label>
+            <select required class="form-control" name="destination">
+                <option value="bank">Do banco</option>
+                <option value="internal">Interno</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 form-group">
             <label for="description" class="control-label">Descrição</label>
             <textarea name="description" class="form-control"></textarea>
         </div>
