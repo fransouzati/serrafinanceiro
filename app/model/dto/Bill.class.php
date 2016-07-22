@@ -24,6 +24,7 @@
         private $id_type;
         private $day;
         private $value;
+        private $description;
 
         public function validDay($day) {
             if ($this->validNumber($day)) {

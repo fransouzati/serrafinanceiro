@@ -14,6 +14,7 @@
 							<tr>
 								<th>Tipo</th>
 								<th>Dia de pagamento</th>
+                                <th>Descrição</th>
 								<th>Valor (aprox.)</th>
                                 <th>Ações</th>
 							</tr>
@@ -23,6 +24,7 @@
 								<tr>
 									<td>{$bill->get('id_type', true)->get('name')}</td>
                                     <td>{$bill->get('day')}</td>
+                                    <td>{$bill->get('description')}</td>
                                     <td>R${$bill->get('value', true)}</td>
 									<td>
                                         <a href="bill/edit/{$bill->get('id')}">

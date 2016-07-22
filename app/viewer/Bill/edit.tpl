@@ -26,6 +26,13 @@
     </div>
 
     <div class="row">
+        <div class="col-sm-12 form-group">
+            <label class="control-label" for="description">Descrição da conta</label>
+            <input type="text" class="form-control" name="description" value="{$bill->get('description')}">
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-sm-offset-4 col-sm-4">
             <button class="btn btn-lg btn-success btn-block">
                 Editar
