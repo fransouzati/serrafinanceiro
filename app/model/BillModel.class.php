@@ -5,6 +5,26 @@
         public function getBill($id) {
             return $this->getDto('bill', 'id', $id);
         }
+        
+        public function makeQuery(){
+            $sql = 'SELECT * FROM bill_payment p WHERE ';
+            
+            $period = $_POST['_filter_period'];
+            if ($period != '') {
+                $period = explode('/', $period);
+                $sql .= ' p.date >= "' . trim($period[0]) . '" AND p.date <= "' . trim($period[1]) . '" AND ';
+            }
+    
+            $sql = rtrim($sql, ' WHEREAND');
+            $sql .= 'ORDER BY date';
+    
+            $payments = $this->query($sql);
+    
+            $payments = $this->query2dto($payments, 'bill_payment');
+    
+            return $payments;
+    
+        }
 
         public function edit($id) {
             $bill = $this->getBill($id);
