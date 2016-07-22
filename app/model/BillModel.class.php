@@ -6,6 +6,14 @@
             return $this->getDto('bill', 'id', $id);
         }
         
+        public function getTotal($payments){
+            $total = 0;
+            foreach($payments as $payment){
+                $total += $payment->get('value');
+            }
+            return $payment->moneyMask($total);
+        }
+        
         public function makeQuery(){
             $sql = 'SELECT * FROM bill_payment p WHERE ';
             

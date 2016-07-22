@@ -88,6 +88,7 @@
                 $this->viewer->set('_filter_period', unfilter_period($_POST['_filter_period']));
         
                 $payments = $this->model->makeQuery();
+                
             }else{
                 $this->viewer->set('_filter_period', date('01/m/Y - t/m/Y'));
                 
@@ -95,6 +96,9 @@
                 $payments = $this->model->query2dto($payments, 'bill_payment');
         
             }
+    
+            $total = $this->model->getTotal($payments);
+            $this->viewer->set('total', $total);
             
             $this->viewer->set('payments', $payments);
 
