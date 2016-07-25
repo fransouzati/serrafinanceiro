@@ -11,7 +11,10 @@
             foreach($payments as $payment){
                 $total += $payment->get('value');
             }
-            return $payment->moneyMask($total);
+            if(isset($payment))
+                return $payment->moneyMask($total);
+            else
+                return '0,00';
         }
         
         public function makeQuery(){
