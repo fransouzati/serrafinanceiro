@@ -50,6 +50,8 @@
     <script src="plugins/datepicker/js/bootstrap-datepicker.js"></script>
     <script src="plugins/datepicker/js/bootstrap-datepicker.init.js"></script>
 
+    <script src="{_APP_ROOT_DIR}assets/js/linkPrevent.js"></script>
+
     {if isset($js)}{$js}{/if}
     {if isset($css)}{$css}{/if}
 </body>

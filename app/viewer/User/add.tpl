@@ -19,6 +19,7 @@
             <input type="password" class="form-control" name="passwordConfirm">
         </div>
     </div>
+    {$form}
     <div class="row">
         <div class="col-sm-offset-4 col-sm-4">
             <button class="btn btn-lg btn-success btn-block">

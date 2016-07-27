@@ -15,7 +15,6 @@
                 $user = $this->getuser($data[0]['id']);
                 $_SESSION['user'] = serialize($user);
                 $_SESSION['logged'] = true;
-                debug_backtrace()[1]['object']->setUser($user);
 
                 return true;
             } else {
@@ -45,6 +44,9 @@
                         $error .= $user->FieldsErrors['passwordConfirm'];
                 }
             }
+    
+            if(in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS_ID)))
+                $user->set('permission', Permission::permissionStr());
 
             if ($error != '') {
                 Viewer::flash($error, 'e');
@@ -72,6 +74,9 @@
                 $error .= $user->FieldsErrors['passwordConfirm'];
             if (!$user->set('password', $_POST['password']))
                 $error .= $user->FieldsErrors['password'];
+    
+            if(in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS_ID)))
+                $user->set('permission', Permission::permissionStr());
 
             if ($error != '') {
                 Viewer::flash($error, 'e');

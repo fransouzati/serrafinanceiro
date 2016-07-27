@@ -8,6 +8,7 @@
                 <input disabled type="email" class="form-control" name="email" value="{$user->get('email')}">
             </div>
 		</div>
+        {$form}
         {if $user->get('id') == $actualUser->get('id')}
             <div class="row">
                 <div class="col-sm-offset-4 col-sm-4">

@@ -23,5 +23,6 @@
         private $email;
         private $password;
         private $name;
+        private $permission;
 
     }

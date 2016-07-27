@@ -2,7 +2,7 @@
     
     trait Functions {
     
-        public $functions = array(
+        public static $functions = array(
            'Bill' => array(
                'view',
                'edit',
@@ -80,25 +80,11 @@
 
         );
     
-        public $public = array(
-            'Client' => array(
-                'pendenciesModal',
-            ),
-            'Project' => array(
-                'installmentsModal',
-                'addInstallmentForm',
-            ),
-            'User' => array(
-                'home',
-                'login',
-                'logout',
-                'view',
-                'edit',
-            )
+        public static $publics = array(
 
         );
         
-        public $block = array(
+        public static $block = array(
             'Bill' => array(
                 'Visualizar' => array(
                     'view',
@@ -259,6 +245,21 @@
                     'view',
                 ),
             ),
+        );
+        
+        public static $controllers = array(
+           'Bill' => 'Contas a pagar',
+           'Client' => 'Clientes',
+           'Entry' => 'Entradas',
+           'EntryType' => 'Tipos de entrada',
+           'ExtraCharge' => 'Cobranças extra',
+           'Investor' => 'Investidores',
+           'Project' => 'Projetos',
+           'Report' => 'Relatórios de título',
+           'User' => 'Administradores',
+           'Withdraw' => 'Saídas',
+           'WithdrawType' => 'Tipos de saída',
+
         );
         
     }

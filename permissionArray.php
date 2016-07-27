@@ -6,19 +6,26 @@
     include_once(_CONFIG_ROOT_DIR.'/constants.inc.php');
     include_once(_CONFIG_ROOT_DIR.'check/formatDate.inc.php');
     include_once(_CONFIG_ROOT_DIR.'exec/autoload.inc.php');
-    define('_TRAIT', _BASE_ROOT_DIR.'model/Trait/Functions.trait.php');
+    define('_TRAIT', _APP_ROOT_DIR.'model/Trait/Functions.trait.php');
     define('_CONTROLLERS', _APP_ROOT_DIR.'controller/');
     
     $controllers = getControllers();
     $traitFunctions = traitFunctions();
+    $traitControllers = traitControllers();
+    
     $diffs = array();
+    
     foreach($controllers as $controller){
         $ctrlDir = _CONTROLLERS.$controller;
         $name = getControllerName($controller, false);
         $functions = getFunctions($ctrlDir);
-        
         $diff = compareFunc($traitFunctions, $functions, $name);
         $diffs[$name] = $diff;
+        
+        if(!in_array($name, array_keys($traitControllers))) {
+            $traitControllers[$name] = $name;
+            $newControllers[] = $name;
+        }
         if(count($diff) > 0){
             mergeDiff($traitFunctions, $diff, $name);
         }
@@ -27,9 +34,11 @@
     if(isset($_POST['submit'])) {
         putInFile($traitFunctions);
         unset($_POST['submit']);
-        putInFile($_POST, 'public');
+        putInFile($_POST, 'publics');
+        putInFile($traitControllers, 'controllers');
         die('Ok!');
     }else {
+        newControllers($newControllers);
         form($diffs);
     }
     
@@ -85,17 +94,17 @@
         $inArray = false;
         foreach($file as $line){
             if($filter == 'block') {
-                if (strpos($line, 'public $block') != 0) {
+                if (strpos($line, 'public static $block') != 0) {
                     $inFunctions = true;
                     continue;
                 }
-            }elseif($filter == 'public'){
-                if (strpos($line, 'public $public') != 0) {
+            }elseif($filter == 'publics'){
+                if (strpos($line, 'public static $publics') != 0) {
                     $inFunctions = true;
                     continue;
                 }
             }else{
-                if (strpos($line, 'public $functions') != 0) {
+                if (strpos($line, 'public static $functions') != 0) {
                     $inFunctions = true;
                     continue;
                 }
@@ -125,6 +134,35 @@
         }
         
         return $functions;
+    }
+    
+    function traitControllers(){
+        $file = file_get_contents(_TRAIT);
+        $file = explode(PHP_EOL, $file);
+        $controllers = array();
+        $inControllers = false;
+        foreach($file as $line){
+            if (strpos($line, 'public static $controllers') != 0) {
+                $inControllers = true;
+                continue;
+            }
+            if(strpos($line, ');') != 0){
+                $inControllers = false;
+            }
+            
+            if($inControllers){
+                $line = explode('=>', $line);
+                if(count($line) > 1) {
+                    $line[0] = trim(str_replace("'", '', $line[0]));
+                    $line[1] = trim(str_replace("'", '', $line[1]));
+                    $line[1] = trim(str_replace(",", '', $line[1]));
+                    $controllers[$line[0]] = $line[1];
+                    continue;
+                }
+            }
+        }
+        
+        return $controllers;
     }
     
     function compareFunc($trait, $ctrl, $name){
@@ -161,21 +199,38 @@
         return $str;
     }
     
+    function toStrController($traitControllers){
+        $str = '';
+        foreach($traitControllers as $controller => $label){
+            $str .= "           '".$controller."' => '".$label."',".PHP_EOL;
+        }
+        return $str;
+    }
+    
     function putInFile($functions, $filter = 'all'){
         $file = file_get_contents(_TRAIT);
         $file = explode(PHP_EOL, $file);
-        $str = toStr($functions);
+        if($filter == 'controllers')
+            $str = toStrController($functions);
+        else
+            $str = toStr($functions);
         
         $inFunctions = false;
         foreach($file as $num => $line){
-            if($filter == 'public'){
-                if (strpos($line, 'public $public') != 0) {
+            if($filter == 'publics'){
+                if (strpos($line, 'public static $publics') != 0) {
                     $inFunctions = true;
                     $toPut = $num + 1;
                     continue;
                 }
-            }else {
-                if (strpos($line, 'public $functions') != 0) {
+            }elseif($filter == 'functions') {
+                if (strpos($line, 'public static $functions') != 0) {
+                    $inFunctions = true;
+                    $toPut = $num + 1;
+                    continue;
+                }
+            }else{
+                if (strpos($line, 'public static $controllers') != 0) {
                     $inFunctions = true;
                     $toPut = $num + 1;
                     continue;
@@ -214,4 +269,14 @@
         }
         echo '<input type="submit" name="submit">';
         echo '</form>';
+    }
+    
+    function newControllers($new){
+        if(count($new)){
+            echo '<b>Novos controladores: </b>';
+            foreach($new as $controller){
+                echo $controller.',';
+            }
+            echo '<br>';
+        }
     }

@@ -51,6 +51,14 @@
                 }
                 $user = $this->model->getUser($id);
                 $this->viewer->set('user', $user);
+    
+                if($id == unserialize($_SESSION['user'])->get('id')) {
+                    $form = Permission::makeForm(true, false, $user->get('permission'));
+                    $this->viewer->set('form', $form);
+                }else{
+                    $this->viewer->set('form', '');
+                }
+                
                 return $this->viewer->show('view_one', $user->get('name'));
             }
 
@@ -61,7 +69,7 @@
         }
 
         public function edit($id) {
-            if ($id != parent::user()->get('id')) {
+            if ($id != unserialize($_SESSION['user'])->get('id')) {
                 Viewer::flash(_PERMISSION_ERROR, 'e');
 
                 return $this->view($id);
@@ -86,6 +94,13 @@
 
             $user = $this->model->getUser($id);
             $this->viewer->set('user', $user);
+    
+            if(in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS_ID))) {
+                $form = Permission::makeForm(false, false, $user->get('permission'));
+                $this->viewer->set('form', $form);
+            }else{
+                $this->viewer->set('form', '');
+            }
             
             $this->viewer->show('edit', 'Editar ' . $user->get('name'));
         }
@@ -101,6 +116,13 @@
 
                     return $this->add();
                 }
+            }
+    
+            if(in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS_ID))) {
+                $form = Permission::makeForm();
+                $this->viewer->set('form', $form);
+            }else{
+                $this->viewer->set('form', '');
             }
 
             return $this->viewer->show('add', 'Cadastrar administrador');

@@ -19,6 +19,7 @@
             <input type="email" class="form-control" name="email" value="{$user->get('email')}">
         </div>
     </div>
+    {$form}
     <div class="row">
         <div class="col-sm-offset-4 col-sm-4">
             <button class="btn btn-lg btn-success btn-block">

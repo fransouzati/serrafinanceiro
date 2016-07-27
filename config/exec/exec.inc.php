@@ -50,29 +50,29 @@
         }
 
         if (class_exists($controller)) {
-            eval('$controller = new ' . $controller . '();');
+            eval('$controller = new ' . $controller . '("'.$controller.'","'.$action.'");');
             if (method_exists($controller, $action)) {
                 eval('$controller->' . $action . '(' . $params . ');');
             } else {
-                eval('$controller = new ' . _MAIN_CLASS . '();');
+                eval('$controller = new ' . _MAIN_CLASS . '("'._MAIN_CLASS.'","'._MAIN_METHOD.'");');
                 eval('$controller->' . _MAIN_METHOD . '();');
             }
         } else {
-            eval('$controller = new ' . _MAIN_CLASS . '();');
+            eval('$controller = new ' . _MAIN_CLASS . '("'._MAIN_CLASS.'","'._MAIN_METHOD.'");');
             eval('$controller->' . _MAIN_METHOD . '();');
         }
 
 
     } else {
         if (isset($_GET['ctrl']) && isset($_GET['act'])) {
-            eval('$controller = new ' . ucfirst($_GET['ctrl']) . 'Controller();');
+            eval('$controller = new ' . ucfirst($_GET['ctrl']) . 'Controller("'.$_GET['ctrl'].'","'.$_GET['act'].'");');
             if (isset($_GET['param']))
                 $controller->{$_GET['act']}($_GET['param']);
             else
                 $controller->{$_GET['act']}();
 
         } else {
-            eval('$controller = new ' . _MAIN_CLASS . '();');
+            eval('$controller = new ' . _MAIN_CLASS . '("'._MAIN_CLASS.'","'._MAIN_METHOD.'");');
             $controller->{_MAIN_METHOD}();
         }
     }

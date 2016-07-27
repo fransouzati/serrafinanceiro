@@ -27,3 +27,7 @@
     define('_EXTRA_ENTRY_TYPE_ID', 7);
 
     define('_ADJUST_EXIT_TYPE_ID', 6);
+    
+    define('_MASTERS_ID', serialize(array(4,5,6)));
+
+    define('_USE_PERMISSIONS', true);

@@ -24,10 +24,7 @@
             include_once(_BASE_ROOT_DIR . 'model/Trait/' . $class . '.trait.php');
         }
         elseif (file_exists(_APP_ROOT_DIR . 'model/Trait/' . $class . '.trait.php')) {
-            include_once(_BASE_ROOT_DIR . 'model/Trait/' . $class . '.trait.php');
-        }
-        elseif (file_exists(_APP_ROOT_DIR . 'model/trait/' . $class . '.trait.php')) {
-            include_once(_BASE_ROOT_DIR . 'model/trait/' . $class . '.trait.php');
+            include_once(_APP_ROOT_DIR . 'model/Trait/' . $class . '.trait.php');
         }
 
         // App classes
