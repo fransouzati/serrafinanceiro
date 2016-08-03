@@ -7,11 +7,15 @@
     
     define('_LOCAL', $_SERVER['HTTP_HOST'] == 'localhost:8091' || $_SERVER['HTTP_HOST'] == 'localhost:8092');
     
+    
     // Dir config
     include_once('config/dirList.php');
-
+    
+    // Password crypt
+    include_once(_CONFIG_ROOT_DIR.'check/passCrypt.inc.php');
+    
     // Constants
-    include_once(_CONFIG_ROOT_DIR.'/constants.inc.php');
+    include_once(_CONFIG_ROOT_DIR.'constants.inc.php');
 
     // Date format
     include_once(_CONFIG_ROOT_DIR.'check/formatDate.inc.php');
