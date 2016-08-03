@@ -52,7 +52,7 @@
                 $user = $this->model->getUser($id);
                 $this->viewer->set('user', $user);
     
-                if($id == unserialize($_SESSION['user'])->get('id')) {
+                if($id == unserialize($_SESSION['user'])->get('id') || $_SESSION['master']) {
                     $form = Permission::makeForm(true, false, $user->get('permission'));
                     $this->viewer->set('form', $form);
                 }else{
@@ -69,7 +69,7 @@
         }
 
         public function edit($id) {
-            if ($id != unserialize($_SESSION['user'])->get('id')) {
+            if ($id != unserialize($_SESSION['user'])->get('id') && !$_SESSION['master']) {
                 Viewer::flash(_PERMISSION_ERROR, 'e');
 
                 return $this->view($id);
@@ -95,17 +95,22 @@
             $user = $this->model->getUser($id);
             $this->viewer->set('user', $user);
     
-            if(in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS_ID))) {
+            if($_SESSION['master']) {
                 $form = Permission::makeForm(false, false, $user->get('permission'));
                 $this->viewer->set('form', $form);
             }else{
                 $this->viewer->set('form', '');
             }
-            
+            $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/markCheckboxes.js');
             $this->viewer->show('edit', 'Editar ' . $user->get('name'));
         }
 
         public function add() {
+            if(!$_SESSION['master']){
+                Viewer::flash(_PERMISSION_ERROR, 'e');
+    
+                return $this->view();
+            }
             if ($this->request()) {
                 if ($this->model->add()) {
                     $id = $this->model->lastInserted('user');

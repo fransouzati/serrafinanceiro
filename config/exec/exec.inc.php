@@ -15,7 +15,6 @@
     }
     
     if ($friendlyUrl) {
-
         $comp = strrchr($_SERVER['REQUEST_URI'], '?');
         $end = str_replace($comp, '', $_SERVER['REQUEST_URI']);
         $url = explode('/', $end);
@@ -50,6 +49,7 @@
         }
 
         if (class_exists($controller)) {
+            
             eval('$controller = new ' . $controller . '("'.$controller.'","'.$action.'");');
             if (method_exists($controller, $action)) {
                 eval('$controller->' . $action . '(' . $params . ');');

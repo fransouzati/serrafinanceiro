@@ -9,7 +9,7 @@
         private $user;
         
         public function __construct($controller = '', $function = '') {
-            parent::__construct();
+            parent::__construct($controller, $function);
             $className = substr(get_class(debug_backtrace()[0]['object']), 0, -10);
             $model = $className . 'Model';
             $viewer = $className . 'Viewer';
@@ -69,11 +69,16 @@
          * Says if one user has access to something without page refresh
          * @return void
          */
-        public function permission($url){
-            die;
-            $controller = $_GET['controlador'];
-            $action = $_GET['acao'];
-            if(Permission::hasAccess(unserialize($_SESSION['user'])->get('permission'), $controller, $action)){
+        public function permission(){
+            $controller = ucfirst($_GET['controlador']);
+            $action = $_GET['funcao'];
+            $permission = unserialize($_SESSION['user'])->get('permission');
+            $permission = Permission::permissionArray($permission);
+            if (in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS_ID))) {
+                echo 1;
+                return;
+            }
+            if(Permission::hasAccess($permission, $controller, $action)){
                 echo 1;
             }else{
                 echo 0;

@@ -9,7 +9,7 @@
             </div>
 		</div>
         {$form}
-        {if $user->get('id') == $actualUser->get('id')}
+        {if ($user->get('id') == $actualUser->get('id')) || $smarty.session.master}
             <div class="row">
                 <div class="col-sm-offset-4 col-sm-4">
                     <a href="user/edit/{$user->get('id')}">

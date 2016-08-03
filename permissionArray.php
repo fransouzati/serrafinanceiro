@@ -14,6 +14,7 @@
     $traitControllers = traitControllers();
     
     $diffs = array();
+    $newControllers = array();
     
     foreach($controllers as $controller){
         $ctrlDir = _CONTROLLERS.$controller;
@@ -38,7 +39,8 @@
         putInFile($traitControllers, 'controllers');
         die('Ok!');
     }else {
-        newControllers($newControllers);
+        if(count($newControllers))
+            newControllers($newControllers);
         form($diffs);
     }
     

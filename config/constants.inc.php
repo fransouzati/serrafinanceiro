@@ -28,6 +28,10 @@
 
     define('_ADJUST_EXIT_TYPE_ID', 6);
     
+    
+    /**
+     * This array stores the masters admins ids
+     */
     define('_MASTERS_ID', serialize(array(4,5,6)));
 
     define('_USE_PERMISSIONS', true);

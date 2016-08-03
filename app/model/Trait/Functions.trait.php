@@ -81,7 +81,20 @@
         );
     
         public static $publics = array(
-
+            'Client' => array(
+                'pendenciesModal',
+            ),
+            'Project' => array(
+                'installmentsModal',
+                'addInstallmentForm',
+            ),
+            'User' => array(
+                'home',
+                'login',
+                'logout',
+                'view',
+                'edit',
+            )
         );
         
         public static $block = array(

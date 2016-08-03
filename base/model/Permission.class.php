@@ -92,7 +92,7 @@
                 if(in_array($action, $publics[$controller]))
                     return true;
             }
-    
+            
             if(isset($permissions[$controller])){
                 if(in_array($action, $permissions[$controller]))
                     return true;

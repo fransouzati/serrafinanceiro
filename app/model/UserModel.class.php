@@ -15,6 +15,7 @@
                 $user = $this->getuser($data[0]['id']);
                 $_SESSION['user'] = serialize($user);
                 $_SESSION['logged'] = true;
+                $_SESSION['master'] = in_array($user->get('id'), unserialize(_MASTERS_ID));
 
                 return true;
             } else {
@@ -75,7 +76,7 @@
             if (!$user->set('password', $_POST['password']))
                 $error .= $user->FieldsErrors['password'];
     
-            if(in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS_ID)))
+            if($_SESSION['master'])
                 $user->set('permission', Permission::permissionStr());
 
             if ($error != '') {

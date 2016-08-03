@@ -24,8 +24,6 @@
             $controller = str_replace('Controller', '', $controller);
             
             if (_USE_PERMISSIONS) {
-                print_r(debug_backtrace());
-                die;
                 if ($controller != '' && $function != '' &&
                     $controller != 'App' && $function != 'permission') {
                     if (isset($_SESSION['user'])) {
@@ -34,7 +32,7 @@
                                 $permission = unserialize($_SESSION['user'])->get('permission');
                                 $permission = Permission::permissionArray($permission);
                                 if (!Permission::hasAccess($permission, $controller, $function)) {
-                                    if (!in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS))) {
+                                    if (!in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS_ID))) {
                                         return $this->permissionError();
                                     }
                                 }
@@ -43,7 +41,7 @@
                             $permission = unserialize($_SESSION['user'])->get('permission');
                             $permission = Permission::permissionArray($permission);
                             if (!Permission::hasAccess($permission, $controller, $function)) {
-                                if (!in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS))) {
+                                if (!in_array(unserialize($_SESSION['user'])->get('id'), unserialize(_MASTERS_ID))) {
                                     return $this->permissionError();
                                 }
                             }

@@ -1,6 +1,10 @@
 $(function(){
 
     $('.datatable').each(function(){
+        if ($.fn.dataTable.isDataTable( $(this) ) ) {
+            return
+        }
+
         if(typeof $(this).attr('default-quantity') != 'undefined')
             quantity = $(this).attr('default-quantity');
         else

@@ -19,6 +19,23 @@
             <input type="email" class="form-control" name="email" value="{$user->get('email')}">
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-2">
+            <button type="button" class="btn btn-default btn-block" id="checkAll">
+                Marcar todas
+            </button>
+        </div>
+        <div class="col-sm-4">
+            <button type="button" class="btn btn-default btn-block" id="uncheckAll">
+                Desmarcar todas
+            </button>
+        </div>
+    </div>
     {$form}
     <div class="row">
         <div class="col-sm-offset-4 col-sm-4">
