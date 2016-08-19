@@ -180,19 +180,18 @@
 
     <div id="projectsData" class="tab-pane fade in">
         <!-- Projects !-->
-        {if !empty($projects)}
-            <div class="row">
-                <div class="col-sm-12">
-                    <h3 class="page-header">
-                        Projetos
-                        <a href="project/add/{$client->get('id')}">
-                            <button class="btn btn-primary pull-right">
-                                Cadastrar
-                            </button>
-                        </a></h3>
-                </div>
-
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-header">
+                    Projetos
+                    <a href="project/add/{$client->get('id')}">
+                        <button class="btn btn-primary pull-right">
+                            Cadastrar
+                        </button>
+                    </a></h3>
             </div>
+        </div>
+        {if !empty($projects)}
             <div class="row">
                 <div class="col-md-12 table-responsive">
                     <table class="table table-bordered table-hover datatable" default-quantity="5">
