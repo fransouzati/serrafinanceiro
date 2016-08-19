@@ -10,11 +10,12 @@
             $oldValue = $value;
             $value = explode('/', $value);
             if(count($value) == 3){
-                if(checkdate($value[1], $value[0],$value[2])) {
-                    $value = $value[2] . '-' . $value[1] . '-' . $value[0];
-                    $_POST[$item] = $value;
+                if(is_numeric($value[1])) {
+                    if (checkdate($value[1], $value[0], $value[2])) {
+                        $value = $value[2] . '-' . $value[1] . '-' . $value[0];
+                        $_POST[$item] = $value;
+                    }
                 }
-
             }else{
                 $value = explode('-', $oldValue);
 
