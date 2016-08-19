@@ -9,7 +9,12 @@
             <select class="form-control " name="id_client">
                 <option value="" selected>Nenhum</option>
                 {foreach $clients as $client}
-                    <option value="{$client->get('id')}">{$client->get('name')}</option>
+                    {if $id_client == $client->get('id')}
+                        {assign var="selected" value='selected'}
+                    {else}
+                        {assign var="selected" value=''}
+                    {/if}
+                    <option {$selected} value="{$client->get('id')}">{$client->get('name')}</option>
                 {/foreach}
             </select>
         </div>

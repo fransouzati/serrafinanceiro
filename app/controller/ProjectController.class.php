@@ -174,7 +174,7 @@
             return $this->view($installment->get('id_project'));
         }
 
-        public function add() {
+        public function add($id_client = null) {
             if ($this->request()) {
                 if ($this->model->add()) {
                     $id = $this->model->lastInserted('project');
@@ -202,6 +202,7 @@
             
             $this->viewer->addJs(_APP_ROOT_DIR . 'assets/js/addInstallment.js');
 
+            $this->viewer->set('id_client', $id_client);
             return $this->viewer->show('add', 'Cadastrar projeto');
         }
 
