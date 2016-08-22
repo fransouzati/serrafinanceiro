@@ -49,7 +49,7 @@
                 $this->viewer->set('_filter_period', date('01/m/Y - t/m/Y'));
 
 
-                $projects = $this->model->search('project');
+                $projects = $this->model->search('project', '*', false, 'id DESC');
                 $projects = $this->model->query2dto($projects, 'project');
 
             }

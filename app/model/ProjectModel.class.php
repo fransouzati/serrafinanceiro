@@ -55,6 +55,8 @@
             }
 
             $sql = rtrim($sql, ' WHEREAND');
+            
+            $sql .= ' ORDER BY id DESC';
 
             $projects = $this->query($sql);
 
