@@ -365,7 +365,7 @@
             $installmentTotal = 0;
             $extraTotal = 0;
             
-            if ($finances->get('monthly_value') > 0) {
+            if ($finances->get('monthly_value') > 0 && $client->get('status')) {
                 $diff = abs(strtotime($periodFinal) - strtotime($periodInit));
                 $years = floor($diff / (365 * 60 * 60 * 24));
                 $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
@@ -496,6 +496,8 @@
             
             
             $finances = $this->getFinances($id_client);
+            $client = $this->getClient($id_client);
+            
             $pendencies = array(
                 'support' => '',
                 'extra'   => '',
@@ -507,7 +509,7 @@
             $installmentTotal = 0;
             
             $pendencies['support'] = '-';
-            if ($finances->get('monthly_value') > 0) {
+            if ($finances->get('monthly_value') > 0 && $client->get('status')) {
                 $diff = abs(strtotime($periodFinal) - strtotime($periodInit));
                 $years = floor($diff / (365 * 60 * 60 * 24));
                 $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
