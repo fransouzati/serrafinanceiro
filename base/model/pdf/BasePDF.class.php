@@ -54,10 +54,7 @@
                 foreach($this->pdfData as $row){
                     if(is_array($row)){
                         $row = $this->CalculateData($row);
-                        $y = $this->GetY();
-                        $this->PutRow($row);
-                        $yEnd = $this->GetY();
-                        $h = $yEnd - $y;
+                        $h = $this->PutRow($row);
                         $this->rowHeights[] = $h;
                     }
                 }

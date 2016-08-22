@@ -55,7 +55,7 @@
          * @param Array $data - row data
          * @param Boolean $mm - measure by milimeters or points
          * @link http://www.fpdf.org/en/script/script3.php
-         * @return void.
+         * @return int - height of the line.
          **/
         function PutRow($data, $mm = true){
             // 	//Calculate the height of the row
@@ -99,6 +99,7 @@
                 else
                     $this->Ln($h + 10);
             }
+            return $h;
         }
 
         /**
