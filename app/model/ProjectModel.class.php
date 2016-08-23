@@ -383,13 +383,17 @@
 
             $div .= '<div class="col-sm-3 form-group">';
             $div .= '<label id="lblValue' . $qtt . '" for="value' . $qtt . '" class="control-label">Valor</label>';
-            $div .= '<input type="text" id="lblValue' . $qtt . '" name="value' . $qtt . '" class="form-control mask-money">';
+            if($qtt == 1)
+                $class = 'firstInstallmentValue';
+            else
+                $class = '';
+            $div .= '<input type="text" id="lblValue' . $qtt . '" name="value' . $qtt . '" class="form-control installmentValue mask-money '.$class.'">';
             $div .= '</div>';
 
             $div .= '<div class="col-sm-3 form-group">';
             $div .= '<label id="lblExpiry' . $qtt . '" for="expiry' . $qtt . '" class="control-label">Vencimento</label>';
             if($qtt == 1)
-                $class = 'firstInstallment';
+                $class = 'firstInstallmentDate';
             else
                 $class = '';
             $div .= '<input type="date" id="lblExpiry' . $qtt . '" name="expiry' . $qtt . '" class="form-control mask-date expiry '.$class.'">';

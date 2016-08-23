@@ -73,17 +73,13 @@ $(function () {
     });
 
     $('#calculateDates').on('click', function () {
-        if(typeof $('.firstInstallment') != undefined)
+        if(typeof $('.firstInstallmentDate') != undefined)
             initialDate = $('.firstInstallment').val();
         else
             return;
-
         isFirst = true;
-
         if(initialDate == '')
             return;
-
-        
         if (initialDate != '' && $('.expiry').length > 0) {
 
             $('.expiry').each(function () {
@@ -93,6 +89,17 @@ $(function () {
                 isFirst = false;
             })
         }
+
+        if(typeof $('.firstInstallmentValue') != undefined)
+            initialValue = $('.firstInstallmentValue').val();
+        else
+            return;
+
+        $('.installmentValue').each(function(){
+            alert('ok')
+            $(this).val(initialValue);
+        })
+
     });
 
 
