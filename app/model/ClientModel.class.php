@@ -365,31 +365,43 @@
             $installmentTotal = 0;
             $extraTotal = 0;
             
+            // Se paga mensalidade e é cliente ativo
             if ($finances->get('monthly_value') > 0 && $client->get('status')) {
+
+                //Pega quantos meses de diferença tem no relatório
                 $diff = abs(strtotime($periodFinal) - strtotime($periodInit));
                 $years = floor($diff / (365 * 60 * 60 * 24));
                 $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
                 $months = ($years * 12) + $months;
+                if($months == 0)
+                    $months = 1;
                 
+                // Mês a mês..
                 for ($i = 0; $i < $months; $i++) {
+                    
+                    /*
+                     * Precisa deste $i para ir somando os meses
+                     * caso for mais de um mês, se não ficaria apenas no mês
+                     * da data de início.
+                     */
                     $month = explode('-', $periodInit)[1] + $i;
                     $year = explode('-', $periodInit)[0];
                     if ($month > 12) {
-                        $month = 1;
+                        $month = 01;
                         $year = $year + 1;
                     }
-                    if ($month < 10)
-                        $month = '0' . $month;
                     
+                    // Início e final do mês
                     $monthInit = $year . '-' . $month . '-01';
                     $monthFinal = date("Y-m-t", strtotime($monthInit));
-                    
+                    // Timestamp
                     $monthInitTs = strtotime($monthInit);
                     $monthFinalTs = strtotime($monthFinal);
                     $todayTs = strtotime(date('Y-m-d'));
-                    
-                    
+    
+                    // Verificação se é este mês que está sendo retirado o relatório.
                     $thisMonth = (($todayTs >= $monthInitTs) && ($todayTs <= $monthFinalTs));
+                    
                     
                     if ($thisMonth) {
                         if (date('d') > $finances->get('payment_day')) {
@@ -409,7 +421,7 @@
                                     date >= "' . $monthInit . '" AND 
                                     date <= "' . $finalDate . '" AND
                                     id_client = ' . $id_client;
-                    
+    
                     $entries = $this->query($sql);
                     if (count($entries) < 1) {
                         $pendencies[] = array(
@@ -513,16 +525,16 @@
                 $diff = abs(strtotime($periodFinal) - strtotime($periodInit));
                 $years = floor($diff / (365 * 60 * 60 * 24));
                 $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+                if($months == 0)
+                    $months = 1;
                 
                 for ($i = 0; $i < $months; $i++) {
                     $month = explode('-', $periodInit)[1] + $i;
                     $year = explode('-', $periodInit)[0];
                     if ($month > 12) {
-                        $month = 1;
+                        $month = 01;
                         $year = $year + 1;
                     }
-                    if ($month < 10)
-                        $month = '0' . $month;
                     
                     $monthInit = $year . '-' . $month . '-01';
                     $monthFinal = date("Y-m-t", strtotime($monthInit));

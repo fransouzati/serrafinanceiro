@@ -261,7 +261,10 @@
                 $project->set('id', $id);
                 if (!$this->addInstallment($project))
                     return false;
-
+    
+                if($_POST['qttInstallments'] == 0)
+                    $project->set('status', 1);
+                
                 // Updates the client status
                 if (!is_null($project->get('id_client')) && trim($project->get('id_client')) != '') {
                     $clientModel = new ClientModel();
