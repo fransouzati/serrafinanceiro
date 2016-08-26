@@ -1,22 +1,26 @@
 <?php
 
 
-    class Bill_payment {
+    class Bill_installment {
         private $FieldsValidation = array(
             'id_bill' => array('existsForeign', ['bill', 'id']),
             'value'   => 'validMoney',
-            'date'     => 'validDate',
+            'number'     => 'validNumber',
+            'expiry' => 'validDate',
         );
         private $FieldsMasks = array(
             'id_bill' => array('getDto', ['bill', 'id']),
             'value'   => 'moneyMask',
-            'date' => 'dateMask',
-            'id_withdraw' => array('getDto', ['withdraw', 'id'])
+            'expiry' => 'dateMask',
+            'payed' => 'booleanMask',
+            'payed_date', 'datemask',
+            'id_payment' => array('getDto', ['bill_payment', 'id']),
         );
         public $FieldsErrors = array(
             'id_bill'  => 'Informe uma conta válida.',
             'value' => 'Informe um valor válido.',
-            'date'   => 'Informe uma data válida.',
+            'number' => 'Informe um número de parcelas válido.',
+            'expiry'   => 'Informe vencimento válido.',
         );
         public $FieldsForm = array();
         use Validation;
@@ -24,10 +28,10 @@
         use DTO;
         private $id;
         private $id_bill;
-        private $id_withdraw;
-        private $number;
-        private $date;
         private $value;
-        private $observation;
+        private $number;
+        private $expiry;
+        private $payed;
+        private $id_payment;
 
     }

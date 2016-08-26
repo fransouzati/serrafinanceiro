@@ -2,8 +2,8 @@
 
     trait Validation {
 
-        public function validNumber($input) {
-            return filter_var($input, FILTER_VALIDATE_INT) || $input == 0;
+        public static function validNumber($input) {
+            return filter_var($input, FILTER_VALIDATE_INT) || $input == 0 || is_numeric($input);
         }
 
         public function validEmail($input) {

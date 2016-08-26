@@ -96,7 +96,8 @@
             $toPay = $billModel->toPay();
 
             return array(
-                'bills' => $toPay,
+                'bills' => $toPay[0],
+                'bill_installments' => $toPay[1]
             );
         }
 

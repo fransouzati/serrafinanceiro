@@ -47,7 +47,7 @@
             $controller = 'UserController';
             $action = 'login';
         }
-
+        
         if (class_exists($controller)) {
             
             eval('$controller = new ' . $controller . '("'.$controller.'","'.$action.'");');

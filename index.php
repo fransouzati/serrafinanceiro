@@ -34,6 +34,6 @@
 
     // Error messages
     include_once(_CONFIG_ROOT_DIR.'errors/messagesLocales.inc.php');
-
+    
     // Code execution
     include_once(_CONFIG_ROOT_DIR.'exec/exec.inc.php');

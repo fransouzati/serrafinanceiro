@@ -8,19 +8,20 @@
      *
      **/
     class Model {
-
+    
         private $debug;
         private $pdo;
         private $transaction = false;
-
+    
         /**
          * Constructor method
          *
          **/
         public function __construct($debug = true, $database = _DATABASE, $user = _DATABASE_USER, $password = _DATABASE_PASSWORD, $host = _HOST) {
+        
             $this->pdo = Connection::getConnection($debug, $database, $user, $password, $host);
         }
-
+    
         /**
          * Method used for insert data in database
          *
@@ -31,29 +32,29 @@
          **/
         public function insert($table, $data) {
             try {
-
+            
                 if (!is_object($data))
                     return false;
-
+            
                 $data = $this->filterValues($data);
-
+            
                 $columns = array();
-
+            
                 foreach ($data as $key => $value) {
                     $columns[] = $key;
                     $values[] = ':' . $key;
                 }
-
+            
                 $columnsStr = implode(', ', $columns);
                 $dataStr = implode(', ', $values);
-
+            
                 $sql = "INSERT INTO " . $table . " (" . $columnsStr . ") VALUES (" . $dataStr . ")";
-                
+            
                 $query = $this->pdo->prepare($sql);
-
+            
                 foreach ($data as $key => $value)
                     $query->bindValue(':' . $key, $value);
-
+            
                 if ($query->execute())
                     return true;
                 else
@@ -62,11 +63,11 @@
                 $this->cancelTransaction();
                 if ($this->debug)
                     echo _PDO_ERROR . $e->getMessage();
-
+            
                 return false;
             }
         }
-
+    
         /**
          * Method used to update information in database
          *
@@ -82,25 +83,25 @@
          *
          **/
         public function update($table, $data, $condition) {
-
+        
             try {
                 $sql = "UPDATE " . $table . " SET";
-
+            
                 if (!is_object($data))
                     return false;
-
+            
                 $data = $this->filterValues($data);
-
+            
                 if (!is_array($condition))
                     return false;
                 foreach ($data as $column => $value) {
                     $sql .= ' ' . $column . ' = :' . $column . ',';
                 }
-
+            
                 $sql = rtrim($sql, ',');
-
+            
                 $sql .= " WHERE ";
-                
+            
                 foreach ($condition as $column => $value) {
                     if (strlen($column) > 8) {
                         if (substr($column, 0, 8) == 'conscond') {
@@ -112,12 +113,12 @@
                         $sql .= $column . '=:' . $column . 'Cond ';
                     }
                 }
-
+            
                 $query = $this->pdo->prepare($sql);
-
+            
                 foreach ($data as $key => $value)
                     $query->bindValue(':' . $key, $value);
-
+            
                 foreach ($condition as $column => $value) {
                     if (strlen($column) > 8) {
                         if (substr($column, 0, 8) != 'conscond') {
@@ -127,18 +128,18 @@
                         $query->bindValue(':' . $column . 'Cond', $value);
                     }
                 }
-
+            
                 return $query->execute();
             } catch (PDOException $e) {
                 $this->cancelTransaction();
                 if ($this->debug)
                     echo _PDO_ERROR . $e->getMessage();
-
+            
                 return false;
             }
-
+        
         }
-
+    
         /**
          * Method used to delete information in database
          *
@@ -155,10 +156,10 @@
         public function delete($table, $condition) {
             try {
                 $sql = 'DELETE FROM ' . $table . ' WHERE ';
-
+            
                 if (!is_array($condition))
                     return false;
-
+            
                 foreach ($condition as $column => $value) {
                     if (strlen($column) > 8) {
                         if (substr($column, 0, 8) == 'conscond') {
@@ -170,10 +171,10 @@
                         $sql .= $column . '=:' . $column . 'Cond ';
                     }
                 }
-
+            
                 $query = $this->pdo->prepare($sql);
-
-
+            
+            
                 foreach ($condition as $column => $value) {
                     if (strlen($column) > 8) {
                         if (substr($column, 0, 8) != 'conscond') {
@@ -183,17 +184,17 @@
                         $query->bindValue(':' . $column . 'Cond', $value);
                     }
                 }
-
+            
                 return $query->execute();
             } catch (PDOException $e) {
                 $this->cancelTransaction();
                 if ($this->debug)
                     echo _PDO_ERROR . $e->getMessage();
-
+            
                 return false;
             }
         }
-
+    
         /**
          * Method used to search information in database
          *
@@ -216,18 +217,18 @@
                 if (is_array($columns)) {
                     $columns = implode(', ', $columns);
                 }
-
+            
                 if (!is_array($condition)) {
                     if ($condition != false) {
                         return false;
                     }
                 }
                 $sql = "SELECT " . $columns . " FROM " . $table;
-
+            
                 if ($condition != false) {
                     $sql .= ' WHERE ';
                     foreach ($condition as $column => $value) {
-
+                    
                         if (strlen($column) > 8) {
                             if (substr($column, 0, 8) == 'conscond') {
                                 $sql .= ' ' . $value . ' ';
@@ -239,19 +240,19 @@
                         }
                     }
                 }
-
-
+            
+            
                 if ($order != false)
                     $sql .= " ORDER BY " . $order;
-
+            
                 if ($group != false)
                     $sql .= ' GROUP BY ' . $group;
-
+            
                 if ($limit != false)
                     $sql .= " LIMIT " . $limit;
-                
+            
                 $query = $this->pdo->prepare($sql);
-
+            
                 if ($condition != false) {
                     foreach ($condition as $column => $value) {
                         if (strlen($column) > 8) {
@@ -263,21 +264,21 @@
                         }
                     }
                 }
-                
+            
                 $query->execute();
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
+            
                 return $result;
             } catch (PDOException $e) {
                 $this->cancelTransaction();
                 if ($this->debug)
                     echo _PDO_ERROR . $e->getMessage();
-
+            
                 return false;
             }
-
+        
         }
-
+    
         /**
          * Método utilizado para realizar um query livre no banco de dados.
          * Devido a questões de segurança, deve ser utilizado apenas
@@ -289,20 +290,40 @@
         public function query($sql) {
             try {
                 $query = $this->pdo->prepare($sql);
-
+            
                 $query->execute();
-
+            
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            
                 return $result;
             } catch (PDOException $e) {
                 $this->cancelTransaction();
                 if ($this->debug)
                     echo _PDO_ERROR . $e->getMessage();
-
+            
                 return false;
             }
         }
-
+    
+        /**
+         * Executes an sql in database
+         * @param String $sql
+         * @return Bool - success or not
+         **/
+        public function execute($sql) {
+            try {
+                $query = $this->pdo->prepare($sql);
+            
+                return $query->execute();
+            } catch (PDOException $e) {
+                $this->cancelTransaction();
+                if ($this->debug)
+                    echo _PDO_ERROR . $e->getMessage();
+            
+                return false;
+            }
+        }
+    
         /**
          * Method used to count a num of rows in a table
          *
@@ -323,10 +344,10 @@
                 }
             }
             $query = $this->search($table, '*', $condition);
-
+        
             return count($query);
         }
-
+    
         /**
          * Method used to return the last inserted register in a table
          *
@@ -336,26 +357,27 @@
          **/
         public function lastInserted($table) {
             try {
-                $sql = 'SHOW KEYS FROM '.$table.' WHERE Key_name = "PRIMARY"';
+                $sql = 'SHOW KEYS FROM ' . $table . ' WHERE Key_name = "PRIMARY"';
                 $query = $this->query($sql)[0]['Column_name'];
-
+            
                 $sql = '
-                    SELECT '.$query.' as id
-                    FROM '.$table.'
-                    ORDER BY '.$query.' DESC
+                    SELECT ' . $query . ' as id
+                    FROM ' . $table . '
+                    ORDER BY ' . $query . ' DESC
                     LIMIT 1
                     ';
                 $query = $this->query($sql);
+            
                 return $query[0]['id'];
             } catch (PDOException $ex) {
                 $this->cancelTransaction();
                 if ($this->debug)
                     echo _PDO_ERROR . $ex->getMessage();
-
+            
                 return false;
             }
         }
-
+    
         /**
          * Method used to check if an register exists
          *
@@ -367,10 +389,10 @@
          **/
         public function exists($table, $key, $value) {
             $query = $this->search($table, '*', array($key => $value));
-
+        
             return (is_array($query) && count($query) > 0);
         }
-
+    
         /**
          * Method used to init a transaction
          *
@@ -379,7 +401,7 @@
             $this->pdo->beginTransaction();
             $this->transaction = true;
         }
-
+    
         /**
          * Method used to end a transaction
          *
@@ -388,7 +410,7 @@
             $this->pdo->commit();
             $this->transaction = false;
         }
-
+    
         /**
          * Method used to rollback a transaction
          *
@@ -399,7 +421,7 @@
                 $this->transaction = false;
             }
         }
-
+    
         /**
          * Method used to get a DTO
          *
@@ -422,10 +444,10 @@
                     $dto->set($field, $data[$field]);
                 }
             }
-
+        
             return $dto;
         }
-
+    
         /**
          * Method used to transform a query array to a dto array
          *
@@ -440,26 +462,25 @@
                 $dto = $this->getDto($table, '', '', $register);
                 $dtos[] = $dto;
             }
-
+        
             return $dtos;
         }
-
+    
         /**
          * Method used to filter the currency values from DTO, and transform it to decimal
          * @param object $dto
          * return array $data
          */
-        public function filterValues($dto){
+        public function filterValues($dto) {
             $data = $dto->getArrayDatabase();
-            foreach($data as $column => $value){
-                if(strpos($column, 'value') !== false || $column == 'initial_capital'){
-                    if(!$dto->validDecimal($value))
+            foreach ($data as $column => $value) {
+                if (strpos($column, 'value') !== false || $column == 'initial_capital') {
+                    if (!$dto->validDecimal($value))
                         $data[$column] = $dto->decimalMask($value);
-                }else{
+                } else {
                 }
             }
+        
             return $data;
         }
     }
-
-?>

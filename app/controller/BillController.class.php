@@ -3,14 +3,31 @@
 
     class BillController extends AppController {
 
-        public function view() {
+        public function view($id = null) {
+            if(!is_null($id)){
+                if(!$this->model->exists('bill', 'id', $id)){
+                    Viewer::flash(_EXISTS_ERROR, 'e');
+                    return $this->view();
+                }
+                $bill = $this->model->getBill($id);
+                $installments = array();
+                if($bill->get('is_variable')){
+                    $installments = $this->model->search('bill_installment', '*', array('id_bill' => $id));
+                    $installments = $this->model->query2dto($installments, 'bill_installment');
+                }
+                $this->viewer->set('installments', $installments);
+                $this->viewer->set('bill', $bill);
+                $this->viewer->set('months', count($installments));
+                
+                return $this->viewer->show('view_one', $bill->get('description'));
+            }
             $bills = $this->model->query2dto($this->model->search('bill'), 'bill');
             $this->viewer->set('bills', $bills);
-            $this->viewer->show('view', 'Contas a pagar');
+            return $this->viewer->show('view', 'Contas a pagar');
         }
 
         public function edit($id) {
-
+            
             if (!$this->model->exists('bill', 'id', $id)) {
                 Viewer::flash(_EXISTS_ERROR, 'e');
 
@@ -20,14 +37,14 @@
             if ($this->request()) {
                 if ($this->model->edit($id)) {
                     Viewer::flash(_INSERT_SUCCESS, 's');
-                    return $this->view();
+                    return $this->view($id);
                 } else {
                     unset($_POST);
 
                     return $this->edit($id);
                 }
             }
-
+            
             $types = $this->model->search('withdraw_type');
             $types = $this->model->query2dto($types, 'withdraw_type');
             $this->viewer->set('types', $types);
@@ -35,6 +52,12 @@
             $bill = $this->model->getBill($id);
             $this->viewer->set('bill', $bill);
             
+            if($bill->get('is_variable')){
+                $qttInstallments = $this->model->numRows('bill_installment', array('id_bill' => $id));
+                $this->viewer->set('qttInstallments', $qttInstallments);
+            }
+    
+            $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/billVariable.js');
             $this->viewer->show('edit', 'Editar conta ' . $bill->get('id_type', true)->get('name'));
         }
 
@@ -55,6 +78,8 @@
             $types = $this->model->search('withdraw_type');
             $types = $this->model->query2dto($types, 'withdraw_type');
             $this->viewer->set('types', $types);
+            
+            $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/billVariable.js');
             
             return $this->viewer->show('add', 'Cadastrar conta a pagar');
         }
