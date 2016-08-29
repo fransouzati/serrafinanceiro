@@ -22,7 +22,7 @@
         $functions = getFunctions($ctrlDir);
         $diff = compareFunc($traitFunctions, $functions, $name);
         $diffs[$name] = $diff;
-        
+    
         if(!in_array($name, array_keys($traitControllers))) {
             $traitControllers[$name] = $name;
             $newControllers[] = $name;
@@ -31,11 +31,15 @@
             mergeDiff($traitFunctions, $diff, $name);
         }
     }
-    
+    $publics = traitFunctions('publics');
     if(isset($_POST['submit'])) {
-        putInFile($traitFunctions);
         unset($_POST['submit']);
-        putInFile($_POST, 'publics');
+        $publics = traitFunctions('publics');
+        foreach($_POST as $name=>$newFuncs) {
+            mergeDiff($publics, $newFuncs, $name);
+        }
+        putInFile($traitFunctions);
+        putInFile($publics, 'publics');
         putInFile($traitControllers, 'controllers');
         die('Ok!');
     }else {
@@ -64,15 +68,14 @@
         $source = file_get_contents($file);
         $tokens = token_get_all($source);
         $functions = array();
-    
         $next = false;
         foreach($tokens as $token){
-            if($token[0] == 335){
+            if($token[0] == 337){
                 $next = true;
                 continue;
             }
                         
-            if($next && $token[0] != 377){
+            if($next && $token[0] != 379){
                 $functions[] = $token[1];
                 $next = false;
             }
@@ -216,7 +219,6 @@
             $str = toStrController($functions);
         else
             $str = toStr($functions);
-        
         $inFunctions = false;
         foreach($file as $num => $line){
             if($filter == 'publics'){
@@ -225,14 +227,14 @@
                     $toPut = $num + 1;
                     continue;
                 }
-            }elseif($filter == 'functions') {
-                if (strpos($line, 'public static $functions') != 0) {
+            }elseif($filter == 'controllers') {
+                if (strpos($line, 'public static $controllers') != 0) {
                     $inFunctions = true;
                     $toPut = $num + 1;
                     continue;
                 }
             }else{
-                if (strpos($line, 'public static $controllers') != 0) {
+                if (strpos($line, 'public static $functions') != 0) {
                     $inFunctions = true;
                     $toPut = $num + 1;
                     continue;
@@ -243,15 +245,16 @@
                 $inFunctions = false;
             }
             
-            if($inFunctions){
-                if($num == $toPut)
+            if ($inFunctions) {
+                if ($num == $toPut)
                     $file[$num] = '';
                 else
                     unset($file[$num]);
             }
         }
-    
+        
         $file[$toPut] = $str;
+        
         $file = implode(PHP_EOL, $file);
         
         file_put_contents(_TRAIT, $file);
