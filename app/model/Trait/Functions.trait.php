@@ -1,7 +1,7 @@
 <?php
     
     trait Functions {
-    
+        
         public static $functions = array(
            'Bill' => array(
                'view',
@@ -9,6 +9,7 @@
                'add',
                'pay',
                'payments',
+               'delete',
            ),
            'Client' => array(
                'view',
@@ -79,22 +80,23 @@
            ),
 
         );
-    
+        
         public static $publics = array(
-            'Client' => array(
-                'pendenciesModal',
-            ),
-            'Project' => array(
-                'installmentsModal',
-                'addInstallmentForm',
-            ),
-            'User' => array(
-                'home',
-                'login',
-                'logout',
-                'view',
-                'edit',
-            )
+           'Client' => array(
+               'pendenciesModal',
+           ),
+           'Project' => array(
+               'installmentsModal',
+               'addInstallmentForm',
+           ),
+           'User' => array(
+               'home',
+               'login',
+               'logout',
+               'view',
+               'edit',
+           ),
+
         );
         
         public static $block = array(
@@ -116,6 +118,10 @@
                 'Pagar' => array(
                     'pay'
                 ),
+                'Deletar' => array(
+                    'view',
+                    'delete',
+                )
             ),
             'Client' => array(
                 'Visualizar' => array(

@@ -6,6 +6,16 @@
             return $this->getDto('bill', 'id', $id);
         }
         
+        public function getInstallment($id_bill, $number){
+            $condition = array(
+                'id_bill' => $id_bill,
+                'conscond1' => 'AND',
+                'number' => $number
+            );
+            $installment = $this->query2dto($this->search('bill_installment', '*', $condition), 'bill_installment');
+            return $installment[0];
+        }
+        
         public function getTotal($payments) {
             $total = 0;
             foreach ($payments as $payment) {
@@ -95,7 +105,7 @@
             } else {
                 $keepFixed = !isset($_POST['to_variable']);
                 if (!$keepFixed) {
-                    $status = $this->addInstallments($bill->get('id'));
+                    $status = $this->addInstallments($bill);
                     $bill->set('is_variable', 1);
                 }
             }
@@ -163,9 +173,10 @@
                         }
                     }
                 }
-                $quantity = $_POST['quantity'];
+                $quantity = $_POST['qttInstallments'];
                 $countFrom = strtotime(date($defaultDate));
                 $numberFrom = 0;
+                
             } else {
                 $lastInstallment = $this->search(
                     'bill_installment',
@@ -177,7 +188,9 @@
                     false,
                     1
                 )[0];
-                $countFrom = strtotime($lastInstallment['expiry']);
+                $lastExpiry = explode('-', $lastInstallment['expiry']);
+                $dateFrom = $lastExpiry[0].'-'.$lastExpiry[1].'-'.$_POST['day'];
+                $countFrom = strtotime($dateFrom);
                 $numberFrom = $lastInstallment['number'];
             }
             
@@ -188,7 +201,7 @@
                 $installment->set('value', $_POST['value']);
                 $installment->set('number', $numberFrom + $i);
                 $installment->set('payed', 0);
-                $expiryStr = '+' . ($i - 1) . ' months';
+                $expiryStr = '+' . $i . ' months';
                 $installment->set('expiry', date($defaultDate, strtotime($expiryStr, $countFrom)));
                 $installment->set('id_payment', null);
                 if (!$this->insert('bill_installment', $installment))
@@ -198,7 +211,7 @@
             return true;
         }
         
-        public function deleteInstallments(Bill $bill, $all, $quantity, $default) {
+        public function deleteInstallments(Bill $bill, $all, $quantity = null, $default = null) {
             if ($all) { // delete all installments that isn't payed
                 $sql = '
                   DELETE FROM bill_installment
@@ -241,18 +254,42 @@
             $payment->set('id_bill', $id_bill);
             $payment->set('date', $date);
             $payment->set('value', $_POST['value']);
-            $payment->set('observation', $_POST['observation']);
+            $observation = $_POST['observation'].' - '.$bill->get('description');
+            if(!is_null($number)){
+                $observation .= ' - PARCELA '.$number;
+            }
+            $payment->set('observation', $observation);
             
             $withdrawModel = new WithdrawModel();
+            $this->initTransaction();
             if (!$withdrawModel->addByBill($payment)) {
                 Viewer::flash(_INSERT_ERROR, 'e');
-                
+                $this->cancelTransaction();
                 return false;
             }
             $id_withdraw = $this->lastInserted('withdraw');
             $payment->set('id_withdraw', $id_withdraw);
             
-            $this->insert('bill_payment', $payment);
+            if(!$this->insert('bill_payment', $payment)) {
+                Viewer::flash(_INSERT_ERROR, 'e');
+                $this->cancelTransaction();
+                return false;
+            }
+            $id_payment = $this->lastInserted('bill_payment');
+            
+            if(!is_null($number)) {
+                $installment = $this->getInstallment($id_bill, $number);
+                $installment->set('payed', 1);
+                $installment->set('id_payment', $id_payment);
+                
+                if (!$this->update('bill_installment', $installment, array('id' => $installment->get('id')))) {
+                    Viewer::flash(_INSERT_ERROR, 'e');
+                    $this->cancelTransaction();
+        
+                    return false;
+                }
+            }
+            $this->endTransaction();
             
             return true;
             

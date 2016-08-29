@@ -1,4 +1,4 @@
-<form action="bill/pay/{$bill->get('id')}" method="post">
+<form action="bill/pay/{$bill->get('id')}/{$number}" method="post">
     <div class="row">
         <div class="col-sm-6 form-group">
             <label class="control-label" for="value">Valor</label>

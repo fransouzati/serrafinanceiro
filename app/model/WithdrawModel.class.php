@@ -170,7 +170,7 @@
         public function addByBill($payment){
             $withdraw = new Withdraw();
             $withdraw->set('date', date('Y-m-d'));
-            $withdraw->set('description', 'Pagamento de conta');
+            $withdraw->set('description', 'Pagamento de conta - '.$payment->get('observation'));
             $withdraw->set('value', $payment->get('value'));
             $withdraw->set('id_type', $payment->get('id_bill', true)->get('id_type'));
 

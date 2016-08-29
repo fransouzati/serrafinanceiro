@@ -1,5 +1,6 @@
 $(function(){
-    if(typeof $('#toFixed') == 'undefined') {
+
+    if(!$('#toFixed').length) {
         $('#variable').hide();
         $('input[name=is_variable').change(function () {
             if ($(this).val() == 1) {
@@ -12,7 +13,7 @@ $(function(){
         })
     }else{
         $('#toVar').change(function () {
-            if ($(this).val() == 1) {
+            if ($(this).prop('checked')) {
                 $('#variable').show();
                 $('#valueLabel').html('Valor da parcela');
             } else {

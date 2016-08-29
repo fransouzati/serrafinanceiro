@@ -45,14 +45,19 @@
                 <tr>
                     <th>Conta</th>
                     <th>Data</th>
+                    <th>Observações</th>
                     <th>Valor</th>
                 </tr>
                 </thead>
                 <tbody>
                 {foreach $payments as $payment}
                     <tr>
-                        <td>{$payment->get('id_bill', true)->get('id_type', true)->get('name')}</td>
+                        <td>
+                            {$payment->get('id_bill', true)->get('id_type', true)->get('name')} -
+                            {$payment->get('id_bill', true)->get('description')}
+                        </td>
                         <td>{$payment->get('date', true)}</td>
+                        <td>{$payment->get('observation')}</td>
                         <td>R${$payment->get('value', true)}</td>
                     </tr>
                 {/foreach}

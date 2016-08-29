@@ -55,7 +55,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" id="variable">
+        <div class="row" id="variable" style="display: none">
             <div class="col-sm-12 form-group">
                 <label class="control-label" for="qttInstallments">Número de parcelas</label>
                 <input type="number" class="form-control" name="qttInstallments">

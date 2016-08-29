@@ -45,6 +45,11 @@
                                                 Visualizar
                                             </button>
                                         </a>
+                                        <a href="bill/delete/{$bill->get('id')}" class="confirm-link">
+                                            <button class="btn btn-danger">
+                                                Deletar
+                                            </button>
+                                        </a>
 									</td>
 								</tr>
 							{/foreach}

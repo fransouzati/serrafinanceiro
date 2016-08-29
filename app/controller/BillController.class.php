@@ -84,14 +84,26 @@
             return $this->viewer->show('add', 'Cadastrar conta a pagar');
         }
 
-        public function pay($id_bill) {
+        public function pay($id_bill, $number = null) {
             if(!$this->model->exists('bill', 'id', $id_bill)){
                 Viewer::flash(_EXISTS_ERROR, 'e');
                 return $this->view();
             }
+            if(!is_null($number)){
+                $condition = array(
+                    'id_bill' => $id_bill,
+                    'conscond1' => 'AND',
+                    'number' => $number
+                );
+                if($this->model->numRows('bill_installment', $condition) < 1){
+                    Viewer::flash(_EXISTS_ERROR, 'e');
+                    return $this->view();
+                }
+                $installment = $this->model->getInstallment($id_bill, $number);
+            }
             $bill = $this->model->getBill($id_bill);
             if ($this->request()) {
-                if ($this->model->pay($bill)) {
+                if ($this->model->pay($bill, $number)) {
 
                     Viewer::flash(_INSERT_SUCCESS, 's');
 
@@ -103,8 +115,12 @@
                 }
             }
 
+            $this->viewer->set('number', $number);
             $this->viewer->set('bill', $bill);
-            return $this->viewer->show('pay', 'Pagar conta - '.$bill->get('id_type', true)->get('name'));
+            $title = 'Pagar conta - '.$bill->get('description');
+            if(isset($installment))
+                $title .= ' - Parcela '.$installment->get('number');
+            return $this->viewer->show('pay', $title);
         }
 
         public function payments(){
@@ -128,6 +144,25 @@
             $this->viewer->set('payments', $payments);
 
             $this->viewer->show('payments', 'Pagamentos');
+        }
+        
+        public function delete($id){
+            if(!$this->model->exists('bill', 'id', $id)){
+                Viewer::flash(_EXISTS_ERROR, 'e');
+                return $this->view();
+            }
+            
+            $this->model->delete('bill_installment', array(
+                'id_bill' => $id,
+                'conscond1' => 'AND',
+                'payed' => 0
+            ));
+            $this->model->delete('bill', array(
+                'id' => $id
+            ));
+            
+            Viewer::flash(_DELETE_SUCCESS, 's');
+            $this->view();
         }
 
     }

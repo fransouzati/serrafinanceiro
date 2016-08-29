@@ -62,9 +62,14 @@
                             <td>{$installment->get('expiry', true)}</td>
                             <td>
                                 {if $installment->get('payed')}
-                                    Paga - {$installment->get('id_payment', true)->get('date')}
+                                    Paga - {$installment->get('id_payment', true)->get('date', true)}
                                 {else}
                                     Pendente
+                                    <a href="bill/pay/{$installment->get('id_bill')}/{$installment->get('number')}">
+                                        <button class="btn btn-success" title="Pagar">
+                                            <i class="fa fa-dollar"> Pagar</i>
+                                        </button>
+                                    </a>
                                 {/if}
                             </td>
                         </tr>
