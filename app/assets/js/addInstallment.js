@@ -96,7 +96,6 @@ $(function () {
             return;
 
         $('.installmentValue').each(function(){
-            alert('ok')
             $(this).val(initialValue);
         })
 
