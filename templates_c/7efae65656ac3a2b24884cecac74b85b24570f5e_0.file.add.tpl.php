@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-30 10:38:14
+/* Smarty version 3.1.28, created on 2016-08-03 09:49:24
   from "C:\wamp\www\financeiro3\app\viewer\Entry\add.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_577520c6433907_21595378',
+  'unifunc' => 'content_57a1e85473b365_94773047',
   'file_dependency' => 
   array (
     '7efae65656ac3a2b24884cecac74b85b24570f5e' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Entry\\add.tpl',
-      1 => 1467293892,
+      1 => 1468224974,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_577520c6433907_21595378 ($_smarty_tpl) {
+function content_57a1e85473b365_94773047 ($_smarty_tpl) {
 ?>
 <form action="entry/add" method="post">
     <div class="row">
@@ -108,7 +108,7 @@ $_smarty_tpl->tpl_vars['client'] = $__foreach_client_1_saved_item;
 
     <div class="row">
         <div class="col-sm-12 form-group">
-            <label for="destionation" class="control-label">Esta entrada será direcionada para o caixa</label>
+            <label for="destination" class="control-label">Esta entrada será direcionada para o caixa</label>
             <select required class="form-control" name="destination">
                 <option value="bank">Do banco</option>
                 <option value="internal">Interno</option>

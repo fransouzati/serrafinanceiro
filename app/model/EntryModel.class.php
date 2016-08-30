@@ -141,6 +141,8 @@
             if(!$idType)
                 $idType = $installment->get('id_project', true)->get('id_entry_type');
             $entry->set('id_type', $idType);
+            if(is_null($idClient) && $installment->get('id_project', true)->get('id_client') != '')
+                $idClient = $installment->get('id_project', true)->get('id_client');
             $entry->set('id_client', $idClient);
             if(!$this->insert('entry', $entry))
                 return false;

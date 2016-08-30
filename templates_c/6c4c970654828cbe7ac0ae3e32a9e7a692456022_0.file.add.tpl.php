@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-07-21 14:38:27
+/* Smarty version 3.1.28, created on 2016-08-19 11:11:56
   from "C:\wamp\www\financeiro3\app\viewer\Project\add.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_5791089308a8e9_77358739',
+  'unifunc' => 'content_57b713ac6b1bd6_71670809',
   'file_dependency' => 
   array (
     '6c4c970654828cbe7ac0ae3e32a9e7a692456022' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Project\\add.tpl',
-      1 => 1469022991,
+      1 => 1471615874,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_5791089308a8e9_77358739 ($_smarty_tpl) {
+function content_57b713ac6b1bd6_71670809 ($_smarty_tpl) {
 ?>
 <form action="project/add" method="post">
     <div class="row">
@@ -43,7 +43,15 @@ if ($__foreach_client_0_total) {
 foreach ($_from as $_smarty_tpl->tpl_vars['client']->value) {
 $__foreach_client_0_saved_local_item = $_smarty_tpl->tpl_vars['client'];
 ?>
-                    <option value="<?php echo $_smarty_tpl->tpl_vars['client']->value->get('id');?>
+                    <?php if ($_smarty_tpl->tpl_vars['id_client']->value == $_smarty_tpl->tpl_vars['client']->value->get('id')) {?>
+                        <?php $_smarty_tpl->tpl_vars["selected"] = new Smarty_Variable('selected', null);
+$_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "selected", 0);?>
+                    <?php } else { ?>
+                        <?php $_smarty_tpl->tpl_vars["selected"] = new Smarty_Variable('', null);
+$_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "selected", 0);?>
+                    <?php }?>
+                    <option <?php echo $_smarty_tpl->tpl_vars['selected']->value;?>
+ value="<?php echo $_smarty_tpl->tpl_vars['client']->value->get('id');?>
 "><?php echo $_smarty_tpl->tpl_vars['client']->value->get('name');?>
 </option>
                 <?php

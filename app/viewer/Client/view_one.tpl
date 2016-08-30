@@ -214,7 +214,8 @@
                             {else}
                                 {assign var="clientName" value=$project->get('id_client', true)->get('name')}
                             {/if}
-                            {if $project->strtotime2($project->get('end_date')) < $project->strtotime2($project->today(false))}
+                            {if $project->strtotime2($project->get('end_date')) < $project->strtotime2($project->today(false))
+                            && !$project->get('done')}
                                 {assign var="style" value="style='color: red'"}
                             {else}
                                 {assign var="style" value=""}

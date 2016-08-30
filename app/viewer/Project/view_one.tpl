@@ -75,6 +75,7 @@
     </div>
 </div>
 {if !empty($installments)}
+    {include file=$smarty.current_dir|cat:"/payInstallment.tpl"}
     <div class="row">
         <div class="col-md-12 table-responsive">
             <table class="table table-bordered table-hover datatable">
@@ -112,6 +113,13 @@
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </a>
+
+                            {if !$installment->get('status')}
+                                <button type="button" class="btn btn-success payment-modal"
+                                        data-installment="{$installment->get('id')}">
+                                    <i class="fa fa-dollar"></i>
+                                </button>
+                            {/if}
 
                         </td>
                     </tr>

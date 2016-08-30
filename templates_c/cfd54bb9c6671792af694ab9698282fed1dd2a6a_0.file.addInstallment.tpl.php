@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-22 20:47:55
+/* Smarty version 3.1.28, created on 2016-08-30 16:18:53
   from "C:\wamp\www\financeiro3\app\viewer\Project\addInstallment.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_576add5b87c575_90189699',
+  'unifunc' => 'content_57c5dc1d994ff9_44533622',
   'file_dependency' => 
   array (
     'cfd54bb9c6671792af694ab9698282fed1dd2a6a' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Project\\addInstallment.tpl',
-      1 => 1466621213,
+      1 => 1472584724,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_576add5b87c575_90189699 ($_smarty_tpl) {
+function content_57c5dc1d994ff9_44533622 ($_smarty_tpl) {
 ?>
 
 
@@ -41,6 +41,9 @@ function content_576add5b87c575_90189699 ($_smarty_tpl) {
                                 </button>
                                 <button class="btn btn-default" type="button" id="removeInstallment">
                                     <span class="fa fa-minus"></span>
+                                </button>
+                                <button class="btn btn-default" type="button" id="calculateDates" title="Calcular datas">
+                                    <span class="fa fa-calculator"></span>
                                 </button>
                             </div>
                             <div class="col-md-12">

@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-06-10 16:27:03
+/* Smarty version 3.1.28, created on 2016-07-27 16:01:38
   from "C:\wamp\www\financeiro3\app\viewer\User\add.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_575ace37cb6108_41207872',
+  'unifunc' => 'content_5799051217eb65_92117362',
   'file_dependency' => 
   array (
     '39c2b32b6566e0daded5a22af9dc52d0111f8e4d' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\User\\add.tpl',
-      1 => 1465568820,
+      1 => 1469645837,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_575ace37cb6108_41207872 ($_smarty_tpl) {
+function content_5799051217eb65_92117362 ($_smarty_tpl) {
 ?>
 <form action="user/add" method="post">
     <div class="row">
@@ -42,6 +42,8 @@ function content_575ace37cb6108_41207872 ($_smarty_tpl) {
             <input type="password" class="form-control" name="passwordConfirm">
         </div>
     </div>
+    <?php echo $_smarty_tpl->tpl_vars['form']->value;?>
+
     <div class="row">
         <div class="col-sm-offset-4 col-sm-4">
             <button class="btn btn-lg btn-success btn-block">

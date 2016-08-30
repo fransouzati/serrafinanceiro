@@ -70,12 +70,12 @@
         $functions = array();
         $next = false;
         foreach($tokens as $token){
-            if($token[0] == 337){
+            if($token[0] == 335){
                 $next = true;
                 continue;
             }
                         
-            if($next && $token[0] != 379){
+            if($next && $token[0] != 377){
                 $functions[] = $token[1];
                 $next = false;
             }

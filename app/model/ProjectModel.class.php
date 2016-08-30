@@ -275,7 +275,7 @@
             }
         }
 
-        public function updateStatus($project) {
+        public function updateStatus(Project $project) {
             $installments = $this->search('project_installment', '*', array('id_project' => $project->get('id')));
             $project->set('status', 1);
             if (count($installments) < 1) {
@@ -470,7 +470,7 @@
             return true;
         }
         
-        public function payInstallment($installment) {
+        public function payInstallment(Project_installment $installment) {
             $installment->set('status', 1);
             $entryModel = new Entrymodel();
 
@@ -485,9 +485,42 @@
 
                 return false;
             }
+            $this->updateStatus($installment->get('id_project', true));
             $this->endTransaction();
 
             return true;
+        }
+    
+        public function payInstallmentModal($id_installment) {
+            $json = array();
+            $installment = $this->getInstallment($id_installment);
+            $project = $installment->get('id_project', true);
+            if($project->get('id_client') != ''){
+                $json['name'] = $project->get('id_client', true)->get('name');
+            }else{
+                $json['name'] = 'Projeto sem cliente';
+            }
+            
+            $json['value'] = 'R$'.$installment->get('value', true);
+            
+            $json['action'] = 'project/payInstallment/'.$id_installment;
+            
+            echo json_encode($json);
+            
+        }
+        
+        public function checkNumberOrdenation(Project $project){
+            $installments = $this->search('project_installment', '*', array('id_project' => $project->get('id')), 'number');
+            $installments = $this->query2dto($installments, 'project_installment');
+            
+            $i = 1;
+            foreach($installments as $installment){
+                if($installment->get('number') != $i){
+                    $installment->set('number', $i);
+                    $this->update('project_installment', $installment, array('id' => $installment->get('id')));
+                }
+                $i++;
+            }
         }
 
     }

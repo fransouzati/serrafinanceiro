@@ -280,6 +280,15 @@
             if ($monthly_value == 0)
                 return true;
             
+            $client = $this->getClient($id_client);
+            if(!$client->get('status'))
+                return true;
+            
+            $monthInitTs = strtotime('2016-09-01 00:00:00');
+            if(strtotime(date('Y-m-d')) < $monthInitTs)
+                return true;
+            
+            
             $sql = 'SELECT * FROM entry 
                     WHERE id_type = ' . _SUPPORT_ENTRY_TYPE_ID . ' AND 
                           date >= "' . date('Y-m') . '-01" AND 
@@ -299,7 +308,7 @@
             $sql = 'SELECT * FROM project_installment i 
                     JOIN project p ON p.id = i.id_project 
                     WHERE i.status = 0 AND
-                          i.expiry >= "' . date('Y-m') . '01" AND
+                          i.expiry >= "' . date('Y-m-') . '01" AND
                           i.expiry <  "' . date('Y-m-d') . '" AND
                           p.id_client = ' . $id_client;
             

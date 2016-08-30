@@ -254,6 +254,12 @@
 
 }
 
+@media (min-width: 979px){
+    html{
+        zoom: 90%;
+    }
+}
+
 @media (max-width:320px) {
     .login-social-link a {
         padding: 15px 17px !important;

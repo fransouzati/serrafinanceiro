@@ -50,6 +50,7 @@
                'end',
                'installmentsModal',
                'addInstallmentForm',
+               'payInstallmentModal',
            ),
            'Report' => array(
                'view',
@@ -88,6 +89,7 @@
            'Project' => array(
                'installmentsModal',
                'addInstallmentForm',
+               'payInstallmentModal',
            ),
            'User' => array(
                'home',

@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-07-20 11:14:53
+/* Smarty version 3.1.28, created on 2016-08-30 15:39:08
   from "C:\wamp\www\financeiro3\app\viewer\Project\view_one.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_578f875d8a6763_72607248',
+  'unifunc' => 'content_57c5d2cca73528_08798279',
   'file_dependency' => 
   array (
     '08caeb59c8916b542fbe07d01dabcc7f99501354' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Project\\view_one.tpl',
-      1 => 1469023039,
+      1 => 1472582340,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_578f875d8a6763_72607248 ($_smarty_tpl) {
+function content_57c5d2cca73528_08798279 ($_smarty_tpl) {
 if ($_smarty_tpl->tpl_vars['project']->value->get('done')) {?>
     <?php $_smarty_tpl->tpl_vars["disabled_end"] = new Smarty_Variable("disabled", null);
 $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "disabled_end", 0);?>
@@ -112,6 +112,9 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "client", 0);?>
     </div>
 </div>
 <?php if (!empty($_smarty_tpl->tpl_vars['installments']->value)) {?>
+    <?php $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, (dirname($_smarty_tpl->source->filepath)).("/payInstallment.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, true);
+?>
+
     <div class="row">
         <div class="col-md-12 table-responsive">
             <table class="table table-bordered table-hover datatable">
@@ -166,12 +169,14 @@ $__foreach_installment_0_saved_local_item = $_smarty_tpl->tpl_vars['installment'
                                 </button>
                             </a>
 
-                            <a href="project/payInstallment/<?php echo $_smarty_tpl->tpl_vars['installment']->value->get('id');?>
-" class="confirm-link">
-                                <button title="Pagar" class="btn btn-success">
+                            <?php if (!$_smarty_tpl->tpl_vars['installment']->value->get('status')) {?>
+                                <button type="button" class="btn btn-success payment-modal"
+                                        data-installment="<?php echo $_smarty_tpl->tpl_vars['installment']->value->get('id');?>
+">
                                     <i class="fa fa-dollar"></i>
                                 </button>
-                            </a>
+                            <?php }?>
+
                         </td>
                     </tr>
                 <?php

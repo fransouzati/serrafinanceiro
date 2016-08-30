@@ -1,5 +1,8 @@
-$(function(){
-    $('.confirm-link').on('click', function () {
+
+function confirmLink(e){
+    if(e.hasClass('confirm-link')){
         return confirm('Você tem certeza?');
-    });
-})
+    }else{
+        return true;
+    }
+}

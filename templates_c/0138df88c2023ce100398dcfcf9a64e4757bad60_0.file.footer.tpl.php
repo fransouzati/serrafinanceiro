@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-07-13 10:53:56
+/* Smarty version 3.1.28, created on 2016-07-27 17:48:35
   from "C:\wamp\www\financeiro3\app\viewer\default\footer.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_578647f47bec93_56546201',
+  'unifunc' => 'content_57991e239e5c22_02421348',
   'file_dependency' => 
   array (
     '0138df88c2023ce100398dcfcf9a64e4757bad60' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\default\\footer.tpl',
-      1 => 1468310751,
+      1 => 1469652512,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_578647f47bec93_56546201 ($_smarty_tpl) {
+function content_57991e239e5c22_02421348 ($_smarty_tpl) {
 ?>
 
 
@@ -139,6 +139,11 @@ assets/js/filter.js"><?php echo '</script'; ?>
 >
     <?php echo '<script'; ?>
  src="plugins/datepicker/js/bootstrap-datepicker.init.js"><?php echo '</script'; ?>
+>
+
+    <?php echo '<script'; ?>
+ src="<?php echo _APP_ROOT_DIR;?>
+assets/js/linkPrevent.js"><?php echo '</script'; ?>
 >
 
     <?php if (isset($_smarty_tpl->tpl_vars['js']->value)) {

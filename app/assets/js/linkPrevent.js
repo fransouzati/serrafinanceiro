@@ -1,6 +1,9 @@
 $(function () {
     $('a').click(function (event) {
         event.preventDefault();
+        if(!confirmLink($(this))){
+            return false;
+        }
         url = $(this).attr('href');
         if(typeof $(this).attr('target') != 'undefined'){
             blank = true;

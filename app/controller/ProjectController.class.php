@@ -22,6 +22,7 @@
                 $this->viewer->set('qttInstallments', count($installments));
 
                 $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/addInstallment.js');
+                $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/projectPayment.js');
                 return $this->viewer->show('view_one', $project->get('name'));
             }
 
@@ -147,6 +148,8 @@
 
             if($this->model->delete('project_installment', array('id' => $id))){
                 $this->model->updateStatus($installment->get('id_project', true));
+                $this->model->checkNumberOrdenation($installment->get('id_project', true));
+                
                 Viewer::flash(_DELETE_SUCCESS, 's');
                 return $this->view($installment->get('id_project'));
             }else{
@@ -305,6 +308,22 @@
 
             return $this->model->addInstallmentForm($qtt);
 
+        }
+    
+        /**
+         * ####### THIS METHOD SHOULD ONLY BE CALLED ONLY BY AJAX #######
+         *
+         * Usage:
+         * app/assets/js/projectPayment.js
+         *
+         * Populates one modal to make a payment screen to an installment
+         * @param int $id_installment
+         * @return void
+         */
+        public function payInstallmentModal($id_installment) {
+        
+            return $this->model->payInstallmentModal($id_installment);
+        
         }
 
     }

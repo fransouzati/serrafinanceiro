@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.28, created on 2016-07-20 10:18:31
+/* Smarty version 3.1.28, created on 2016-08-30 16:20:51
   from "C:\wamp\www\financeiro3\app\viewer\Client\view_one.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.28',
-  'unifunc' => 'content_578f7a27508646_48221197',
+  'unifunc' => 'content_57c5dc937132d6_95750530',
   'file_dependency' => 
   array (
     'c508bf7ebdeffc2c4af72d9799d9ea6e61505376' => 
     array (
       0 => 'C:\\wamp\\www\\financeiro3\\app\\viewer\\Client\\view_one.tpl',
-      1 => 1468863899,
+      1 => 1472584849,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_578f7a27508646_48221197 ($_smarty_tpl) {
+function content_57c5dc937132d6_95750530 ($_smarty_tpl) {
 ?>
 <ul class="nav nav-tabs">
     <li class="active">
@@ -244,12 +244,19 @@ $_smarty_tpl->tpl_vars['history'] = $__foreach_history_0_saved_item;
 
     <div id="projectsData" class="tab-pane fade in">
         <!-- Projects !-->
-        <?php if (!empty($_smarty_tpl->tpl_vars['projects']->value)) {?>
-            <div class="row">
-                <div class="col-sm-12">
-                    <h3 class="page-header">Projetos</h3>
-                </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-header">
+                    Projetos
+                    <a href="project/add/<?php echo $_smarty_tpl->tpl_vars['client']->value->get('id');?>
+">
+                        <button class="btn btn-primary pull-right">
+                            Cadastrar
+                        </button>
+                    </a></h3>
             </div>
+        </div>
+        <?php if (!empty($_smarty_tpl->tpl_vars['projects']->value)) {?>
             <div class="row">
                 <div class="col-md-12 table-responsive">
                     <table class="table table-bordered table-hover datatable" default-quantity="5">
@@ -285,7 +292,7 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "clientName", 0);?>
                                 <?php $_smarty_tpl->tpl_vars["clientName"] = new Smarty_Variable($_smarty_tpl->tpl_vars['project']->value->get('id_client',true)->get('name'), null);
 $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "clientName", 0);?>
                             <?php }?>
-                            <?php if ($_smarty_tpl->tpl_vars['project']->value->strtotime2($_smarty_tpl->tpl_vars['project']->value->get('end_date')) < $_smarty_tpl->tpl_vars['project']->value->strtotime2($_smarty_tpl->tpl_vars['project']->value->today(false))) {?>
+                            <?php if ($_smarty_tpl->tpl_vars['project']->value->strtotime2($_smarty_tpl->tpl_vars['project']->value->get('end_date')) < $_smarty_tpl->tpl_vars['project']->value->strtotime2($_smarty_tpl->tpl_vars['project']->value->today(false)) && !$_smarty_tpl->tpl_vars['project']->value->get('done')) {?>
                                 <?php $_smarty_tpl->tpl_vars["style"] = new Smarty_Variable("style='color: red'", null);
 $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, "style", 0);?>
                             <?php } else { ?>
@@ -400,14 +407,6 @@ $__foreach_extra_2_saved_local_item = $_smarty_tpl->tpl_vars['extra'];
                                     <?php }?>
                                 </td>
                                 <td>
-                                    <?php if (!$_smarty_tpl->tpl_vars['extra']->value->get('status')) {?>
-                                        <a href="extraCharge/pay/<?php echo $_smarty_tpl->tpl_vars['extra']->value->get('id');?>
-" class="confirm-link">
-                                            <button type="button" class="btn btn-success" title="Pagar">
-                                                <i class="fa fa-dollar"></i>
-                                            </button>
-                                        </a>
-                                    <?php }?>
                                     <a href="extraCharge/delete/<?php echo $_smarty_tpl->tpl_vars['extra']->value->get('id');?>
 " class="confirm-link">
                                         <button type="button" class="btn btn-danger" title="Remover">

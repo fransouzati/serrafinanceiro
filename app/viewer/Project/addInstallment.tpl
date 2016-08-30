@@ -18,6 +18,9 @@
                                 <button class="btn btn-default" type="button" id="removeInstallment">
                                     <span class="fa fa-minus"></span>
                                 </button>
+                                <button class="btn btn-default" type="button" id="calculateDates" title="Calcular datas">
+                                    <span class="fa fa-calculator"></span>
+                                </button>
                             </div>
                             <div class="col-md-12">
                                 <hr>
