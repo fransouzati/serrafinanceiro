@@ -13,6 +13,7 @@
             $error = $report[1];
             $report = $report[0];
             $report->set('created', date('Y-m-d'));
+            $report->set('toView', isset($_POST['toView']));
             
             if(isset($_POST['all'])){
                 $report->set('period', '1970-01-01 / '.date('Y-m-d'));
@@ -335,5 +336,17 @@
             return $finalReport;
         }
         
+        public static function reportType($type){
+            // switch($type){
+            //     case 'development':
+            //         return in_array('development')
+            //         break;
+            //     case 'support':
+            //         break;
+            //     case 'extra':
+            //         break;
+            // }
+            return in_array($type, $_POST['_report_filter']);
+        }
 
     }

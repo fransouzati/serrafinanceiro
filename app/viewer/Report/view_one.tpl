@@ -62,7 +62,9 @@
                             <th>Tipo</th>
                             <th>Valor</th>
                             <th>Vencimento</th>
-                            <th>Pagar</th>
+                            {if !$report->get('toView')}
+                                <th>Pagar</th>
+                            {/if}
                         </tr>
                         </thead>
                         <tbody>
@@ -78,25 +80,27 @@
                                     <td>{$pendency['type']}</td>
                                     <td>{$pendency['value']}</td>
                                     <td>{$pendency['expiry']}</td>
-                                    <td>
-                                        {if $pendency['block']}
-                                            Título pago
-                                        {else}
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" name="pay[]" value="{$titleValue}">
-                                                Pagar título
-                                            </label>
-                                            <br>
-                                            <input type="text" class="mask-money form-control" name="{$titleValue}" value="{$pendency['value']}">
-                                            <br>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="{$titleValue}_destination" checked value="bank"> Caixa do banco
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="{$titleValue}_destination" value="internal"> Caixa interno
-                                            </label>
-                                        {/if}
-                                    </td>
+                                    {if !$report->get('toView')}
+                                        <td>
+                                            {if $pendency['block']}
+                                                Título pago
+                                            {else}
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="pay[]" value="{$titleValue}">
+                                                    Pagar título
+                                                </label>
+                                                <br>
+                                                <input type="text" class="mask-money form-control" name="{$titleValue}" value="{$pendency['value']}">
+                                                <br>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="{$titleValue}_destination" checked value="bank"> Caixa do banco
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="{$titleValue}_destination" value="internal"> Caixa interno
+                                                </label>
+                                            {/if}
+                                        </td>
+                                    {/if}
                                 </tr>
                             {/foreach}
                         </tbody>

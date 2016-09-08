@@ -27,7 +27,7 @@
                 return $this->viewer->show('view_one', $report->get('name'));
             }
 
-            $reports = $this->model->search('report');
+            $reports = $this->model->search('report', '*', array('toView' => 0));
             $reports = $this->model->query2dto($reports, 'report');
             $this->viewer->set('reports', $reports);
 

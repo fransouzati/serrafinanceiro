@@ -25,5 +25,6 @@
         private $period;
         private $created;
         private $file;
+        private $toView;
 
     }
