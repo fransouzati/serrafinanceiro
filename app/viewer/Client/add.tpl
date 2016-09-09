@@ -83,9 +83,13 @@
             <label class="control-label" for="monthly_value">Suporte mensal</label>
             <input type="text" class="form-control mask-money" name="monthly_value">
         </div>
-        <div class="col-sm-6 form-group">
+        <div class="col-lg-3 col-sm-6 form-group">
             <label class="control-label" for="payment_day">Dia de pagamento</label>
             <input type="number" min="1" max="31" class="form-control" name="payment_day">
+        </div>
+        <div class="col-lg-3 col-sm-12 form-group">
+            <label class="control-label" for="payment_init">Início de pagamento de suporte mensal</label>
+            <input type="text" class="form-control mask-date" required name="payment_init" value="{$smarty.now|date_format:"%Y-%m"}-01">
         </div>
     </div>
     <div class="row">

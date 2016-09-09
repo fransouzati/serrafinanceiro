@@ -100,9 +100,13 @@
             <label class="control-label" for="monthly_value">Suporte mensal</label>
             <input type="text" class="form-control mask-money" name="monthly_value" value="R${$finances->get('monthly_value', true)}">
         </div>
-        <div class="col-sm-6 form-group">
+        <div class="col-lg-3 col-sm-6 form-group">
             <label class="control-label" for="payment_day">Dia de pagamento</label>
             <input type="number" min="1" max="31" class="form-control" name="payment_day" value="{$finances->get('payment_day')}">
+        </div>
+        <div class="col-lg-3 col-sm-12 form-group">
+            <label class="control-label" for="payment_init">Início de pagamento de suporte mensal</label>
+            <input type="text" class="form-control mask-date" required name="payment_init" value="{$finances->get('payment_init', true)}">
         </div>
     </div>
     <div class="row">

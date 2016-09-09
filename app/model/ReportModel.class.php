@@ -346,7 +346,10 @@
             //     case 'extra':
             //         break;
             // }
-            return in_array($type, $_POST['_report_filter']);
+            if(isset($_POST['_report_filter']))
+                return in_array($type, $_POST['_report_filter']);
+            else
+                return true;
         }
 
     }

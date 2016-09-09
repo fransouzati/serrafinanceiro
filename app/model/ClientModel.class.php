@@ -381,14 +381,13 @@
                     //Pega quantos meses de diferença tem no relatório
                     $diff = abs(strtotime($periodFinal) - strtotime($periodInit));
                     $years = floor($diff / (365 * 60 * 60 * 24));
-                    $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+                    $months = ceil(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
                     $months = ($years * 12) + $months;
                     if ($months == 0)
                         $months = 1;
-    
+                    
                     // Mês a mês..
                     for ($i = 0; $i < $months; $i++) {
-        
                         /*
                          * Precisa deste $i para ir somando os meses
                          * caso for mais de um mês, se não ficaria apenas no mês
@@ -407,6 +406,7 @@
                         // Timestamp
                         $monthInitTs = strtotime($monthInit);
                         $monthFinalTs = strtotime($monthFinal);
+                        
                         $todayTs = strtotime(date('Y-m-d'));
         
                         // Verificação se é este mês que está sendo retirado o relatório.
@@ -425,15 +425,24 @@
                             // Prev & next month
                             $finalDate = $monthFinal;
                         }
+                        
+                        $paymentInitTs = strtotime($finances->get('payment_init'));
+                        
+                        if($paymentInitTs > $monthFinalTs){
+                            
+                            continue;
+                        }
         
                         $sql = 'SELECT * FROM entry 
                                     WHERE id_type = ' . _SUPPORT_ENTRY_TYPE_ID . ' AND 
                                     date >= "' . $monthInit . '" AND 
                                     date <= "' . $finalDate . '" AND
                                     id_client = ' . $id_client;
+                        
         
                         $entries = $this->query($sql);
                         if (count($entries) < 1) {
+                            
                             $pendencies[] = array(
                                 'type'   => 'Suporte web',
                                 'value'  => 'R$' . $finances->get('monthly_value', true),
@@ -444,6 +453,7 @@
                             $supportTotal += $finances->get('monthly_value');
                         }
                     }
+                    
                 }
             }
             
@@ -569,6 +579,11 @@
                         } else {
                             // Prev or next month
                             $finalDate = $monthFinal;
+                        }
+    
+                        $paymentInitTs = strtotime($finances->get('payment_init'));
+                        if($paymentInitTs > $monthFinalTs){
+                            continue;
                         }
             
                         $sql = 'SELECT * FROM entry 

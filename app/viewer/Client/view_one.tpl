@@ -107,7 +107,7 @@
     </div>
 
     <div id="financesData" class="tab-pane fade in">
-        <!-- Dados financeiros !-->
+        <!-- Finances !-->
         <div class="row">
             <div class="col-sm-12">
                 <h3 class="page-header">Dados financeiros</h3>
@@ -119,10 +119,14 @@
                 <input disabled type="text" class="form-control mask-money" name="monthly_value"
                        value="R${$finances->get('monthly_value', true)}">
             </div>
-            <div class="col-sm-6 form-group">
+            <div class="col-lg-3 col-sm-6 form-group">
                 <label class="control-label" for="payment_day">Dia de pagamento</label>
                 <input disabled type="number" class="form-control" name="payment_day"
                        value="{$finances->get('payment_day')}">
+            </div>
+            <div class="col-lg-3 col-sm-12 form-group">
+                <label class="control-label" for="payment_init">Início de pagamento de suporte mensal</label>
+                <input disabled type="text" class="form-control mask-date" required name="payment_init" value="{$finances->get('payment_init', true)}">
             </div>
         </div>
         <div class="row mt">
