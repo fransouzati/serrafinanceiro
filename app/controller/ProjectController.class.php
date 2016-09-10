@@ -158,6 +158,26 @@
             }
 
         }
+        
+        public function undoPayment($id_installment){
+            if (!$this->model->exists('project_installment', 'id', $id_installment)) {
+                Viewer::flash(_EXISTS_ERROR, 'e');
+        
+                return $this->view();
+            }
+    
+            $installment = $this->model->getInstallment($id_installment);
+            
+            if($this->model->undoPayment($installment)){
+                $this->model->updateStatus($installment->get('id_project', true));
+    
+                Viewer::flash('Pagamento desfeito com sucesso.', 's');
+                return $this->view($installment->get('id_project'));
+            }else{
+                Viewer::flash(_DELETE_ERROR, 'e');
+                return $this->view($installment->get('id_project'));
+            }
+        }
 
         public function payInstallment($id){
             if (!$this->model->exists('project_installment', 'id', $id)) {

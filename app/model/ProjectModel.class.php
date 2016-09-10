@@ -509,6 +509,24 @@
             
         }
         
+        public function undoPayment($installment){
+            $withdrawModel = new WithdrawModel();
+            $this->initTransaction();
+            if(!$withdrawModel->addByProjectInstallment($installment)){
+                $this->cancelTransaction();
+                return false;
+            }else{
+                $installment->set('status', 0);
+                if(!$this->update('project_installment', $installment, array('id' => $installment->get('id')))) {
+                    $this->cancelTransaction();
+    
+                    return false;
+                }
+                $this->endTransaction();
+                return true;
+            }
+        }
+        
         public function checkNumberOrdenation(Project $project){
             $installments = $this->search('project_installment', '*', array('id_project' => $project->get('id')), 'number');
             $installments = $this->query2dto($installments, 'project_installment');

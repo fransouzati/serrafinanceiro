@@ -114,7 +114,13 @@
                                 </button>
                             </a>
 
-                            {if !$installment->get('status')}
+                            {if $installment->get('status')}
+                                <a href="project/undoPayment/{$installment->get('id')}" class="confirm-link">
+                                    <button type="button" class="btn btn-warning">
+                                        Desfazer pagamento
+                                    </button>
+                                </a>
+                            {else}
                                 <button type="button" class="btn btn-success payment-modal"
                                         data-installment="{$installment->get('id')}">
                                     <i class="fa fa-dollar"></i>

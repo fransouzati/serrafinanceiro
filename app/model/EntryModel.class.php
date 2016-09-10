@@ -158,6 +158,7 @@
     
             return true;
         }
+    
 
         public function addByExtraCharge($extraCharge) {
             $entry = new Entry();

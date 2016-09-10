@@ -51,6 +51,7 @@
                'installmentsModal',
                'addInstallmentForm',
                'payInstallmentModal',
+               'undoPayment',
            ),
            'Report' => array(
                'view',
@@ -212,6 +213,7 @@
                 ),
                 'Pagar parcelas' => array(
                     'payInstallment',
+                    'undoPayment',
                 ),
             ),
             'Report' => array(

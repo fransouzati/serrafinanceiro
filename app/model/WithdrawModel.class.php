@@ -188,6 +188,25 @@
                 return false;
             return true;
         }
+    
+        public function addByProjectInstallment($installment){
+            $withdraw = new Withdraw();
+            $withdraw->set('date', date('Y-m-d'));
+            $desc = 'Ajuste de caixa - desfazer pagamento/deleção de parcela - '.$installment->get('number').' de projeto '.$installment->get('id_project');
+            $withdraw->set('description', $desc);
+            $withdraw->set('value', $installment->get('value'));
+            $withdraw->set('id_type', _ADJUST_EXIT_TYPE_ID);
+    
+            $investor = $this->search('investor', '*', array('name' => _BANK_INVESTOR_NAME))[0];
+            $withdraw->set('id_investor', $investor['id']);
+            
+        
+            if(!$this->insert('withdraw', $withdraw))
+                return false;
+            if(!$this->cashDestination($withdraw))
+                return false;
+            return true;
+        }
 
         /**
          * Decides wheter the money goes to the bank or the internal count
