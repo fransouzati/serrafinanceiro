@@ -18,7 +18,7 @@
             if(isset($_POST['all'])){
                 $report->set('period', '1970-01-01 / '.date('Y-m-d'));
             }
-
+            
             if ($error != '') {
                 Viewer::flash($error, 'e');
 

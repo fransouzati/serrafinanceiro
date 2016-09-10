@@ -393,16 +393,13 @@
                          * caso for mais de um mês, se não ficaria apenas no mês
                          * da data de início.
                          */
-                        $month = explode('-', $periodInit)[1] + $i;
-                        $year = explode('-', $periodInit)[0];
-                        if ($month > 12) {
-                            $month = 01;
-                            $year = $year + 1;
-                        }
-        
+                        $month = date('m', strtotime('+'.$i.' months', strtotime($periodInit)));
+                        $year = date('Y', strtotime('+'.$i.' months', strtotime($periodInit)));
+                        
                         // Início e final do mês
                         $monthInit = $year . '-' . $month . '-01';
                         $monthFinal = date("Y-m-t", strtotime($monthInit));
+                        
                         // Timestamp
                         $monthInitTs = strtotime($monthInit);
                         $monthFinalTs = strtotime($monthFinal);
@@ -453,7 +450,6 @@
                             $supportTotal += $finances->get('monthly_value');
                         }
                     }
-                    
                 }
             }
             

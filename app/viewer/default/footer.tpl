@@ -32,7 +32,6 @@
 
 
     <script src="{_APP_ROOT_DIR}assets/js/jquery.scrollTo.min.js"></script>
-    <script src="{_APP_ROOT_DIR}assets/js/jquery.nicescroll.js" type="text/javascript"></script>
 
     <script src="{_APP_ROOT_DIR}assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="{_APP_ROOT_DIR}assets/js/common-scripts.js"></script>
