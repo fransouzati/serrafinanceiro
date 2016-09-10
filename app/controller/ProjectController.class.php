@@ -13,7 +13,7 @@
                 $project = $this->model->getProject($id);
                 $this->viewer->set('project', $project);
 
-                $installments = $this->model->search('project_installment', '*', array('id_project' => $id));
+                $installments = $this->model->search('project_installment', '*', array('id_project' => $id), 'number');
                 if(count($installments)){
                     $installments = $this->model->query2dto($installments, 'project_installment');
                 }
@@ -133,6 +133,13 @@
                     return $this->edit($id);
                 }
             }
+            
+            $last = 'SELECT * FROM project_installment p WHERE p.id_project = '.$installment->get('id_project').'
+                ORDER BY p.number DESC LIMIT 1
+            ';
+            $last = $this->model->query($last)[0]['number'];
+            $this->viewer->set('last', $last);
+            
             $name = $installment->get('id_project', true)->get('name');
             $this->viewer->show('editInstallment', 'Editar parcela ' . $installment->get('number').' - '.$name);
         }

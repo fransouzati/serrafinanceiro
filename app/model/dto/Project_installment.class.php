@@ -19,6 +19,7 @@
             'value' => 'Informe um valor válido.',
             'initial_date' => 'Informe uma data de início válida.',
             'end_date' => 'Informe uma data final válida.',
+            'number' => 'Informe um número de parcela válido.',
         );
         public $FieldsForm = array(
         );

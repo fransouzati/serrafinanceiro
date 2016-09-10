@@ -199,21 +199,34 @@
 
         public function editInstallment($id) {
             $installment = $this->getInstallment($id);
+            $oldNumber = $installment->get('number');
             $error = '';
             if (!$installment->set('value', $_POST['value']))
                 $error .= $installment->FieldsErrors['value'];
             if (!$installment->set('expiry', $_POST['expiry']))
                 $error .= $installment->FieldsErrors['expiry'];
-
+            if (!$installment->set('number', $_POST['number']))
+                $error .= $installment->FieldsErrors['number'];
+            $newNumber = $installment->get('number');
             if ($error != '') {
                 Viewer::flash($error, 'e');
 
                 return false;
             } else {
                 $this->initTransaction();
+                
+                if($oldNumber != $installment->get('number')) {
+                    if (!$this->updateOrdenation($newNumber, $oldNumber, $installment->get('id_project'))) {
+                        Viewer::flash(_INSERT_ERROR, 'e');
+                        $this->cancelTransaction();
+        
+                        return false;
+                    }
+                }
+                
                 if (!$this->update('project_installment', $installment, array('id' => $id))) {
                     Viewer::flash(_INSERT_ERROR, 'e');
-
+                    $this->cancelTransaction();
                     return false;
                 }
 
@@ -223,7 +236,7 @@
                 }
 
                 $this->endTransaction();
-
+                Viewer::flash(_INSERT_SUCCESS, 's');
                 return true;
 
             }
@@ -539,6 +552,48 @@
                 }
                 $i++;
             }
+        }
+        
+        public function updateOrdenation($newNumber, $oldNumber, $id_project){
+            
+            if($oldNumber > $newNumber){
+                $sql = '
+                  select * from project_installment p
+                  where id_project = '.$id_project.' AND
+                        p.number < '.$oldNumber.' AND
+                        p.number >= '.$newNumber.'
+                ';
+                $op = 'mais';
+                // aumentar um número
+            }elseif ($oldNumber < $newNumber){
+                $sql = '
+                  select * from project_installment p
+                  where id_project = '.$id_project.' AND
+                        p.number <= '.$newNumber.' AND
+                        p.number > '.$oldNumber.'
+                ';
+                $op = 'menos';
+                // diminuir um
+            }
+            
+            $installments = $this->query2dto($this->query($sql), 'project_installment');
+            foreach($installments as $installment){
+                if($installment->get('id') != $id_project){
+                    if($op == 'mais'){
+                        $installment->set('number', $installment->get('number') + 1);
+                    }else{
+                        $installment->set('number', $installment->get('number') - 1);
+                    }
+                }
+                
+                if(!$this->update('project_installment', $installment, array('id' => $installment->get('id')))){
+                    return false;
+                }
+            }
+            
+            return true;
+            
+            
         }
 
     }
