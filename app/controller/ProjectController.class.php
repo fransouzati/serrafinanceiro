@@ -20,9 +20,15 @@
                 $this->viewer->set('installments', $installments);
 
                 $this->viewer->set('qttInstallments', count($installments));
-
+                $this->setSalesmans('salesmansModal');
+                
+                $salesmans = $this->model->search('project_salesman', '*', array('id_project' => $id));
+                $salesmans = $this->model->query2dto($salesmans, 'project_salesman');
+                $this->viewer->set('salesmans', $salesmans);
+    
                 $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/addInstallment.js');
                 $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/projectPayment.js');
+                $this->viewer->addJs(_APP_ROOT_DIR.'assets/js/addSalesman.js');
                 return $this->viewer->show('view_one', $project->get('name'));
             }
 
@@ -304,6 +310,37 @@
                 return $this->view($id);
             }
 
+        }
+        
+        public function setSalesmans($name){
+            $salesmans = $this->model->query2dto($this->model->search('salesman'), 'salesman');
+            $this->viewer->set($name, $salesmans);
+        }
+        
+        public function addSalesman($id_project){
+            if(!$this->model->exists('project', 'id', $id_project)){
+                Viewer::flash(_EXISTS_ERROR, 'e');
+                unset($_POST);
+                return $this->view();
+            }
+            
+            if(!$this->model->addSalesman($id_project)){
+                Viewer::flash(_INSERT_SUCCESS, 's');
+            }
+            
+            return $this->view($id_project);
+        }
+        
+        public function deleteSalesman($id_project, $id_salesman){
+            $cond = array(
+                'id_project' => $id_project,
+                'conscond1' => 'AND',
+                'id_salesman' => $id_salesman
+            );
+            
+            $this->model->delete('project_salesman', $cond);
+            Viewer::flash(_DELETE_SUCCESS, 's');
+            return $this->view($id_project);
         }
 
         /**

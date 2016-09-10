@@ -146,5 +146,9 @@
         public function unfilterPeriod($val){
             return unfilter_period($val);
         }
+        
+        public function percentageMask($val){
+            return ($val * 100);
+        }
 
     }

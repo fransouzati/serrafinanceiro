@@ -1,7 +1,9 @@
 $(function(){
 	$('select').each(function(){
-		$(this).select2({
-        	language: 'pt-BR'
-    	});
+	    if(!$(this).hasClass('noselect2')) {
+            $(this).select2({
+                language: 'pt-BR'
+            });
+        }
 	})
 })

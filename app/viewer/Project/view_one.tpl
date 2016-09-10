@@ -61,6 +61,55 @@
     </div>
 </div>
 
+<!-- Comissões !-->
+<div class="row">
+    <div class="col-sm-12">
+        <h4 class="page-header">Colaboradores/Vendedores</h4>
+    </div>
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSalesmanModal">
+            Cadastrar
+        </button>
+        {include file=$smarty.current_dir|cat:"/addSalesman.tpl"}
+        <hr>
+    </div>
+</div>
+{if !empty($salesmans)}
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-bordered table-hover datatable">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Comissão - Total</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $salesmans as $salesman}
+                    <tr>
+                        <td>{$salesman->get('id_salesman', true)->get('name')}</td>
+                        <td>
+                            {$salesman->get('percentage', true)}% -
+                            {$salesman->get('percentage') * $project->get('value')} reais
+                        </td>
+                        <td>
+                            <a href="project/deleteSalesman/{$project->get('id')}/{$salesman->get('id_salesman')}"
+                               class="confirm-link">
+                                <button class="btn btn-danger">
+                                    Retirar comissão
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{/if}
+
+
 <!-- Parcelas !-->
 <div class="row">
     <div class="col-sm-12">

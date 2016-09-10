@@ -485,7 +485,7 @@
         
         public function payInstallment(Project_installment $installment) {
             $installment->set('status', 1);
-            $entryModel = new Entrymodel();
+            $entryModel = new EntryModel();
 
             $this->initTransaction();
             if (!$entryModel->addByInstallment($installment)) {
@@ -596,4 +596,12 @@
             
         }
 
+        public function addSalesman($id_project){
+            $project = new Project_salesman();
+            $project->set('id_salesman', $_POST['id_salesman']);
+            $project->set('id_project', $id_project);
+            $project->set('percentage', str_replace('%', '', $_POST['percentage']) / 100);
+            return $this->insert('project_salesman', $project);
+        }
+        
     }

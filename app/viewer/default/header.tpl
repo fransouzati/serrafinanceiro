@@ -93,6 +93,7 @@
                             <li><a  href="withdrawType/">Tipos de saída</a></li>
                             <li><a  href="entryType/">Tipos de entrada</a></li>
                             <li><a  href="bill/">Contas a pagar</a></li>
+                            <li><a  href="salesman/">Vendedores/Colaboradores</a></li>
                         </ul>
                     </li>
 
@@ -135,6 +136,13 @@
                         <a class="" href="report/">
                             <i class="fa fa-dollar"></i>
                             <span>Relatório títulos</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a class="" href="salesman/export">
+                            <i class="fa fa-dollar"></i>
+                            <span>Relatório de comissão</span>
                         </a>
                     </li>
 

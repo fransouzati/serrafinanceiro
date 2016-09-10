@@ -52,6 +52,8 @@
                'addInstallmentForm',
                'payInstallmentModal',
                'undoPayment',
+               'addSalesman',
+               'deleteSalesman',
            ),
            'Report' => array(
                'view',
@@ -80,6 +82,13 @@
                'edit',
                'add',
            ),
+           'Salesman' => array(
+               'view',
+               'edit',
+               'add',
+               'export',
+               'getPercentage',
+           ),
 
         );
         
@@ -91,6 +100,7 @@
                'installmentsModal',
                'addInstallmentForm',
                'payInstallmentModal',
+               'setSalesmans',
            ),
            'User' => array(
                'home',
@@ -98,6 +108,10 @@
                'logout',
                'view',
                'edit',
+           ),
+           'Salesman' => array(
+               'export',
+               'getPercentage',
            ),
 
         );
@@ -215,6 +229,11 @@
                     'payInstallment',
                     'undoPayment',
                 ),
+                'Controlar comissões' => array(
+                    'addSalesman',
+                    'deleteSalesman',
+                    'view',
+                )
             ),
             'Report' => array(
                 'Visualizar' => array(
@@ -268,6 +287,19 @@
                     'view',
                 ),
             ),
+            'Salesman' => array(
+                'Cadastrar' => array(
+                    'view',
+                    'add',
+                ),
+                'Visualizar' => array(
+                    'view',
+                ),
+                'Editar' => array(
+                    'view',
+                    'edit',
+                ),
+            )
         );
         
         public static $controllers = array(
@@ -282,6 +314,7 @@
            'User' => 'Administradores',
            'Withdraw' => 'Saídas',
            'WithdrawType' => 'Tipos de saída',
+           'Salesman' => 'Vendedores/Colaboradores',
 
         );
         
