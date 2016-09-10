@@ -13,7 +13,7 @@
             $error = $report[1];
             $report = $report[0];
             $report->set('created', date('Y-m-d'));
-            $report->set('toView', isset($_POST['toView']));
+            $report->set('toView', $_POST['toView'] == 'on');
             
             if(isset($_POST['all'])){
                 $report->set('period', '1970-01-01 / '.date('Y-m-d'));
