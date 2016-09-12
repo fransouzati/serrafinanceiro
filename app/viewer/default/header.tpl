@@ -92,7 +92,6 @@
                             <li><a  href="investor/">Investidores</a></li>
                             <li><a  href="withdrawType/">Tipos de saída</a></li>
                             <li><a  href="entryType/">Tipos de entrada</a></li>
-                            <li><a  href="bill/">Contas a pagar</a></li>
                             <li><a  href="salesman/">Vendedores/Colaboradores</a></li>
                         </ul>
                     </li>
@@ -124,6 +123,15 @@
                             <span>Projetos</span>
                         </a>
                     </li>
+
+
+                    <li class="">
+                        <a class="" href="bill/">
+                            <i class="fa fa-dollar"></i>
+                            <span>Contas a pagar</span>
+                        </a>
+                    </li>
+
 
                     <li class="">
                         <a class="" href="bill/payments">
