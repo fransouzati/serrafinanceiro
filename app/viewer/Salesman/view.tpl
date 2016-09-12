@@ -28,6 +28,11 @@
                                                 Visualizar
                                             </button>
                                         </a>
+                                        <a href="salesman/delete/{$salesman->get('id')}" class="confirm-link">
+                                            <button class="btn btn-danger">
+                                                Deletar
+                                            </button>
+                                        </a>
                                     </td>
 								</tr>
 							{/foreach}

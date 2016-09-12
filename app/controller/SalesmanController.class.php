@@ -67,6 +67,20 @@
 
             return $this->viewer->show('add', 'Cadastrar investidor');
         }
+        
+        public function delete($id){
+    
+            if (!$this->model->exists('salesman', 'id', $id)) {
+                Viewer::flash(_EXISTS_ERROR, 'e');
+        
+                return $this->view();
+            }
+    
+            $this->model->delete('salesman', array('id' => $id));
+            $this->model->delete('project_salesman', array('id_salesman' => $id));
+            return $this->view();
+            
+        }
     
         public function export(){
             if($this->request()) {
