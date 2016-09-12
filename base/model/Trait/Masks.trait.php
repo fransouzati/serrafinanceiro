@@ -148,7 +148,7 @@
         }
         
         public function percentageMask($val){
-            return ($val * 100);
+            return number_format((floatval($val) * 100), 2);
         }
 
     }
