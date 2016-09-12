@@ -45,12 +45,12 @@
         public function makeQuery(){
             $sql = 'SELECT * FROM project p 
                     JOIN project_salesman s ON s.id_project = p.id 
-                    WHERE ';
+                    WHERE done = 1 AND ';
             
             $period = $_POST['_filter_period'];
             if ($period != '') {
                 $period = explode('/', $period);
-                $sql .= ' p.end_date >= "' . trim($period[0]) . '" AND p.end_date <= "' . trim($period[1]) . '" AND ';
+                $sql .= ' p.done_date >= "' . trim($period[0]) . '" AND p.done_date <= "' . trim($period[1]) . '" AND ';
             }
     
             $salesman = $_POST['_filter_salesman'];
