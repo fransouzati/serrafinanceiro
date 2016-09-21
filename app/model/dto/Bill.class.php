@@ -30,7 +30,7 @@
         
         public function validDay($day) {
             if ($this->validNumber($day)) {
-                if ($day > 1 && $day < 31)
+                if ($day >= 1 && $day < 31)
                     return true;
             }
             
