@@ -26,6 +26,7 @@ function clearModal(){
 
 function populateModal(json){
     $('#_client_name').text(json.name);
+    $('#_finances_obs').text(json.obs);
 
     $.each(json.pendencies, function (index, pendency) {
         $('#tbody-pendencies').append(

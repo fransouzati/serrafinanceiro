@@ -13,6 +13,10 @@
                     <div class="col-sm-12">
                         <h3 id="_client_name" class="page-header"></h3>
                     </div>
+                    <div class="col-sm-12">
+                        <b>Observações financeiras:</b>
+                        <span id="_finances_obs"></span>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 table-responsive">

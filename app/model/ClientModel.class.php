@@ -82,7 +82,6 @@
                     return false;
                 }
                 
-                $finances->set('status', 1);
                 $finances->set('observation', $_POST['observation_finances']);
                 if (!$this->update('finances', $finances, array('id' => $id))) {
                     // If not updated, cancel the transaction (including the client) and returns the error message
@@ -127,6 +126,7 @@
                     
                 }
                 
+                $this->inspectionValidate($id);
                 
                 $this->endTransaction();
                 
@@ -259,7 +259,7 @@
                 }
                 $inspection = new Inspection();
                 $inspection->set('date', date('Y-m-d'));
-                $this->insert('inspection', $inspection);
+                // $this->insert('inspection', $inspection);
             }
             
             return;
@@ -268,7 +268,7 @@
         public function inspectionValidate($id) {
             $finances = $this->getFinances($id);
             $financesStatus = $finances->get('status');
-            $status = $this->supportInspection($id, $finances->get('monthly_value')) &&
+            $status = $this->supportInspection($id, $finances->get('monthly_value'), $finances) &&
                 $this->installmentInspection($id) &&
                 $this->extraInspection($id);
             
@@ -276,29 +276,29 @@
                 $this->changeFinancesStatus($finances, $status);
         }
         
-        public function supportInspection($id_client, $monthly_value) {
+        public function supportInspection($id_client, $monthly_value, $finances = null) {
             if ($monthly_value == 0)
                 return true;
             
-            $client = $this->getClient($id_client);
-            if(!$client->get('status'))
-                return true;
-            
-            $monthInitTs = strtotime('2016-09-01 00:00:00');
-            if(strtotime(date('Y-m-d')) < $monthInitTs)
-                return true;
-            
+            $monthInitTs = strtotime($finances->get('payment_init').' 00:00:00');
+    
+            //Pega quantos meses de diferença tem no relatório
+            $diff = abs($monthInitTs - strtotime(date('Y-m-d H:i:s')));
+            $years = floor($diff / (365 * 60 * 60 * 24));
+            $months = ceil(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+            $months = ($years * 12) + $months;
+            if ($months == 0)
+                $months = 1;
             
             $sql = 'SELECT * FROM entry 
                     WHERE id_type = ' . _SUPPORT_ENTRY_TYPE_ID . ' AND 
-                          date >= "' . date('Y-m') . '-01" AND 
+                          date >= "' . $finances->get('payment_init') . '" AND 
                           date <= "' . date('Y-m-t') . '" AND
-                          value >= ' . $monthly_value . ' AND
                           id_client = ' . $id_client;
             
             $entries = $this->query($sql);
             
-            if (count($entries) < 1)
+            if (count($entries) < $months)
                 return false;
             
             return true;
@@ -342,9 +342,14 @@
             
             if ($this->exists('client', 'id', $id_client)) {
                 $client = $this->getClient($id_client);
+                $finances = $this->getFinances($id_client);
+                
+                $period = $finances->get('payment_init').'/'.date('Y-m-d');
+                    
                 $json = array(
                     'name'       => $client->get('name'),
-                    'pendencies' => $this->getPendencies($id_client)['pendencies'],
+                    'obs'        => $finances->get('observation'),
+                    'pendencies' => $this->getPendencies($id_client, $period)['pendencies'],
                 );
                 echo json_encode($json);
             } else {
