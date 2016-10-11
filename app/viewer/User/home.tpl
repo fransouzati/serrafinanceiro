@@ -3,7 +3,7 @@
 <div class="showback">
     <div class="row">
         <div class="col-sm-12">
-            <h4>Contas a pagar</h4>
+            <h4>Contas que ainda não foram pagas, no mês presente</h4>
         </div>
         <div class="col-md-12 table-responsive">
             <table class="table table-bordered table-hover datatable">

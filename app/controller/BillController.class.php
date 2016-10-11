@@ -23,7 +23,7 @@
             }
             $bills = $this->model->query2dto($this->model->search('bill'), 'bill');
             $this->viewer->set('bills', $bills);
-            return $this->viewer->show('view', 'Contas a pagar');
+            return $this->viewer->show('view', 'Cadastro de contas a pagar');
         }
 
         public function edit($id) {
